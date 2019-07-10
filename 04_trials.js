@@ -17,5 +17,10 @@ const trial_info = {
             option2: "rainbow",
             correct: "shiny"
         }
+    ],
+    text_insertion: [
+      {
+        question: "Describe the size."
+      }
     ]
 };

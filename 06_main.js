@@ -18,6 +18,7 @@ $("document").ready(function() {
             intro,
             instructions,
             forced_choice_2A,
+            text_insertion,
             post_test,
             thanks,
         ],

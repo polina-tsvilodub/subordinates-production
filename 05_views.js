@@ -31,7 +31,7 @@ const intro = babeViews.view_generator("intro",{
             <br />
             <br />
             This is a minimal experiment with one forced choice view. It can serve as a starting point for programming your own experiment.`,
-   buttonText: 'Begin the experiment'    
+   buttonText: 'Begin the experiment'
 });
 
 // For most tasks, you need instructions views
@@ -113,6 +113,17 @@ const forced_choice_2A = babeViews.view_generator("forced_choice", {
     // hook: {
     //     after_response_enabled: check_response
     // }
+});
+
+const text_insertion = custom_text({
+  name: 'main',
+  trials: 1,
+  data: [ {
+    picture: "images/question_mark_02.png", 
+    text: "Please describe the picture below.",
+    question: "This is a big "
+  }]
+
 });
 
 // There are many more templates available:
