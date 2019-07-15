@@ -1,12 +1,23 @@
-# Departure Point
+# Speaker Production Experiment
 
-This repository contains a minimal example of a _babe experiment. It can be used as a quick-start departure point when programming a new _babe experiment from scratch.
+This repository contains the script for a speaker production experiment based on the [_babe environment](https://github.com/babe-project/departure-point), to be run in on-line on English native speakers. The goal of the experiment is to verify whether speakers tend to establish subordinate comparison classes in a certain syntactic frame.  
 
-## Online demo
+## Structure
 
-You can have a look at the experiment [here](https://departure-point.netlify.com/) 
+Participants see a picture of e. g. an animal and they are told that they see this object as they walk by. They are asked to judge the size of this object by completing one of the two sentential frames:
+1. That is a big ____ .
+2. The ____ is big.
 
-## How to set up an experiment with _babe (quick start quide)
+Here, given a picture of a dog, specifically a Great Dane, animal would be superordinate, dog would be the basic level and Great Dane the subordinate category label. We hypothesize that ... .
+The assignment of pictures to sentential frames is randomized, the ratio of the two frames throughout the whole experiment for each participant is 1:1.   
+
+## Warm-up trials proposal
+The first part of the experiment consists of warm-up trials to make the participants use subordinate category labels. The participants are supposed to describe a picture of a situation involving members of the same basic level category belonging to two different subordinate categories, such that subordinate label is necessary to describe the situation. For example, a picture could depict a Great Dane chasing a Yorkshire Terrier, whereas the answer template looks like this:
+*The \___ is chasing the ___ .*
+Depending on whether the participants are able to recognize and reproduce the subordinate categories, they will be included in the main experiment.
+## Main trials
+In the main trials, we test whether the comparison class established in a given situation depends on the syntactic frame. Participants see pictures of e. g. an animal they are supposed to be walking by. The are asked to judge the size of this object by referring to a friend and uttering one of the two possible sentences. The comparison class label has to be inserted.
+
 
 ### Obtaining the `departure point`
 
@@ -30,4 +41,3 @@ You can have a look at the experiment [here](https://departure-point.netlify.com
 	- `05_views.js` :: defines the different kinds of tasks, or, more generally, anything users will engage with on the screen
 	- `06_main.js` :: contains the experiment structure and general information about deployment
 - The numbering of the files is important, you can use the functions defined in `01` in `04`, but you can't use some variable from `05` in `02`
-
