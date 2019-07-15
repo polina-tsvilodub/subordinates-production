@@ -19,7 +19,7 @@ const custom_textfield_main = function(config, startingTime) {
       <section class="babe-text-container">
         <p class="babe-view-question">${config.data[CT].text}</p>
       </section>
-      <img src="${config.data[CT].picture}" align="center">
+      <img src="${config.data[CT].picture}" class="center">
       <div class='babe-view-answer-container'>
       <p class='babe-view-text'>${config.data[CT].question}
         <textarea name='textbox-input' rows=1 cols=15 class='textbox-input'/>
@@ -91,10 +91,10 @@ const custom_textfield_warmup = function(config, startingTime) {
       <img src="${config.data[CT].picture}" align="center">
       <div class='babe-view-answer-container'>
       <p class='babe-view-text'>${config.data[CT].question1}
-        <textarea name='textbox-input' rows=1 cols=15 class='textbox-input'/>
+        <textarea id='textbox-input1' rows=1 cols=15 class='textbox-input'/>
       ${config.data[CT].question2}
-        <textarea name='textbox-input' rows=1 cols=15 class='textbox-input'/>
-        
+        <textarea id='textbox-input2' rows=1 cols=15 class='textbox-input'/>
+
       </p>
       </div>
           <button id='next' class='babe-view-button babe-nodisplay'>next</button>
@@ -105,20 +105,33 @@ const custom_textfield_warmup = function(config, startingTime) {
 
 
         let next;
-        let textInput;
+        let textInput1;
+        let textInput2;
         const minChars = config.data[CT].min_chars === undefined ? 10 : config.data[CT].min_chars;
 
       //  $(".babe-view").append(answer_container_generator(config, CT));
 
         next = $("#next");
-        textInput = $("textarea");
+        textInput1 = $("#textbox-input1");
+        textInput2 = $("#textbox-input2");
 
         // attaches an event listener to the textbox input
-        textInput.on("keyup", function() {
+        textInput1.on("keyup", function() {
             // if the text is longer than (in this case) 10 characters without the spaces
             // the 'next' button appears
-            if (textInput.val().trim().length > minChars) {
-                next.removeClass("babe-nodisplay");
+            if (textInput1.val().trim().length > minChars) {
+
+              textInput2.on("keyup", function() {
+                  // if the text is longer than (in this case) 10 characters without the spaces
+                  // the 'next' button appears
+                  if (textInput2.val().trim().length > minChars) {
+
+                      next.removeClass("babe-nodisplay");
+                  } else {
+                      next.addClass("babe-nodisplay");
+                  }
+              });
+        //        next.removeClass("babe-nodisplay");
             } else {
                 next.addClass("babe-nodisplay");
             }
@@ -130,7 +143,8 @@ const custom_textfield_warmup = function(config, startingTime) {
             let trial_data = {
                 trial_name: config.name,
                 trial_number: CT + 1,
-                response: textInput.val().trim(),
+                response1: textInput1.val().trim(),
+                response2: textInput2.val().trim(),
                 RT: RT
             };
 

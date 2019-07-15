@@ -18,9 +18,17 @@ const trial_info = {
             correct: "shiny"
         }
     ],
-    text_insertion: [
-      {
-        question: "Describe the size."
-      }
-    ]
+
+    text_insertion_main: [ {
+     picture: "images/question_mark_02.png",
+     text: "Please describe the picture below.",
+     question: "This is a big "
+   }],
+
+   text_insertion_warmup: [ {
+     picture: "images/question_mark_02.png",
+     text: "Please describe the situation you see on the picture as if you had walked by.",
+     question1: "The ",
+     question2: "is chasing the "
+   }]
 };
