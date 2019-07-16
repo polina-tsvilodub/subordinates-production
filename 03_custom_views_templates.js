@@ -21,8 +21,9 @@ const custom_textfield_main = function(config, startingTime) {
       </section>
       <img src="${config.data[CT].picture}" class="center">
       <div class='babe-view-answer-container'>
-      <p class='babe-view-text'>${config.data[CT].question}
+      <p class='babe-view-text'>${config.data[CT].question1}
         <textarea name='textbox-input' rows=1 cols=15 class='textbox-input'/>
+        ${config.data[CT].question2}
       </p>
       </div>
           <button id='next' class='babe-view-button babe-nodisplay'>next</button>

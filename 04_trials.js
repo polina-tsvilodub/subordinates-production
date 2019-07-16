@@ -1,5 +1,5 @@
 // In this file you can specify the trial data for your experiment
-
+//const picture_list = 
 
 const trial_info = {
     forced_choice: [
@@ -22,8 +22,15 @@ const trial_info = {
     text_insertion_main: [ {
      picture: "images/question_mark_02.png",
      text: "Please describe the picture below.",
-     question: "This is a big "
-   }],
+     question1: "That's a big ",
+     question2: ""
+   },
+   {
+      picture: "images/question_mark_02.png",
+      text: "Please describe the picture below.",
+      question1: "That",
+      question2: "is big"
+    }],
 
    text_insertion_warmup: [ {
      picture: "images/question_mark_02.png",

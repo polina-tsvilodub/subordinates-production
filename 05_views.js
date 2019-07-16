@@ -117,16 +117,16 @@ const forced_choice_2A = babeViews.view_generator("forced_choice", {
 
 const main_trials = custom_textfield_main({
   name: 'main',
-  trials: 1,
-  data: trial_info.text_insertion_main
+  trials: trial_info.text_insertion_main.length,
+  data: _.shuffle(trial_info.text_insertion_main)
 
 
 });
 
 const warump_trials = custom_textfield_warmup({
   name: 'warmup',
-  trials: 1,
-  data: trial_info.text_insertion_warmup
+  trials: trial_info.text_insertion_warmup.length,
+  data: _.shuffle(trial_info.text_insertion_warmup)
 });
 
 // There are many more templates available:
