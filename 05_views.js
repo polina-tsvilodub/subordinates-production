@@ -23,14 +23,15 @@ const intro = babeViews.view_generator("intro",{
     trials: 1,
     name: 'intro',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-    text:   `This is a sample introduction view.
+    text:   `Welcome!
             <br />
             <br />
-            The introduction view welcomes the participant and gives general information
-            about the experiment. You are in the <strong>${coin}</strong> group.
+            Thank you for participating in our experiment  about adjective interpretation in context.
+            You will be given detailed instructions on the next page after clicking the button "Begin the Experiment".
+            By clicking the button you confirm that you participate voluntarily. Please be informed that you can quit the experiment at any point without consequences.
+            Then you will be asked to  complete a few 'warm-up' trials before proceeding to the main experiment.
             <br />
-            <br />
-            This is a minimal experiment with one forced choice view. It can serve as a starting point for programming your own experiment.`,
+            <br />`,
    buttonText: 'Begin the experiment'
 });
 
@@ -38,11 +39,24 @@ const intro = babeViews.view_generator("intro",{
 const instructions = babeViews.view_generator("instructions",{
     trials: 1,
     name: 'instrucions',
-    title: 'General Instructions',
-    text:  `This is a sample instructions view.
+    title: 'Instructions',
+    text:  `Please read the instructions carefully before starting the experiment. Please make sure you can concentrate on the task without disturbance.
+
             <br />
             <br />
-            Tell your participants what they are to do here.`,
+            The first part of the experiment consists of practice trials. You will see pictures of several situations.
+            Imagine you walk by these events and describe them to a friend who has not seen them. Please fill in your description into the template provided.
+            <br/>
+            <br/>
+            The second part of the experiment consists of main trials. You will see pictures of objects which you describe to a friend as you walk by.
+            (Size?)
+            Please fill in your description into the template provided.
+
+            <br/>
+            <br/>
+            Plase press the 'Go to Trials' button to begin the practice trials. 
+
+            `,
     buttonText: 'go to trials'
 });
 
