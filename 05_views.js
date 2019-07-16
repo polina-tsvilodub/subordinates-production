@@ -23,7 +23,7 @@ const intro = babeViews.view_generator("intro",{
     trials: 1,
     name: 'intro',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-    text:   `Welcome!
+    text:   `Welcome to our experiment!
             <br />
             <br />
             Thank you for participating in our experiment  about adjective interpretation in context.
@@ -54,7 +54,7 @@ const instructions = babeViews.view_generator("instructions",{
 
             <br/>
             <br/>
-            Plase press the 'Go to Trials' button to begin the practice trials. 
+            Plase press the 'Go to Trials' button to begin the practice trials.
 
             `,
     buttonText: 'go to trials'
@@ -117,17 +117,17 @@ const thanks = babeViews.view_generator("thanks", {
 
 
 // Here, we initialize a normal forced_choice view
-const forced_choice_2A = babeViews.view_generator("forced_choice", {
+//const forced_choice_2A = babeViews.view_generator("forced_choice", {
     // This will use all trials specified in `data`, you can user a smaller value (for testing), but not a larger value
-    trials: trial_info.forced_choice.length,
+  //  trials: trial_info.forced_choice.length,
     // name should be identical to the variable name
-    name: 'forced_choice_2A',
-    data: trial_info.forced_choice,
+    //name: 'forced_choice_2A',
+    //data: trial_info.forced_choice,
     // you can add custom functions at different stages through a view's life cycle
     // hook: {
     //     after_response_enabled: check_response
     // }
-});
+//});
 
 const main_trials = custom_textfield_main({
   name: 'main',
