@@ -129,7 +129,7 @@ const thanks = babeViews.view_generator("thanks", {
     // }
 //});
 
-const warump_trials = custom_textfield_warmup({
+const warmup_trials = custom_textfield_warmup({
   name: 'warmup',
   trials: trial_info.text_insertion_warmup.length,
   data: _.shuffle(trial_info.text_insertion_warmup)
