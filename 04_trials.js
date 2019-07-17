@@ -4,13 +4,13 @@
 const trial_info = {
 
     text_insertion_main: [ {
-     picture: "images/question_mark_02.png",
+     picture: "images/great_dane.jpg",
      text: "Please describe the picture below.",
      question1: "That's a big ",
      question2: ""
    },
    {
-      picture: "images/question_mark_02.png",
+      picture: "images/great_dane.jpg",
       text: "Please describe the picture below.",
       question1: "That",
       question2: "is big"

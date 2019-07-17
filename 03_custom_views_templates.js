@@ -19,7 +19,9 @@ const custom_textfield_main = function(config, startingTime) {
       <section class="babe-text-container">
         <p class="babe-view-question">${config.data[CT].text}</p>
       </section>
-      <img src="${config.data[CT].picture}" class="center">
+      <div class="picture" align="center">
+        <img src="${config.data[CT].picture}" height="200" width="300">
+      </div>
       <div class='babe-view-answer-container'>
       <p class='babe-view-text'>${config.data[CT].question1}
         <textarea name='textbox-input' rows=1 cols=15 class='textbox-input'/>
@@ -35,7 +37,7 @@ const custom_textfield_main = function(config, startingTime) {
 
         let next;
         let textInput;
-        const minChars = config.data[CT].min_chars === undefined ? 10 : config.data[CT].min_chars;
+        const minChars = config.data[CT].min_chars === undefined ? 5 : config.data[CT].min_chars;
 
       //  $(".babe-view").append(answer_container_generator(config, CT));
 
@@ -89,7 +91,9 @@ const custom_textfield_warmup = function(config, startingTime) {
       <section class="babe-text-container">
         <p class="babe-view-question">${config.data[CT].text}</p>
       </section>
-      <img src="${config.data[CT].picture}" align="center">
+      <div class="picture" align="center">
+        <img src="${config.data[CT].picture}">
+      </div>
       <div class='babe-view-answer-container'>
       <p class='babe-view-text'>${config.data[CT].question1}
         <textarea id='textbox-input1' rows=1 cols=15 class='textbox-input'/>
@@ -108,7 +112,7 @@ const custom_textfield_warmup = function(config, startingTime) {
         let next;
         let textInput1;
         let textInput2;
-        const minChars = config.data[CT].min_chars === undefined ? 10 : config.data[CT].min_chars;
+        const minChars = config.data[CT].min_chars === undefined ? 3 : config.data[CT].min_chars;
 
       //  $(".babe-view").append(answer_container_generator(config, CT));
 
