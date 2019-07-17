@@ -132,7 +132,7 @@ const thanks = babeViews.view_generator("thanks", {
 const main_trials = custom_textfield_main({
   name: 'main',
   trials: trial_info.text_insertion_main.length,
-  data: _.shuffle(trial_info.text_insertion_main)
+  data: shuffle(trial_info.text_insertion_main)
 
 
 });
@@ -140,7 +140,7 @@ const main_trials = custom_textfield_main({
 const warump_trials = custom_textfield_warmup({
   name: 'warmup',
   trials: trial_info.text_insertion_warmup.length,
-  data: _.shuffle(trial_info.text_insertion_warmup)
+  data: shuffle(trial_info.text_insertion_warmup)
 });
 
 // There are many more templates available:

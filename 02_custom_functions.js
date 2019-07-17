@@ -4,7 +4,7 @@
 *
 *
 */
-const coin = _.sample(["head", "tail"]); // You can determine global (random) parameters here
+const coin = sample(["head", "tail"]); // You can determine global (random) parameters here
 // Declare your variables here
 
 
@@ -31,7 +31,7 @@ const generateID = function(len) {
 
 
 
-/* Hooks  
+/* Hooks
 *
 *
 */
