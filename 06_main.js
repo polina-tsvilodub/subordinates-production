@@ -38,7 +38,7 @@ $("document").ready(function() {
         progress_bar: {
             in: [
                 // list the view-names of the views for which you want a progress bar
-                warump_trials.name,
+                warmup_trials.name,
                 main_trials.name,
             ],
              // Possible styles are "default", "separate" and "chunks"
