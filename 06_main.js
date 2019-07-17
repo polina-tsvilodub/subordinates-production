@@ -18,7 +18,7 @@ $("document").ready(function() {
             intro,
             instructions,
     //        forced_choice_2A,
-            warump_trials,
+            warmup_trials,
             main_trials,
             post_test,
             thanks,
