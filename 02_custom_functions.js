@@ -4,7 +4,7 @@
 *
 *
 */
-const coin = sample(["head", "tail"]); // You can determine global (random) parameters here
+const coin = _.sample(["head", "tail"]); // You can determine global (random) parameters here
 // Declare your variables here
 
 

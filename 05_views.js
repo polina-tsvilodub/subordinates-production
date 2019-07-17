@@ -129,20 +129,19 @@ const thanks = babeViews.view_generator("thanks", {
     // }
 //});
 
-const main_trials = custom_textfield_main({
-  name: 'main',
-  trials: trial_info.text_insertion_main.length,
-  data: shuffle(trial_info.text_insertion_main)
-
-
-});
-
 const warump_trials = custom_textfield_warmup({
   name: 'warmup',
   trials: trial_info.text_insertion_warmup.length,
-  data: shuffle(trial_info.text_insertion_warmup)
+  data: _.shuffle(trial_info.text_insertion_warmup)
 });
 
+const main_trials = custom_textfield_main({
+  name: 'main',
+  trials: trial_info.text_insertion_main.length,
+  data: _.shuffle(trial_info.text_insertion_main)
+
+
+});
 // There are many more templates available:
 // forced_choice, slider_rating, dropdown_choice, testbox_input, rating_scale, image_selection, sentence_choice,
 // key_press, self_paced_reading and self_paced_reading_rating_scale
