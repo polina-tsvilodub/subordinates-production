@@ -17,8 +17,8 @@ $("document").ready(function() {
         views_seq: [
             intro,
             instructions,
-    //        forced_choice_2A,
             warmup_trials,
+            context,
             main_trials,
             post_test,
             thanks,

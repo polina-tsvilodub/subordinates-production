@@ -4,22 +4,28 @@
 const trial_info = {
 
     text_insertion_main: [ {
-     picture: "images/great_dane.jpg",
-     text: "Please describe the picture below.",
+    context_picture: "images/dog_parade.png",
+     picture: "images/great-dane.jpg",
+     context: "You see a parade of animals.",
+     text: "Now you see one of the animals and you say to your friend:",
      question1: "That's a big ",
      question2: ""
    },
    {
-      picture: "images/great_dane.jpg",
-      text: "Please describe the picture below.",
+     context_picture: "images/dog_parade.png",
+      picture: "images/great-dane.jpg",
+      context: "You see a parade of animals.",
+      text: "Now you see one of the animals and you say to your friend:",
       question1: "That",
       question2: "is big"
     }],
 
    text_insertion_warmup: [ {
-     picture: "images/question_mark_02.png",
-     text: "Please describe the situation you see on the picture as if you had walked by.",
-     question1: "The ",
-     question2: "is chasing the "
+     picture1: "images/poodle.jpg",
+     picture2:"images/pug.jpg",
+     picture3: "images/great-dane.jpg",
+     text: "Please label the pictures below.",
+     question1: "This is a ",
+     question2: "These are all "
    }]
 };

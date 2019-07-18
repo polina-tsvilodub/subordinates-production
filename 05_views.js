@@ -26,10 +26,10 @@ const intro = babeViews.view_generator("intro",{
     text:   `Welcome to our experiment!
             <br />
             <br />
-            Thank you for participating in our experiment  about adjective interpretation in context.
+            Thank you for participating in our experiment about adjective interpretation in context.
             You will be given detailed instructions on the next page after clicking the button "Begin the Experiment".
             By clicking the button you confirm that you participate voluntarily. Please be informed that you can quit the experiment at any point without consequences.
-            Then you will be asked to  complete a few 'warm-up' trials before proceeding to the main experiment.
+            Then you will be asked to  complete a few warm-up trials before proceeding to the main experiment.
             <br />
             <br />`,
    buttonText: 'Begin the experiment'
@@ -40,21 +40,17 @@ const instructions = babeViews.view_generator("instructions",{
     trials: 1,
     name: 'instrucions',
     title: 'Instructions',
-    text:  `Please read the instructions carefully before starting the experiment. Please make sure you can concentrate on the task without disturbance.
+    text:  `Please read the instructions carefully before starting the experiment and
+            make sure you can concentrate on the task without disturbance.
 
             <br />
             <br />
-            The first part of the experiment consists of practice trials. You will see pictures of several situations.
-            Imagine you walk by these events and describe them to a friend who has not seen them. Please fill in your description into the template provided.
+            The first part of the experiment consists of practice trials.
+            You will see pictures of several animals.
+            Please label the animals using the template provided.
             <br/>
             <br/>
-            The second part of the experiment consists of main trials. You will see pictures of objects which you describe to a friend as you walk by.
-            (Size?)
-            Please fill in your description into the template provided.
-
-            <br/>
-            <br/>
-            Plase press the 'Go to Trials' button to begin the practice trials.
+            Plase press the 'Go to Trials' button to begin the warm-up trials.
 
             `,
     buttonText: 'go to trials'
@@ -133,6 +129,20 @@ const warmup_trials = custom_textfield_warmup({
   name: 'warmup',
   trials: trial_info.text_insertion_warmup.length,
   data: _.shuffle(trial_info.text_insertion_warmup)
+});
+
+const context = babeViews.view_generator("instructions",{
+    trials: 1,
+    name: 'instrucions',
+    title: 'Instructions',
+    text:  `
+    The second part of the experiment consists of main trials.
+    </br>
+    Imagine you view parades of animals as they go by.
+    Then you see one of the participants of the parade which you point out to a friend.
+    Press the button 'Go to trials' to begin the main trials.
+            `,
+    buttonText: 'go to trials'
 });
 
 const main_trials = custom_textfield_main({
