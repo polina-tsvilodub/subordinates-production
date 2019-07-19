@@ -38,7 +38,26 @@ const trial_info = {
         sentence: "You say to your friend:",
         question1: "That",
         question2: "is big"
-      }
+      },
+      {
+        context_picture: "images/flower-parade.png",
+         picture: "images/sunflower.png",
+         context: "You see a parade of flowers.",
+         text: "Another flower continues the parade.",
+         sentence: "You say to your friend:",
+         question1: "That",
+         question2: "is big"
+       },
+       {
+         context_picture: "images/fish-parade.png",
+          picture: "images/swordfish.jpg",
+          context: "You see a parade of fish.",
+          text: "Another fish continues the parade.",
+          sentence: "You say to your friend:",
+          question1: "That",
+          question2: "is big"
+        },
+
   ],
 
    text_insertion_warmup: [ {
