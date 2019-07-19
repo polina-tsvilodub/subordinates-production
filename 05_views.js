@@ -46,8 +46,8 @@ const instructions = babeViews.view_generator("instructions",{
             <br />
             <br />
             The first part of the experiment consists of practice trials.
-            You will see pictures of several animals.
-            Please label the animals using the template provided.
+            You will see pictures of several objects.
+            Please label the objects using the template provided.
             <br/>
             <br/>
             Plase press the 'Go to Trials' button to begin the warm-up trials.
@@ -127,8 +127,12 @@ const thanks = babeViews.view_generator("thanks", {
 
 const warmup_trials = custom_textfield_warmup({
   name: 'warmup',
+  title: 'Labeling task',
   trials: trial_info.text_insertion_warmup.length,
-  data: _.shuffle(trial_info.text_insertion_warmup)
+  data: _.shuffle(trial_info.text_insertion_warmup),
+//  hook: {
+//    after_response_enabled: check_response
+//  }
 });
 
 const context = babeViews.view_generator("instructions",{
@@ -136,10 +140,8 @@ const context = babeViews.view_generator("instructions",{
     name: 'instrucions',
     title: 'Instructions',
     text:  `
-    The second part of the experiment consists of main trials.
+    You are viewing sequences of objects and describing them as they pass by.
     </br>
-    Imagine you view parades of animals as they go by.
-    Then you see one of the participants of the parade which you point out to a friend.
     Press the button 'Go to trials' to begin the main trials.
             `,
     buttonText: 'go to trials'
@@ -147,6 +149,7 @@ const context = babeViews.view_generator("instructions",{
 
 const main_trials = custom_textfield_main({
   name: 'main',
+  title: 'Parades',
   trials: trial_info.text_insertion_main.length,
   data: _.shuffle(trial_info.text_insertion_main)
 

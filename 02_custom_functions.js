@@ -51,14 +51,21 @@ const time_limit = function(data, next) {
 
 // compares the chosen answer to the value of `option1`
 check_response = function(data, next) {
-    $('input[name=answer]').on('change', function(e) {
-        if (e.target.value === data.correct) {
-            alert('Your answer is correct! Yey!');
-        } else {
-            alert('Sorry, this answer is incorrect :( The correct answer was ' + data.correct);
-        }
-        next();
-    })
+   $('next').on('click', function() {
+     if (data.correct1 === $('#textbox-input1')) {
+        alert('Your answer is correct!');
+     } else {
+       alert('Sorry, this is incorrect! Please correct your response!');
+     }
+})
+    //$('textarea[id=textbox-input1]').on('change', function(e) {
+        //if (e.target.value === data.correct1) {
+        //    alert('Your answer is correct! Yey!');
+      //  } else {
+      //      alert('Sorry, this answer is incorrect :( The correct answer was ' + data.correct1);
+    //    }
+  //      next();
+//    })
 }
 
 // Declare your hooks here

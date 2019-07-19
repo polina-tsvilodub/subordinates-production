@@ -15,7 +15,7 @@ const custom_textfield_main = function(config, startingTime) {
     trials: config.trials,
     render: function(CT, babe, startingTime) {
       $("main").html(`<div class='babe-view'>
-      <h1 class='babe-view-title'>Main trials</h1>
+      <h1 class='babe-view-title'>Parades</h1>
       <section class="babe-text-container">
         <p class="babe-view-question">${config.data[CT].context}</p>
       </section>
@@ -28,6 +28,9 @@ const custom_textfield_main = function(config, startingTime) {
       <div class="picture" align="center">
         <img src="${config.data[CT].picture}">
       </div>
+      <section class="babe-text-container">
+        <p class="babe-view-question">${config.data[CT].sentence}</p>
+      </section>
       <div class='babe-view-answer-container'>
       <p class='babe-view-text'>${config.data[CT].question1}
         <textarea name='textbox-input' rows=1 cols=15 class='textbox-input'/>
@@ -65,7 +68,7 @@ const custom_textfield_main = function(config, startingTime) {
         next.on("click", function(startingTime) {
             const RT = Date.now() - startingTime; // measure RT before anything else
             let trial_data = {
-                trial_name: config.name,
+                trial_name: 'main',
                 trial_number: CT + 1,
                 response: textInput.val().trim(),
                 RT: RT
@@ -158,7 +161,13 @@ const custom_textfield_warmup = function(config, startingTime) {
                     if (textInput3.val().trim().length > minChars) {
                       textInput4.on("keyup", function() {
                         if (textInput4.val().trim().length > minChars) {
-                          next.removeClass("babe-nodisplay");
+                          // check response
+                        //  if(textInput1.val().trim() === config.data[CT].correct1) {
+                          //  alert("You are right!")
+                            next.removeClass("babe-nodisplay");
+                          //}
+
+                        //  next.removeClass("babe-nodisplay");
                         }
                       })
                     }
@@ -173,6 +182,14 @@ const custom_textfield_warmup = function(config, startingTime) {
 
         // the trial data gets added to the trial object
         next.on("click", function(startingTime) {
+          check_response = function(data, next) {
+             $('next').on('click', function() {
+               if (data.correct1 === $('#textbox-input1')) {
+                  alert('Your answer is correct!');
+               } else {
+                 alert('Sorry, this is incorrect! Please correct your response!');
+               }
+          })}
             const RT = Date.now() - startingTime; // measure RT before anything else
             let trial_data = {
                 trial_name: config.name,
