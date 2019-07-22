@@ -150,7 +150,7 @@ const context = babeViews.view_generator("instructions",{
 const main_trials = custom_textfield_main({
   name: 'main',
   title: 'Parades',
-  trials: trial_info.text_insertion_main.length,
+  trials: 6,
   data: _.shuffle(trial_info.text_insertion_main)
 
 

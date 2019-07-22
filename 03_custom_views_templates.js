@@ -8,6 +8,16 @@
 // and a render function, the render function gets CT and the babe-object as input
 // and has to call babe.findNextView() eventually to proceed to the next view (or the next trial in this view),
 // if it is an trial view it also makes sense to call babe.trial_data.push(trial_data) to save the trial information
+const check_response = function(CT, textInput, correct, config) {
+  //num = toString("correct" + i)
+  if (correct != textInput.val().trim() ) {
+    return true;
+  } else{
+    return false;
+  }
+
+}
+
 const custom_textfield_main = function(config, startingTime) {
   const view = {
     name: config.name,
@@ -162,10 +172,9 @@ const custom_textfield_warmup = function(config, startingTime) {
                       textInput4.on("keyup", function() {
                         if (textInput4.val().trim().length > minChars) {
                           // check response
-                        //  if(textInput1.val().trim() === config.data[CT].correct1) {
-                          //  alert("You are right!")
+                            //alert("You are right!")
                             next.removeClass("babe-nodisplay");
-                          //}
+
 
                         //  next.removeClass("babe-nodisplay");
                         }
@@ -182,14 +191,47 @@ const custom_textfield_warmup = function(config, startingTime) {
 
         // the trial data gets added to the trial object
         next.on("click", function(startingTime) {
-          check_response = function(data, next) {
-             $('next').on('click', function() {
-               if (data.correct1 === $('#textbox-input1')) {
-                  alert('Your answer is correct!');
-               } else {
-                 alert('Sorry, this is incorrect! Please correct your response!');
-               }
-          })}
+        //  check_response = function(data, next) {
+          //   $('next').on('click', function() {
+            //   if (config.data[CT].correct1 === textInput1.val().trim()) {
+              //    alert('Your answer is correct!');
+               //} else {
+                 //alert('Sorry, this is incorrect! Please correct your response!');
+               //}
+        //  }
+        //)
+      //}
+          //  while ((config.data[CT].correct1 != textInput1.val().trim())||(config.data[CT].correct2 != textInput2.val().trim())||config.data[CT].correct3 != textInput3.val().trim()) {
+            //  alert('Sorry, your response is incorrect! Please correct your response!');
+            //}
+            const message = String("The labels are false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
+            if (check_response(CT, textInput1, config.data[CT].correct1, config)) {
+              if (check_response(CT, textInput2,config.data[CT].correct2, config)) {
+                if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
+                  alert(message);
+                }  else {
+                  alert(message);
+                }
+              } else {
+                alert(message);
+              }
+            } else if (check_response(CT, textInput2, config.data[CT].correct2, config)) {
+              if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
+                alert(message);
+              } else {
+                alert(message);
+              }
+            } else if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
+              alert(message);
+            } else {
+              alert('Your answer is correct!');
+            }
+
+            // if(check_response(CT, textInput1, config.data[CT].correct1, config)) {
+            //   alert("FIrst answer incorrect!")
+            // }
+
+
             const RT = Date.now() - startingTime; // measure RT before anything else
             let trial_data = {
                 trial_name: config.name,
