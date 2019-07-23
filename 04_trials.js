@@ -12,8 +12,8 @@ const size = function() {
 const mainTrials = { dogs: [{
    context_picture: "images/dog_parade.png",
     picture: "images/great-dane.jpg",
-    context: "You see a parade of animals.",
-    text: "Another animal continues the parade.",
+    context: "You see a group of animals.",
+    text: "Another animal belongs to the group.",
     sentence: "You say to your friend:",
     question1: utterance.question1b,
     question2: utterance.question2b
@@ -21,8 +21,8 @@ const mainTrials = { dogs: [{
   {
    context_picture: "images/dog_parade_small.png",
     picture: "images/chihuahua.jpg",
-    context: "You see a parade of animals.",
-    text: "Another animal continues the parade.",
+    context: "You see a group of animals.",
+    text: "Another animal belongs to the group.",
     sentence: "You say to your friend:",
     question1: utterance.question1s,
     question2: utterance.question2s
@@ -30,8 +30,8 @@ const mainTrials = { dogs: [{
   birds: [{
     context_picture: "images/bird-parade.png",
      picture: "images/swan.jpg",
-     context: "You see a parade of birds.",
-     text: "Another bird continues the parade.",
+     context: "You see a group of animals.",
+     text: "Another animal belongs to the group.",
      sentence: "You say to your friend:",
      question1: utterance.question1b,
      question2: utterance.question2b
@@ -39,8 +39,8 @@ const mainTrials = { dogs: [{
    {
      context_picture: "images/bird-parade-small.png",
       picture: "images/colibri.jpg",
-      context: "You see a parade of birds.",
-      text: "Another bird continues the parade.",
+      context: "You see a group of animals.",
+      text: "Another animal bleongs to the group.",
       sentence: "You say to your friend:",
       question1: utterance.question1s,
       question2: utterance.question2s
@@ -48,8 +48,8 @@ const mainTrials = { dogs: [{
    monkeys: [{
      context_picture: "images/monkey-parade.png",
       picture: "images/gorilla.jpg",
-      context: "You see a parade of animals.",
-      text: "Another animal continues the parade.",
+      context: "You see a group of animals.",
+      text: "Another animal belongs to the group.",
       sentence: "You say to your friend:",
       question1: utterance.question1b,
       question2: utterance.question2b
@@ -57,8 +57,8 @@ const mainTrials = { dogs: [{
     {
       context_picture: "images/monkey-parade-small.png",
        picture: "images/spidermonkey.jpg",
-       context: "You see a parade of animals.",
-       text: "Another animal continues the parade.",
+       context: "You see a group of animals.",
+       text: "Another animal belongs to the group.",
        sentence: "You say to your friend:",
        question1: utterance.question1s,
        question2: utterance.question2s
@@ -66,8 +66,8 @@ const mainTrials = { dogs: [{
     flowers: [{
       context_picture: "images/flower-parade.png",
        picture: "images/sunflower.png",
-       context: "You see a parade of plants.",
-       text: "Another plant continues the parade.",
+       context: "You see a group of plants.",
+       text: "Another plant belongs to the group.",
        sentence: "You say to your friend:",
        question1: utterance.question1b,
        question2: utterance.question2b
@@ -75,8 +75,8 @@ const mainTrials = { dogs: [{
      {
        context_picture: "images/flower-parade-small.png",
         picture: "images/daisy.png",
-        context: "You see a parade of plants.",
-        text: "Another plant continues the parade.",
+        context: "You see a group of plants.",
+        text: "Another plant belongs to the group.",
         sentence: "You say to your friend:",
         question1: utterance.question1s,
         question2: utterance.question2s
@@ -84,8 +84,8 @@ const mainTrials = { dogs: [{
      fish: [{
        context_picture: "images/fish-parade.png",
         picture: "images/swordfish.jpg",
-        context: "You see a parade of fish.",
-        text: "Another fish continues the parade.",
+        context: "You see a group of fish.",
+        text: "Another fish belongs to the group.",
         sentence: "You say to your friend:",
         question1: utterance.question1b,
         question2: utterance.question2b
@@ -93,8 +93,8 @@ const mainTrials = { dogs: [{
       {
         context_picture: "images/fish-parade.png",
          picture: "images/goldfish.png",
-         context: "You see a parade of fish.",
-         text: "Another fish continues the parade.",
+         context: "You see a group of fish.",
+         text: "Another fish belongs to the group.",
          sentence: "You say to your friend:",
          question1: utterance.question1s,
          question2: utterance.question2s
@@ -102,8 +102,8 @@ const mainTrials = { dogs: [{
     trees: [{
         context_picture: "images/tree-parade.png",
          picture: "images/sequoia.jpg",
-         context: "You see a parade of plants.",
-         text: "Another plant continues the parade.",
+         context: "You see a group of plants.",
+         text: "Another plant belongs to the group.",
          sentence: "You say to your friend:",
          question1: utterance.question1b,
          question2: utterance.question2b
@@ -111,8 +111,8 @@ const mainTrials = { dogs: [{
        {
          context_picture: "images/tree-parade.png",
           picture: "images/bonsai.jpg",
-          context: "You see a parade of plants.",
-          text: "Another plant continues the parade.",
+          context: "You see a group of plants.",
+          text: "Another plant belongs to the group.",
           sentence: "You say to your friend:",
           question1: utterance.question1s,
           question2: utterance.question2s
@@ -120,7 +120,7 @@ const mainTrials = { dogs: [{
 const warmupTrials = {dogs: {
   picture1: "images/chihuahua.jpg",
   picture2: "images/great-dane.jpg",
-  correct1: "chihuhua",
+  correct1: "chihuahua",
   correct2: "great dane",
   correct3: "dogs",
   text: "Please label the pictures below.",
@@ -132,7 +132,7 @@ birds: {
   picture1: "images/swan.jpg",
   picture2: "images/colibri.jpg",
   correct1: "swan",
-  correct2: "colibri",
+  correct2: "hummingbird",
   correct3: "birds",
   text: "Please label the pictures below.",
   question1: "This is a ",
@@ -171,7 +171,7 @@ fish: {
 trees: {
   picture1: "images/sequoia.jpg",
   picture2: "images/bonsai.jpg",
-  correct1: "sequoia",
+  correct1: "redwood",
   correct2: "bonsai",
   correct3: "trees",
   text: "Please label the pictures below.",

@@ -23,13 +23,10 @@ const intro = babeViews.view_generator("intro",{
     trials: 1,
     name: 'intro',
     // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-    text:   `Welcome to our experiment!
-            <br />
-            <br />
+    text:   `
             Thank you for participating in our experiment about adjective interpretation in context.
             You will be given detailed instructions on the next page after clicking the button "Begin the Experiment".
             By clicking the button you confirm that you participate voluntarily. Please be informed that you can quit the experiment at any point without consequences.
-            Then you will be asked to  complete a few warm-up trials before proceeding to the main experiment.
             <br />
             <br />`,
    buttonText: 'Begin the experiment'
@@ -45,12 +42,16 @@ const instructions = babeViews.view_generator("instructions",{
 
             <br />
             <br />
-            The first part of the experiment consists of practice trials.
-            You will see pictures of several objects.
-            Please label the objects using the template provided.
+            The experiment consists of two rounds, each having a few warm-up trials before the main trials start.
+            <br />
+            During the warm-up trials, you will see pictures of several objects.
+            Please label the objects using the template provided. You will be given feedback on your labels.
+            <br />
+            By pressing the button 'Go to Trials' you begin the first round.
+
             <br/>
             <br/>
-            Plase press the 'Go to Trials' button to begin the warm-up trials.
+
 
             `,
     buttonText: 'go to trials'
@@ -58,26 +59,13 @@ const instructions = babeViews.view_generator("instructions",{
 
 
 // In the post test questionnaire you can ask your participants addtional questions
-const post_test = babeViews.view_generator("post_test",{
-    trials: 1,
-    name: 'post_test',
-    title: 'Additional information',
-    text: 'Answering the following questions is optional, but your answers will help us analyze our results.'
-
-    // You can change much of what appears here, e.g., to present it in a different language, as follows:
-    // buttonText: 'Weiter',
-    // age_question: 'Alter',
-    // gender_question: 'Geschlecht',
-    // gender_male: 'männlich',
-    // gender_female: 'weiblich',
-    // gender_other: 'divers',
-    // edu_question: 'Höchster Bildungsabschluss',
-    // edu_graduated_high_school: 'Abitur',
-    // edu_graduated_college: 'Hochschulabschluss',
-    // edu_higher_degree: 'Universitärer Abschluss',
-    // languages_question: 'Muttersprache',
-    // languages_more: '(in der Regel die Sprache, die Sie als Kind zu Hause gesprochen haben)',
-    // comments_question: 'Weitere Kommentare'
+const custom_post_test = custom_post_test_view({
+  name: 'post_test',
+  title: 'Additional information',
+  text: `Please enter your native languages.
+  <br />
+    Answering the other questions is optional, but your answers will help us analyze our results.`,
+  trials: 1
 });
 
 // The 'thanks' view is crucial; never delete it; it submits the results!
@@ -144,17 +132,33 @@ const warmup_trials2 = custom_textfield_warmup({
 //  }
 });
 
-const context = babeViews.view_generator("instructions",{
+const context1 = babeViews.view_generator("instructions",{
     trials: 1,
-    name: 'instrucions',
+    name: 'instructions',
     title: 'Instructions',
     text:  `
-    You are viewing sequences of objects and describing them as they pass by.
+    Next, you will complete the main trials.
+    <br/>
+    <br/>
+    You are viewing groups of objects and describing them as they pass by.
     </br>
     Press the button 'Go to trials' to begin the main trials.
             `,
     buttonText: 'go to trials'
 });
+const context2 = babeViews.view_generator("instructions",{
+    trials: 1,
+    name: 'instructions',
+    title: 'Instructions',
+    text:  `
+    Now the second round of the experiment starts. You will complete similar trials.
+    <br />
+    </br>
+    Press the button 'Go to trials' to begin the second round.
+            `,
+    buttonText: 'go to trials'
+});
+
 
 const main_trials1 = custom_textfield_main({
   name: 'main',
