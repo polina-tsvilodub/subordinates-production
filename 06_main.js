@@ -17,9 +17,12 @@ $("document").ready(function() {
         views_seq: [
             intro,
             instructions,
-            warmup_trials,
+            warmup_trials1,
             context,
-            main_trials,
+            main_trials1,
+            //context,
+            warmup_trials2,
+            main_trials2,
             post_test,
             thanks,
         ],
@@ -38,8 +41,10 @@ $("document").ready(function() {
         progress_bar: {
             in: [
                 // list the view-names of the views for which you want a progress bar
-                warmup_trials.name,
-                main_trials.name,
+                warmup_trials1.name,
+                main_trials1.name,
+                warmup_trials2.name,
+                main_trials2.name
             ],
              // Possible styles are "default", "separate" and "chunks"
             style: "separate",

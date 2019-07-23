@@ -126,17 +126,9 @@ const custom_textfield_warmup = function(config, startingTime) {
           <textarea id='textbox-input2' rows=1 cols=15 class='textbox-input'/>
         </p>
       </div>
-      <div class="picture" align="center">
-        <img src="${config.data[CT].picture3}">
-      </div>
-      <div class='babe-view-answer-container'>
-        <p class='babe-view-text'>${config.data[CT].question1}
-          <textarea id='textbox-input3' rows=1 cols=15 class='textbox-input'/>
-        </p>
-      </div>
       <div class='babe-view-answer-container'>
         <p class='babe-view-text'>${config.data[CT].question2}
-          <textarea id='textbox-input4' rows=1 cols=15 class='textbox-input'/>
+          <textarea id='textbox-input3' rows=1 cols=15 class='textbox-input'/>
         </p>
       </div>
           <button id='next' class='babe-view-button babe-nodisplay'>next</button>
@@ -150,7 +142,7 @@ const custom_textfield_warmup = function(config, startingTime) {
         let textInput1;
         let textInput2;
         let textInput3;
-        let textInput4;
+      //  let textInput4;
 
         const minChars = config.data[CT].min_chars === undefined ? 2 : config.data[CT].min_chars;
 
@@ -160,7 +152,7 @@ const custom_textfield_warmup = function(config, startingTime) {
         textInput1 = $("#textbox-input1")
         textInput2 = $("#textbox-input2")
         textInput3 = $("#textbox-input3")
-        textInput4 = $("#textbox-input4")
+      //  textInput4 = $("#textbox-input4")
         textInput1.on("keyup", function() {
             // if the text is longer than (in this case) 10 characters without the spaces
             // the 'next' button appears
@@ -169,16 +161,14 @@ const custom_textfield_warmup = function(config, startingTime) {
                 if (textInput2.val().trim().length > minChars) {
                   textInput3.on("keyup", function() {
                     if (textInput3.val().trim().length > minChars) {
-                      textInput4.on("keyup", function() {
-                        if (textInput4.val().trim().length > minChars) {
+
                           // check response
                             //alert("You are right!")
-                            next.removeClass("babe-nodisplay");
+                        next.removeClass("babe-nodisplay");
 
 
                         //  next.removeClass("babe-nodisplay");
-                        }
-                      })
+
                     }
                   });
                 };
@@ -204,25 +194,25 @@ const custom_textfield_warmup = function(config, startingTime) {
           //  while ((config.data[CT].correct1 != textInput1.val().trim())||(config.data[CT].correct2 != textInput2.val().trim())||config.data[CT].correct3 != textInput3.val().trim()) {
             //  alert('Sorry, your response is incorrect! Please correct your response!');
             //}
-            const message = String("The labels are false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
+      const message = String("The labels are false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
             if (check_response(CT, textInput1, config.data[CT].correct1, config)) {
               if (check_response(CT, textInput2,config.data[CT].correct2, config)) {
                 if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
-                  alert(message);
+                  alert("The labels are false. The correct labels are: "+ config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
                 }  else {
-                  alert(message);
+                  alert("Some labels are false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
                 }
               } else {
-                alert(message);
+                alert("A label is false. The correct labels are: "+ config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
               }
             } else if (check_response(CT, textInput2, config.data[CT].correct2, config)) {
               if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
-                alert(message);
+                alert("Some labels are false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
               } else {
-                alert(message);
+                alert("A label is false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
               }
             } else if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
-              alert(message);
+              alert("A label is false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
             } else {
               alert('Your answer is correct!');
             }
@@ -239,7 +229,6 @@ const custom_textfield_warmup = function(config, startingTime) {
                 response1: textInput1.val().trim(),
                 response2: textInput2.val().trim(),
                 response3: textInput3.val().trim(),
-                response4: textInput4.val().trim(),
                 RT: RT
             };
 

@@ -125,11 +125,20 @@ const thanks = babeViews.view_generator("thanks", {
     // }
 //});
 
-const warmup_trials = custom_textfield_warmup({
+const warmup_trials1 = custom_textfield_warmup({
   name: 'warmup',
   title: 'Labeling task',
-  trials: trial_info.text_insertion_warmup.length,
-  data: _.shuffle(trial_info.text_insertion_warmup),
+  trials: 3,
+  data: trial_info.text_insertion_warmup1,
+//  hook: {
+//    after_response_enabled: check_response
+//  }
+});
+const warmup_trials2 = custom_textfield_warmup({
+  name: 'warmup',
+  title: 'Labeling task',
+  trials: 3,
+  data: trial_info.text_insertion_warmup2,
 //  hook: {
 //    after_response_enabled: check_response
 //  }
@@ -147,11 +156,19 @@ const context = babeViews.view_generator("instructions",{
     buttonText: 'go to trials'
 });
 
-const main_trials = custom_textfield_main({
+const main_trials1 = custom_textfield_main({
   name: 'main',
   title: 'Parades',
-  trials: 6,
-  data: _.shuffle(trial_info.text_insertion_main)
+  trials: 3,
+  data: _.shuffle(trial_info.text_insertion_main1)
+
+
+});
+const main_trials2 = custom_textfield_main({
+  name: 'main',
+  title: 'Parades',
+  trials: 3,
+  data: _.shuffle(trial_info.text_insertion_main2)
 
 
 });
