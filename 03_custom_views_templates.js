@@ -9,7 +9,7 @@
 // and has to call babe.findNextView() eventually to proceed to the next view (or the next trial in this view),
 // if it is an trial view it also makes sense to call babe.trial_data.push(trial_data) to save the trial information
 const check_response = function(CT, textInput, correct, config) {
-  if (correct.includes(String(textInput.val().trim().toLowerCase()))) {
+  if (correct.includes(textInput.val().trim().toLowerCase())) {
     return false;
   } else{
     return true;

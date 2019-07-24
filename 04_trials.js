@@ -143,7 +143,7 @@ monkeys: {
   picture2: "images/gorilla.jpg",
   correct1: ["spider monkey"],
   correct2: ["gorilla"],
-  correct3: ["monkeys ", "apes"],
+  correct3: ["monkeys", "apes"],
   text: "Please label the pictures below.",
   question1: "This is a ",
   question2: "These are all "
@@ -171,7 +171,7 @@ fish: {
 trees: {
   picture1: "images/sequoia.jpg",
   picture2: "images/bonsai.jpg",
-  correct1: ["redwood ", "sequoia ", "redwoodtree"],
+  correct1: ["redwood", "sequoia", "redwoodtree"],
   correct2: ["bonsai"],
   correct3: ["trees"],
   text: "Please label the pictures below.",
