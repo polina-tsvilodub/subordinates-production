@@ -140,6 +140,7 @@ const custom_textfield_warmup = function(config, startingTime) {
       <div  class='babe-view-answer-container'>
         <p id='1' class='babe-view-text'>${config.data[CT].question1}
           <textarea id='textbox-input1' rows=1 cols=15 class='textbox-input'/>
+
         </p>
         <p class = 'correct-answer babe-nodisplay'>The correct answer is ${config.data[CT].correct1}</p>
       </div>
@@ -395,7 +396,8 @@ const custom_intro_view = function(config) {
             <img src="${config.picture1}">
           </div>
           <section class="babe-text-container">
-            <p class="babe-view-text">By continuing, you are participating in a study being performed by cognitive scientists in the MIT Computational Psycholinguistics Lab. If you have questions about this research, please contact Polina Tsvilodub, at <a href="mailto:polinats@mit.edu">polinats@mit.edu</a>, or MH Tessler, at tessler@mit.edu. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.
+            <p class="babe-view-text"> Thank you for taking part in our study on adjective interpretation in context. <br />
+            By continuing, you are participating in an experiment being performed by cognitive scientists in the MIT Computational Psycholinguistics Lab. If you have questions about this research, please contact Polina Tsvilodub, at <a href="mailto:polinats@mit.edu">polinats@mit.edu</a>, or MH Tessler, at tessler@mit.edu. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.
              </p>
           </section>
           <button class = "babe-view-button" id="next">Go To Trials</button>
