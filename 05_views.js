@@ -19,18 +19,6 @@
 */
 
 // Every experiment should start with an intro view. Here you can welcome your participants and tell them what the experiment is about
-const intro = babeViews.view_generator("intro",{
-    trials: 1,
-    name: 'intro',
-    // If you use JavaScripts Template String `I am a Template String`, you can use HTML <></> and javascript ${} inside
-    text:   `
-            Thank you for participating in our experiment about adjective interpretation in context.
-            You will be given detailed instructions on the next page after clicking the button "Begin the Experiment".
-            By clicking the button you confirm that you participate voluntarily. Please be informed that you can quit the experiment at any point without consequences.
-            <br />
-            <br />`,
-   buttonText: 'Begin the experiment'
-});
 
 // For most tasks, you need instructions views
 const instructions = babeViews.view_generator("instructions",{
@@ -67,7 +55,13 @@ const custom_post_test = custom_post_test_view({
     Answering the other questions is optional, but your answers will help us analyze our results.`,
   trials: 1
 });
+const custom_intro = custom_intro_view({
+  name: 'Intro',
+  title: 'Welcome!',
+  picture1: 'images/cpl.png',
+  trials: 1
 
+});
 // The 'thanks' view is crucial; never delete it; it submits the results!
 const thanks = babeViews.view_generator("thanks", {
     trials: 1,

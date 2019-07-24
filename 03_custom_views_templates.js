@@ -9,14 +9,44 @@
 // and has to call babe.findNextView() eventually to proceed to the next view (or the next trial in this view),
 // if it is an trial view it also makes sense to call babe.trial_data.push(trial_data) to save the trial information
 const check_response = function(CT, textInput, correct, config) {
-  //num = toString("correct" + i)
-  if (correct != textInput.val().trim().toLowerCase()) {
+  if (-1 == textInput.val().trim().toLowerCase().indexOf(correct)) {
     return true;
   } else{
     return false;
   }
 
 }
+
+const custom_response_check = function(correct1, correct2, correct3) {
+  var para1 = document.createElement("p");
+  var node1 = document.createTextNode("The correct answer is: " + correct1);
+  para1.appendChild(node1);
+  var element1 = document.getElementById("1");
+  element1.appendChild(para1);
+
+  var para2 = document.createElement("p");
+  var node2 = document.createTextNode("The correct answer is: " + correct2);
+  para2.appendChild(node2);
+  var element2 = document.getElementById("2");
+  element2.appendChild(para2);
+
+  var para3 = document.createElement("p");
+  var node3 = document.createTextNode("The correct answer is: " + correct3);
+  para3.appendChild(node3);
+  var element3 = document.getElementById("3");
+  element3.appendChild(para3);
+
+  var para4 = document.createElement("p");
+  var node4 = document.createTextNode("Please enter the correct labels to proceed.");
+  para4.appendChild(node4);
+  var element4 = document.getElementById("4");
+  element4.appendChild(para4);
+
+
+
+  return (element1.appendChild(para1),element2.appendChild(para2), element3.appendChild(para3),element3.appendChild(para3), element4.appendChild(para4))
+
+};
 
 const custom_textfield_main = function(config, startingTime) {
   const view = {
@@ -49,16 +79,10 @@ const custom_textfield_main = function(config, startingTime) {
       </div>
           <button id='next' class='babe-view-button babe-nodisplay'>next</button>
       </div>`);
-      //  <div class='babe-view-answer-container'> </div>
-// height="42" width="42"
-      //config, CT, babe, answer_container_generator, startingTime
-
 
         let next;
         let textInput;
         const minChars = config.data[CT].min_chars === undefined ? 2 : config.data[CT].min_chars;
-
-      //  $(".babe-view").append(answer_container_generator(config, CT));
 
         next = $("#next");
         textInput = $("textarea");
@@ -113,46 +137,41 @@ const custom_textfield_warmup = function(config, startingTime) {
       <div class="picture" align="center">
         <img src="${config.data[CT].picture1}">
       </div>
-      <div class='babe-view-answer-container'>
-        <p class='babe-view-text'>${config.data[CT].question1}
+      <div  class='babe-view-answer-container'>
+        <p id='1' class='babe-view-text'>${config.data[CT].question1}
           <textarea id='textbox-input1' rows=1 cols=15 class='textbox-input'/>
         </p>
       </div>
-      <div class="picture" align="center">
+      <div  class="picture" align="center">
         <img src="${config.data[CT].picture2}">
       </div>
       <div class='babe-view-answer-container'>
-        <p class='babe-view-text'>${config.data[CT].question1}
+        <p id='2' class='babe-view-text'>${config.data[CT].question1}
           <textarea id='textbox-input2' rows=1 cols=15 class='textbox-input'/>
         </p>
       </div>
-      <div class='babe-view-answer-container'>
-        <p class='babe-view-text'>${config.data[CT].question2}
+      <div  class='babe-view-answer-container'>
+        <p id='3' class='babe-view-text'>${config.data[CT].question2}
           <textarea id='textbox-input3' rows=1 cols=15 class='textbox-input'/>
+        <p id='4'></p>
         </p>
       </div>
           <button id='next' class='babe-view-button babe-nodisplay'>next</button>
     </div>  `);
-      //  <div class='babe-view-answer-container'> </div>
-// height="42" width="42"
-      //config, CT, babe, answer_container_generator, startingTime
-
 
         let next;
         let textInput1;
         let textInput2;
         let textInput3;
-      //  let textInput4;
+
 
         const minChars = config.data[CT].min_chars === undefined ? 2 : config.data[CT].min_chars;
-
-      //  $(".babe-view").append(answer_container_generator(config, CT));
 
         next = $("#next");
         textInput1 = $("#textbox-input1")
         textInput2 = $("#textbox-input2")
         textInput3 = $("#textbox-input3")
-      //  textInput4 = $("#textbox-input4")
+
       const input = function(textInput1, textInput2, textInput3) {
         if (textInput1.val().trim().length > minChars) {
           if (textInput2.val().trim().length > minChars) {
@@ -164,7 +183,6 @@ const custom_textfield_warmup = function(config, startingTime) {
           return false;
         }
       }
-
         textInput1.on("keyup", function() {
             // if the text is longer than (in this case) 10 characters without the spaces
             // the 'next' button appears
@@ -173,14 +191,7 @@ const custom_textfield_warmup = function(config, startingTime) {
                 if (textInput2.val().trim().length > minChars) {
                   textInput3.on("keyup", function() {
                     if (textInput3.val().trim().length > minChars) {
-
-                          // check response
-                            //alert("You are right!")
                         next.removeClass("babe-nodisplay");
-
-
-                        //  next.removeClass("babe-nodisplay");
-
                     }
                   });
                 } else if (textInput3.val().trim().length > minChars) {
@@ -191,20 +202,12 @@ const custom_textfield_warmup = function(config, startingTime) {
                     })
                 };
               });
-
             } else if (textInput2.val().trim().length > minChars) {
               textInput1.on("keyup", function() {
                 if (textInput1.val().trim().length > minChars) {
                   textInput3.on("keyup", function() {
                     if (textInput3.val().trim().length > minChars) {
-
-                          // check response
-                            //alert("You are right!")
                         next.removeClass("babe-nodisplay");
-
-
-                        //  next.removeClass("babe-nodisplay");
-
                     }
                   });
                 } else if (textInput3.val().trim().length > minChars) {
@@ -246,64 +249,44 @@ const custom_textfield_warmup = function(config, startingTime) {
 
         // the trial data gets added to the trial object
         next.on("click", function(startingTime) {
-        //  check_response = function(data, next) {
-          //   $('next').on('click', function() {
-            //   if (config.data[CT].correct1 === textInput1.val().trim()) {
-              //    alert('Your answer is correct!');
-               //} else {
-                 //alert('Sorry, this is incorrect! Please correct your response!');
-               //}
-        //  }
-        //)
-      //}
-          //  while ((config.data[CT].correct1 != textInput1.val().trim())||(config.data[CT].correct2 != textInput2.val().trim())||config.data[CT].correct3 != textInput3.val().trim()) {
-            //  alert('Sorry, your response is incorrect! Please correct your response!');
-            //}
-    //  const message = String(config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
+
             if (check_response(CT, textInput1, config.data[CT].correct1, config)) {
               if (check_response(CT, textInput2,config.data[CT].correct2, config)) {
                 if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
-                  alert("The labels are false. The correct labels are: "+ config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
+                  custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
                 }  else {
-                  alert("Some labels are false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
+                  custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
                 }
               } else {
-                alert("A label is false. The correct labels are: "+ config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
+                custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
               }
             } else if (check_response(CT, textInput2, config.data[CT].correct2, config)) {
               if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
-                alert("Some labels are false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
+                custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
               } else {
-                alert("A label is false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
+                custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
               }
             } else if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
-              alert("A label is false. The correct labels are: " + config.data[CT].correct1 + ", " + config.data[CT].correct2 + ", " + config.data[CT].correct3);
+              custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
             } else {
-              alert('Your answers are correct!');
-            }
+              const RT = Date.now() - startingTime; // measure RT before anything else
+              let trial_data = {
+                  trial_name: config.name,
+                  trial_number: CT + 1,
+                  response1: textInput1.val().trim(),
+                  response2: textInput2.val().trim(),
+                  response3: textInput3.val().trim(),
+                  RT: RT
+              };
 
-            // if(check_response(CT, textInput1, config.data[CT].correct1, config)) {
-            //   alert("FIrst answer incorrect!")
-            // }
+              trial_data = babeUtils.view.save_config_trial_data(config.data[CT], trial_data);
 
+              babe.trial_data.push(trial_data);
+              babe.findNextView();
+             }
 
-            const RT = Date.now() - startingTime; // measure RT before anything else
-            let trial_data = {
-                trial_name: config.name,
-                trial_number: CT + 1,
-                response1: textInput1.val().trim(),
-                response2: textInput2.val().trim(),
-                response3: textInput3.val().trim(),
-                RT: RT
-            };
-
-            trial_data = babeUtils.view.save_config_trial_data(config.data[CT], trial_data);
-
-            babe.trial_data.push(trial_data);
-            babe.findNextView();
         });
 
-      //  $('#textInput').on("click", handle_response);
         $('#next').on("click");
     },
 
@@ -408,4 +391,37 @@ const custom_post_test_view = function(config) {
       trials: config.trials
   };
   return _survey;
+};
+
+const custom_intro_view = function(config) {
+  const view = {
+      name: config.name,
+      title: config.title,
+    //  text: config.text,
+      render: function(CT, babe) {
+          let startingTime;
+          const viewTemplate = `
+          <div class='babe-view'>
+          <h1 class='babe-view-title'>Welcome!</h1>
+          <div class="picture" align="center">
+            <img src="${config.picture1}">
+          </div>
+          <section class="babe-text-container">
+            <p class="babe-view-text">By continuing, you are participating in a study being performed by cognitive scientists in the MIT Computational Psycholinguistics Lab. If you have questions about this research, please contact Polina Tsvilodub, at <a href="mailto:polinats@mit.edu">polinats@mit.edu</a>, or MH Tessler, at tessler@mit.edu. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.
+             </p>
+          </section>
+          <button class = "babe-view-button" id="next">Go To Trials</button>
+          </div>
+          `;
+          $("#main").html(viewTemplate);
+          let next = $("#next");
+          next.on("click", function() {
+            babe.findNextView();
+          });
+          startingTime = Date.now();
+      },
+      CT: 0,
+      trials: config.trials
+  };
+  return view;
 };
