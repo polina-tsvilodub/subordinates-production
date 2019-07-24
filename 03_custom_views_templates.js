@@ -9,34 +9,34 @@
 // and has to call babe.findNextView() eventually to proceed to the next view (or the next trial in this view),
 // if it is an trial view it also makes sense to call babe.trial_data.push(trial_data) to save the trial information
 const check_response = function(CT, textInput, correct, config) {
-  if (-1 == textInput.val().trim().toLowerCase().indexOf(correct)) {
-    return true;
-  } else{
+  if (correct.includes(String(textInput.val().trim().toLowerCase()))) {
     return false;
+  } else{
+    return true;
   }
 
 }
 
 const custom_response_check = function(correct1, correct2, correct3) {
-  var para1 = document.createElement("p");
+  var para1 = document.createElement("h4");
   var node1 = document.createTextNode("The correct answer is: " + correct1);
   para1.appendChild(node1);
   var element1 = document.getElementById("1");
   element1.appendChild(para1);
 
-  var para2 = document.createElement("p");
+  var para2 = document.createElement("h4");
   var node2 = document.createTextNode("The correct answer is: " + correct2);
   para2.appendChild(node2);
   var element2 = document.getElementById("2");
   element2.appendChild(para2);
 
-  var para3 = document.createElement("p");
+  var para3 = document.createElement("h4");
   var node3 = document.createTextNode("The correct answer is: " + correct3);
   para3.appendChild(node3);
   var element3 = document.getElementById("3");
   element3.appendChild(para3);
 
-  var para4 = document.createElement("p");
+  var para4 = document.createElement("h4");
   var node4 = document.createTextNode("Please enter the correct labels to proceed.");
   para4.appendChild(node4);
   var element4 = document.getElementById("4");

@@ -120,9 +120,9 @@ const mainTrials = { dogs: [{
 const warmupTrials = {dogs: {
   picture1: "images/chihuahua.jpg",
   picture2: "images/great-dane.jpg",
-  correct1: "chihuahua",
-  correct2: "great dane",
-  correct3: "dogs",
+  correct1: ["chihuahua"],
+  correct2: ["great dane"],
+  correct3: ["dogs"],
   text: "Please label the pictures below.",
   question1: "This is a ",
   question2: "These are all "
@@ -131,9 +131,9 @@ const warmupTrials = {dogs: {
 birds: {
   picture1: "images/swan.jpg",
   picture2: "images/colibri.jpg",
-  correct1: "swan",
-  correct2: "hummingbird",
-  correct3: "birds",
+  correct1: ["swan"],
+  correct2: ["hummingbird"],
+  correct3: ["birds"],
   text: "Please label the pictures below.",
   question1: "This is a ",
   question2: "These are all "
@@ -141,9 +141,9 @@ birds: {
 monkeys: {
   picture1: "images/spidermonkey.jpg",
   picture2: "images/gorilla.jpg",
-  correct1: "spider monkey",
-  correct2: "gorilla",
-  correct3: "monkeys",
+  correct1: ["spider monkey"],
+  correct2: ["gorilla"],
+  correct3: ["monkeys ", "apes"],
   text: "Please label the pictures below.",
   question1: "This is a ",
   question2: "These are all "
@@ -151,9 +151,9 @@ monkeys: {
 flowers: {
   picture1: "images/daisy.png",
   picture2: "images/sunflower.png",
-  correct1: "daisy",
-  correct2: "sunflower",
-  correct3: "flowers",
+  correct1: ["daisy"],
+  correct2: ["sunflower"],
+  correct3: ["flowers"],
   text: "Please label the pictures below.",
   question1: "This is a ",
   question2: "These are all "
@@ -161,9 +161,9 @@ flowers: {
 fish: {
   picture1: "images/swordfish.jpg",
   picture2: "images/goldfish.png",
-  correct1: "swordfish",
-  correct2: "goldfish",
-  correct3: "fish",
+  correct1: ["swordfish"],
+  correct2: ["goldfish"],
+  correct3: ["fish"],
   text: "Please label the pictures below.",
   question1: "This is a ",
   question2: "These are all "
@@ -171,9 +171,9 @@ fish: {
 trees: {
   picture1: "images/sequoia.jpg",
   picture2: "images/bonsai.jpg",
-  correct1: "redwood",
-  correct2: "bonsai",
-  correct3: "trees",
+  correct1: ["redwood ", "sequoia ", "redwoodtree"],
+  correct2: ["bonsai"],
+  correct3: ["trees"],
   text: "Please label the pictures below.",
   question1: "This is a ",
   question2: "These are all "
