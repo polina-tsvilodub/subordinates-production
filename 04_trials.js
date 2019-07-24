@@ -171,7 +171,7 @@ fish: {
 trees: {
   picture1: "images/sequoia.jpg",
   picture2: "images/bonsai.jpg",
-  correct1: ["redwood", "sequoia", "redwoodtree"],
+  correct1: ["redwood", "sequoia"],
   correct2: ["bonsai"],
   correct3: ["trees"],
   text: "Please label the pictures below.",

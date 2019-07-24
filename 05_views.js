@@ -36,7 +36,7 @@ const instructions = babeViews.view_generator("instructions",{
             During the warm-up trials, you will see pictures of several objects.
             <br />
             <br />
-            Please label the objects using the template provided. You will be given feedback on your labels.
+            Please label the objects. You will be given feedback on your labels.
             <br />
             <br />
             By pressing the button 'Go to Trials' you begin the first round.

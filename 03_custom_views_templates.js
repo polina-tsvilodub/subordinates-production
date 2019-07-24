@@ -74,7 +74,7 @@ const custom_textfield_main = function(config, startingTime) {
             babe.findNextView();
         });
 
-      
+
         $('#next').on("click");
     },
 
@@ -102,7 +102,7 @@ const custom_textfield_warmup = function(config, startingTime) {
           <textarea id='textbox-input1' rows=1 cols=15 class='textbox-input'/>
 
         </p>
-        <p class = 'correct-answer babe-nodisplay'>The correct answer is ${config.data[CT].correct1}</p>
+        <p class = 'correct-answer babe-nodisplay'>Possible correct labels: ${config.data[CT].correct1}</p>
       </div>
       <div  class="picture" align="center">
         <img src="${config.data[CT].picture2}">
@@ -111,13 +111,13 @@ const custom_textfield_warmup = function(config, startingTime) {
         <p id='2' class='babe-view-text'>${config.data[CT].question1}
           <textarea id='textbox-input2' rows=1 cols=15 class='textbox-input'/>
         </p>
-        <p class = 'correct-answer babe-nodisplay'>The correct answer is ${config.data[CT].correct2}</p>
+        <p class = 'correct-answer babe-nodisplay'>Possible correct labels: ${config.data[CT].correct2}</p>
       </div>
       <div  class='babe-view-answer-container'>
         <p id='3' class='babe-view-text'>${config.data[CT].question2}
           <textarea id='textbox-input3' rows=1 cols=15 class='textbox-input'/>
         <p id='4'></p>
-        <p class = 'correct-answer babe-nodisplay'>The correct answer is ${config.data[CT].correct3}</p>
+        <p class = 'correct-answer babe-nodisplay'>Possible correct labels: ${config.data[CT].correct3}</p>
         </p>
         <br />
         <p class = 'correct-answer babe-nodisplay'>Please enter the correct labels to proceed</p>
@@ -354,7 +354,7 @@ const custom_intro_view = function(config) {
             <img src="${config.picture1}">
           </div>
           <section class="babe-text-container">
-            <p class="babe-view-text"> Thank you for taking part in our study on adjective interpretation in context. <br />
+            <p class="babe-view-text"> Thank you for taking part in our study. We investigate how people use language to describe their environment. The study will take about XXX minutes.<br /> <br />
             By continuing, you are participating in an experiment being performed by cognitive scientists in the MIT Computational Psycholinguistics Lab. If you have questions about this research, please contact Polina Tsvilodub, at <a href="mailto:polinats@mit.edu">polinats@mit.edu</a>, or MH Tessler, at tessler@mit.edu. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.
              </p>
           </section>
