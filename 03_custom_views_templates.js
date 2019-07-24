@@ -141,6 +141,7 @@ const custom_textfield_warmup = function(config, startingTime) {
         <p id='1' class='babe-view-text'>${config.data[CT].question1}
           <textarea id='textbox-input1' rows=1 cols=15 class='textbox-input'/>
         </p>
+        <p class = 'correct-answer babe-nodisplay'>The correct answer is ${config.data[CT].correct1}</p>
       </div>
       <div  class="picture" align="center">
         <img src="${config.data[CT].picture2}">
@@ -149,11 +150,13 @@ const custom_textfield_warmup = function(config, startingTime) {
         <p id='2' class='babe-view-text'>${config.data[CT].question1}
           <textarea id='textbox-input2' rows=1 cols=15 class='textbox-input'/>
         </p>
+        <p class = 'correct-answer babe-nodisplay'>The correct answer is ${config.data[CT].correct2}</p>
       </div>
       <div  class='babe-view-answer-container'>
         <p id='3' class='babe-view-text'>${config.data[CT].question2}
           <textarea id='textbox-input3' rows=1 cols=15 class='textbox-input'/>
         <p id='4'></p>
+        <p class = 'correct-answer babe-nodisplay'>The correct answer is ${config.data[CT].correct3}</p>
         </p>
       </div>
           <button id='next' class='babe-view-button babe-nodisplay'>next</button>
@@ -250,24 +253,9 @@ const custom_textfield_warmup = function(config, startingTime) {
         // the trial data gets added to the trial object
         next.on("click", function(startingTime) {
 
-            if (check_response(CT, textInput1, config.data[CT].correct1, config)) {
-              if (check_response(CT, textInput2,config.data[CT].correct2, config)) {
-                if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
-                  custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
-                }  else {
-                  custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
-                }
-              } else {
-                custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
-              }
-            } else if (check_response(CT, textInput2, config.data[CT].correct2, config)) {
-              if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
-                custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
-              } else {
-                custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
-              }
-            } else if (check_response(CT, textInput3, config.data[CT].correct3, config)) {
-              custom_response_check(config.data[CT].correct1, config.data[CT].correct2, config.data[CT].correct3);
+            if (textInput1.val().trim() != config.data[CT].correct1 || textInput2.val().trim() != config.data[CT].correct2 || textInput3.val().trim() != config.data[CT].correct3) {
+              $(".correct-answer").removeClass("babe-nodisplay")
+
             } else {
               const RT = Date.now() - startingTime; // measure RT before anything else
               let trial_data = {
