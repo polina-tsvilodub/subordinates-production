@@ -139,7 +139,9 @@ const context1 = babeViews.view_generator("instructions",{
     <br/>
     <br/>
     You are watching groups of objects and describing them as they pass by.
-    </br>
+    <br />
+    <br />
+
     Press the button 'Go to trials' to begin the main trials.
             `,
     buttonText: 'go to trials'
