@@ -38,6 +38,8 @@ $("document").ready(function() {
             contact_email: "polinats@mit.edu",
             prolificURL: "https://app.prolific.ac/submissions/complete?cc=SAMPLE1234"
         },
+        unqiueTurkerID: '0e8b1d8dfda437c9dfeff65c57c17e40',
+
         // Here, you can specify how the progress bar should look like
         progress_bar: {
             in: [

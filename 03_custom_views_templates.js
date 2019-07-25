@@ -383,13 +383,48 @@ const custom_intro_view = function(config) {
             By continuing, you are participating in an experiment being performed by cognitive scientists in the MIT Computational Psycholinguistics Lab. If you have questions about this research, please contact Polina Tsvilodub, at <a href="mailto:polinats@mit.edu">polinats@mit.edu</a>, or MH Tessler, at tessler@mit.edu. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.
              </p>
           </section>
+
+          <p class = 'babe-nodisplay' id = 'please-return'>Please return the HIT. It seems that your IP is not from the US or you have completed this HIT before.</p>
           <button class = "babe-view-button" id="next">Go To Trials</button>
           </div>
           `;
           $("#main").html(viewTemplate);
+
+
+          var bad_worker = false;
+
+          console.log("UNIQUE TURKER?");
+          (function(){
+              var ut_id = babe.uniqueTurkerID;
+              if (UTWorkerLimitReached(ut_id)) {// {
+                  bad_worker = true;
+              }
+          })();
+
+
+          console.log("ARE YOU FROM THE US???");
+          function USOnly() {var accessKey = 'b487843addca6e9ec32e6ae28aeaa022';
+
+               $.ajax({
+                   url: 'https://api.ipstack.com/check?access_key='+accessKey,
+                   dataType: 'jsonp',
+
+                   success: function(json) {
+                     if (json.country_code != 'US') {
+                       bad_worker = true;
+                   }
+               }
+             });
+           }
+
+
           let next = $("#next");
           next.on("click", function() {
-            babe.findNextView();
+            if (bad_worker) {
+              $("#please-return").removeClass('babe-nodisplay')
+            } else {
+              babe.findNextView();
+            }
           });
           startingTime = Date.now();
       },
