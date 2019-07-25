@@ -225,25 +225,37 @@ const custom_textfield_warmup = function(config, startingTime) {
           trial_data = babeUtils.view.save_config_trial_data(config.data[CT], trial_data);
           babe.trial_data.push(trial_data);
 
-            if (config.data[CT].correct1.includes(textInput1.val().trim().toLowerCase()) == false|| config.data[CT].correct2.includes(textInput2.val().trim().toLowerCase()) == false || config.data[CT].correct3.includes(textInput3.val().trim().toLowerCase()) == false) {
-              if (config.data[CT].correct1.includes(textInput1.val().trim().toLowerCase()) == false) {
-                $(".correct-answer1").removeClass("babe-nodisplay")
-                $(".correct-answer4").removeClass("babe-nodisplay")
-              }
-              if (config.data[CT].correct2.includes(textInput2.val().trim().toLowerCase()) == false) {
-                $(".correct-answer2").removeClass("babe-nodisplay")
-                $(".correct-answer4").removeClass("babe-nodisplay")
-              }
+          var flag = true;
 
-              if (config.data[CT].correct3.includes(textInput3.val().trim().toLowerCase()) == false) {
-                $(".correct-answer3").removeClass("babe-nodisplay")
-                $(".correct-answer4").removeClass("babe-nodisplay")
-              }
+          if (config.data[CT].correct1.includes(textInput1.val().trim().toLowerCase()) == false) {
+            flag = false;
+            $(".correct-answer1").removeClass("babe-nodisplay")
+            $(".correct-answer4").removeClass("babe-nodisplay")
+          } else {
+            $(".correct-answer1").addClass("babe-nodisplay")
+          }
 
-            } else {
-              
-              babe.findNextView();
-             }
+
+          if (config.data[CT].correct2.includes(textInput2.val().trim().toLowerCase()) == false) {
+            flag = false;
+            $(".correct-answer2").removeClass("babe-nodisplay")
+            $(".correct-answer4").removeClass("babe-nodisplay")
+          } else {
+            $(".correct-answer2").addClass("babe-nodisplay")
+          }
+
+          if (config.data[CT].correct3.includes(textInput3.val().trim().toLowerCase()) == false) {
+            flag = false;
+            $(".correct-answer3").removeClass("babe-nodisplay")
+            $(".correct-answer4").removeClass("babe-nodisplay")
+          } else {
+            $(".correct-answer3").addClass("babe-nodisplay")
+          }
+
+          if (flag) {
+
+            babe.findNextView();
+           }
 
         });
 
