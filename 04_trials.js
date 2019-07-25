@@ -84,8 +84,8 @@ const mainTrials = { dogs: [{
      fish: [{
        context_picture: "images/fish-parade.png",
         picture: "images/swordfish.jpg",
-        context: "You see a group of fish.",
-        text: "Another fish belongs to the group.",
+        context: "You see a group of animals.",
+        text: "Another animal belongs to the group.",
         sentence: "You say to your friend:",
         question1: utterance.question1b,
         question2: utterance.question2b
@@ -93,8 +93,8 @@ const mainTrials = { dogs: [{
       {
         context_picture: "images/fish-parade.png",
          picture: "images/goldfish.png",
-         context: "You see a group of fish.",
-         text: "Another fish belongs to the group.",
+         context: "You see a group of animals.",
+         text: "Another animal belongs to the group.",
          sentence: "You say to your friend:",
          question1: utterance.question1s,
          question2: utterance.question2s
