@@ -151,17 +151,6 @@ const custom_textfield_warmup = function(config, startingTime) {
         textInput2 = $("#textbox-input2")
         textInput3 = $("#textbox-input3")
 
-      const input = function(textInput1, textInput2, textInput3) {
-        if (textInput1.val().trim().length > minChars) {
-          if (textInput2.val().trim().length > minChars) {
-            if (textInput3.val().trim().length > minChars) {
-              return true;
-            }
-          }
-        } else {
-          return false;
-        }
-      }
         textInput1.on("keyup", function() {
             // if the text is longer than (in this case) 10 characters without the spaces
             // the 'next' button appears
@@ -221,8 +210,20 @@ const custom_textfield_warmup = function(config, startingTime) {
             }
         });
 
+
         // the trial data gets added to the trial object
         next.on("click", function(startingTime) {
+
+          let trial_data = {
+              trial_name: config.name,
+              trial_number: CT + 1,
+              response1: textInput1.val().trim(),
+              response2: textInput2.val().trim(),
+              response3: textInput3.val().trim()
+          //    RT: RT
+          };
+          trial_data = babeUtils.view.save_config_trial_data(config.data[CT], trial_data);
+          babe.trial_data.push(trial_data);
 
             if (config.data[CT].correct1.includes(textInput1.val().trim().toLowerCase()) == false|| config.data[CT].correct2.includes(textInput2.val().trim().toLowerCase()) == false || config.data[CT].correct3.includes(textInput3.val().trim().toLowerCase()) == false) {
               if (config.data[CT].correct1.includes(textInput1.val().trim().toLowerCase()) == false) {
@@ -240,19 +241,7 @@ const custom_textfield_warmup = function(config, startingTime) {
               }
 
             } else {
-              const RT = Date.now() - startingTime; // measure RT before anything else
-              let trial_data = {
-                  trial_name: config.name,
-                  trial_number: CT + 1,
-                  response1: textInput1.val().trim(),
-                  response2: textInput2.val().trim(),
-                  response3: textInput3.val().trim(),
-                  RT: RT
-              };
-
-              trial_data = babeUtils.view.save_config_trial_data(config.data[CT], trial_data);
-
-              babe.trial_data.push(trial_data);
+              
               babe.findNextView();
              }
 
