@@ -125,7 +125,7 @@ const warmupTrials = {dogs: {
   correct3: ["dogs"],
   text: "Please label the pictures below.",
   question1: "This is a ",
-  question2: "These are all "
+  question2: "These are both"
 },
 
 birds: {
@@ -136,7 +136,7 @@ birds: {
   correct3: ["birds"],
   text: "Please label the pictures below.",
   question1: "This is a ",
-  question2: "These are all "
+  question2: "These are both"
 },
 monkeys: {
   picture1: "images/spidermonkey.jpg",
@@ -146,7 +146,7 @@ monkeys: {
   correct3: ["monkeys", "apes"],
   text: "Please label the pictures below.",
   question1: "This is a ",
-  question2: "These are all "
+  question2: "These are both"
 },
 flowers: {
   picture1: "images/daisy.png",
@@ -156,7 +156,7 @@ flowers: {
   correct3: ["flowers"],
   text: "Please label the pictures below.",
   question1: "This is a ",
-  question2: "These are all "
+  question2: "These are both"
 },
 fish: {
   picture1: "images/swordfish.jpg",
@@ -166,7 +166,7 @@ fish: {
   correct3: ["fish"],
   text: "Please label the pictures below.",
   question1: "This is a ",
-  question2: "These are all "
+  question2: "These are both"
 },
 trees: {
   picture1: "images/sequoia.jpg",
@@ -176,7 +176,7 @@ trees: {
   correct3: ["trees"],
   text: "Please label the pictures below.",
   question1: "This is a ",
-  question2: "These are all "
+  question2: "These are both"
 }
 }
 

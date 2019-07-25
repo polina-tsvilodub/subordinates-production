@@ -94,34 +94,46 @@ const custom_textfield_warmup = function(config, startingTime) {
       <section class="babe-text-container">
         <p class="babe-view-question">${config.data[CT].text}</p>
       </section>
-      <div class="picture" align="center">
-        <img src="${config.data[CT].picture1}">
-      </div>
-      <div  class='babe-view-answer-container'>
-        <p id='1' class='babe-view-text'>${config.data[CT].question1}
-          <textarea id='textbox-input1' rows=1 cols=15 class='textbox-input'/>
 
-        </p>
-        <p class = 'correct-answer babe-nodisplay'>Possible correct labels: ${config.data[CT].correct1}</p>
+
+    <div style="width:100%;">
+     <div style="width:50%;height:400px;float:left;position:relative;align:center;">
+        <div style="position:absolute;bottom:0;right:20px;">
+          <div class="picture"  align="center" >
+            <img src="${config.data[CT].picture1}">
+          </div>
+          <div  class='babe-view-answer-container'>
+            <p id='1' class='babe-view-text'>${config.data[CT].question1}
+              <textarea id='textbox-input1' rows=1 cols=15 class='textbox-input'/>
+            </p>
+            <p class = 'correct-answer1 babe-nodisplay'>Possible correct labels: ${config.data[CT].correct1}</p>
+          </div>
+        </div>
+    </div>
+    <div style="width:50%;height:400px;float:right; position:relative;align:center;">
+      <div style="position:absolute;bottom:0;left:20px;">
+          <div  class="picture" align="center" >
+            <img src="${config.data[CT].picture2}">
+          </div>
+          <div class='babe-view-answer-container' >
+            <p id='2' class='babe-view-text'>${config.data[CT].question1}
+              <textarea id='textbox-input2' rows=1 cols=15 class='textbox-input'/>
+            </p>
+            <p class = 'correct-answer2 babe-nodisplay'>Possible correct labels: ${config.data[CT].correct2}</p>
+          </div>
       </div>
-      <div  class="picture" align="center">
-        <img src="${config.data[CT].picture2}">
       </div>
-      <div class='babe-view-answer-container'>
-        <p id='2' class='babe-view-text'>${config.data[CT].question1}
-          <textarea id='textbox-input2' rows=1 cols=15 class='textbox-input'/>
-        </p>
-        <p class = 'correct-answer babe-nodisplay'>Possible correct labels: ${config.data[CT].correct2}</p>
-      </div>
-      <div  class='babe-view-answer-container'>
-        <p id='3' class='babe-view-text'>${config.data[CT].question2}
-          <textarea id='textbox-input3' rows=1 cols=15 class='textbox-input'/>
-        <p id='4'></p>
-        <p class = 'correct-answer babe-nodisplay'>Possible correct labels: ${config.data[CT].correct3}</p>
-        </p>
-        <br />
-        <p class = 'correct-answer babe-nodisplay'>Please enter the correct labels to proceed</p>
-      </div>
+    </div>
+
+    <div  class='babe-view-answer-container'>
+      <p id='3' class='babe-view-text'>${config.data[CT].question2}
+        <textarea id='textbox-input3' rows=1 cols=15 class='textbox-input'/>
+      <p id='4'></p>
+      <p class = 'correct-answer3 babe-nodisplay'>Possible correct labels: ${config.data[CT].correct3}</p>
+      </p>
+      <br />
+      <p class = 'correct-answer4 babe-nodisplay'>Please enter the correct labels to proceed</p>
+    </div>
 
           <button id='next' class='babe-view-button babe-nodisplay'>next</button>
     </div>  `);
@@ -213,7 +225,19 @@ const custom_textfield_warmup = function(config, startingTime) {
         next.on("click", function(startingTime) {
 
             if (config.data[CT].correct1.includes(textInput1.val().trim().toLowerCase()) == false|| config.data[CT].correct2.includes(textInput2.val().trim().toLowerCase()) == false || config.data[CT].correct3.includes(textInput3.val().trim().toLowerCase()) == false) {
-              $(".correct-answer").removeClass("babe-nodisplay")
+              if (config.data[CT].correct1.includes(textInput1.val().trim().toLowerCase()) == false) {
+                $(".correct-answer1").removeClass("babe-nodisplay")
+                $(".correct-answer4").removeClass("babe-nodisplay")
+              }
+              if (config.data[CT].correct2.includes(textInput2.val().trim().toLowerCase()) == false) {
+                $(".correct-answer2").removeClass("babe-nodisplay")
+                $(".correct-answer4").removeClass("babe-nodisplay")
+              }
+
+              if (config.data[CT].correct3.includes(textInput3.val().trim().toLowerCase()) == false) {
+                $(".correct-answer3").removeClass("babe-nodisplay")
+                $(".correct-answer4").removeClass("babe-nodisplay")
+              }
 
             } else {
               const RT = Date.now() - startingTime; // measure RT before anything else
@@ -354,7 +378,7 @@ const custom_intro_view = function(config) {
             <img src="${config.picture1}">
           </div>
           <section class="babe-text-container">
-            <p class="babe-view-text"> Thank you for taking part in our study. We investigate how people use language to describe their environment. The study will take about XXX minutes.<br /> <br />
+            <p class="babe-view-text"> Thank you for taking part in our study. We are studying how people talk about things around them. The study will take about 7-9 minutes.<br /> <br />
             By continuing, you are participating in an experiment being performed by cognitive scientists in the MIT Computational Psycholinguistics Lab. If you have questions about this research, please contact Polina Tsvilodub, at <a href="mailto:polinats@mit.edu">polinats@mit.edu</a>, or MH Tessler, at tessler@mit.edu. You must be at least 18 years old to participate. Your participation in this research is voluntary. You may decline to answer any or all of the following questions. You may decline further participation, at any time, without adverse consequences. Your anonymity is assured; the researchers who have requested your participation will not receive any personal information about you.
              </p>
           </section>
