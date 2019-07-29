@@ -1,5 +1,5 @@
 ---
-title: "analysis_mh"
+title: "Comparison Class Elicitation Pilot"
 author: "MH Tessler"
 date: "7/29/2019"
 output: github_document
@@ -8,18 +8,28 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+#Experiment outline 
+This script analyses the data from a comparison class elicitation pilot experiment (n=24). Due to  syntactic frame manipulation, the participans are supposed to use different comparison classes (superordinate categories versus subordinate categories of the target) in order to communicate the situation presented to them in the stimulus. 
 
+The goal of the pilot is to get a first impression of the design quality. 
+The experiment is devided into two blocks, each consisting of 3 warm-up and 3 main trials, such that subjects can easily memorize target category labels. 
+The warm-up trials are a simple labeling task. The subjects are presented pictures of two superordinate category members, for example two dogs, each being a different subordinate, and a text box asking for a common label (the superordinate label is expected). The task was to label the pictures. The goal of this task to motivate speakers to produce subordinate category labels and to familiarize them with the target labels, since the warm-up trial pictures included the main trial target pictures. They were given feedback on the labels and cpould proceed only after correcting the entered answer to the suggested one. 
+The main trials provide a context via an object parade picture. Then the participants see an additional parade member, the target object which they are supposed to point out to a friend. The target is chosen such that the question under discussion (size) is maximally salient in comparison to the superordinate category, but normal within the subordinate category. 
+The syntactic structure of the reponse is the main condition (prenominal versus predicative, randomly sampled between-subject), the size of the target on comparison to the superordinate class is also randomly sampled (within-subject).
+
+We expect _more superordinate labels to occur in the prenominal condition_, since it constraints the comparison class to the NP more strongly. In contrast, we expect _a similar proportion of superordinate and subordinate labels in the predicative condition_, since the comparison class is less restricted. 
+
+## Data analysis
 ```{r}
 library(tidyverse)
 library(tidyboot)
-#library(dplyr)
-set.seed(123)
-#setwd('~/Internship/speaker-production-exp-results')
+
 # read in data
-d <- read_csv('results_4_comparison-class-production_24.csv')#, header=T, sep=',')
+d <- read_csv('./../data/results_4_comparison-class-production_24.csv')
 
 #first look at the data
 glimpse(d)
+
 # comments
 d_comments <- d %>%
   distinct(submission_id, problems, comments, fairprice)
@@ -27,55 +37,58 @@ d_comments <- d %>%
 View(d_comments)
 ```
 
+The design seems to work, no technical issues occured. Remarkable comments are: possibly photos instead of cartoons would make the subordinate cateories more clear; 'primates' was not included as an acceptable answer in the warm-up trials; monkeys and apes are both included in a context picture making a superordinate label difficult; tree cartoon might be unclear. 
+The participants recruited an MTurk were paid $1.10. 
+
+Link to repository. 
+
+
+##Spliting data into main and warm-up, excluding participants
 ```{r}
-
-# notable comments: possibly photos instead of cartoons
-# include primates as acceptable answer, be consistent about apes vs monkeys 
-# tree clipart is not clear
-# mean of fair price 1.34$
-
+# make sure how participants indicate their native language 
+# sometimes participants use only "en" or "eng" for english
+# excluded non-native speakers 
+d %>% distinct(d$languages) %>% glimpse()
 d_filt <- d %>% 
   filter(grepl("English", languages, ignore.case = T)) %>%
-  select(submission_id, trial_name, trial_number, question1, question2, response, response1, response2, response3, correct1, correct2, correct3, context_picture)
-# sometimes participants use only "en" or "eng" for english
-
-
-View(d_filt)
-#d <- select(d_filt, c(submission_id, trial_name, trial_number, question1, question2, response, response1, response2, response3, correct1, correct2, correct3, context_picture))
+  select(submission_id, trial_name, trial_number, question1, question2, response, response1, response2, response3, correct1, correct2, correct3, picture, context_picture)
 
 glimpse(d_filt)
-#main trials 
+
+# extract main trials 
 d_main <- d_filt %>% 
   filter(trial_name == "main") %>%
-  select(submission_id, trial_number, question1, question2, response, context_picture)
+  select(submission_id, trial_number, question1, question2, response, picture, context_picture)
 
+# extract warm-up trials 
+d_warmup <- d_filt %>% filter(trial_name =="warmup") %>% 
+  select(submission_id, trial_number, response1, correct1, response2, correct2, response3, correct3)
 
-warmup <- filter(d_filt, trial_name =="warmup")
-warmup <- select(warmup, c(submission_id, trial_number, response1, correct1, response2, correct2, response3, correct3))
-
-# NB: trial_number includes two distinct trials (first block, second block)
-warmup %>%
+# NB: trial_number includes two distinct trials (first block, second block), i.e. trial_number 1 is both the first warm-up view of the first and the second warm-up block
+d_warmup %>%
   group_by(submission_id, trial_number, correct3) %>%
   count() %>%
   ungroup() %>%
-  tidyboot_mean(column = n)
+  tidyboot_mean(column = n) # calculate mean of attempts participants needed for the warm-up completion
 ```
+On average, participants had to re-enter the labels twice per two warm-up views, meaning that they corrected they initial answer once to proceed to the next view. This seems to be reasonable, yet the task might be improved. 
 
-
+## Categorizing the data 
 
 ```{r}
+# question1 and question2 are the sentence parts coded in the experiment 
 
 d_main_responseCat <- d_main %>%
   rowwise() %>%
   mutate(
     question2 = ifelse(is.na(question2), "X", question2), # rewrite NAs as X
-    condition = ifelse(question2 == "X", "prenominal", "predicative"),
+    condition = ifelse(question2 == "X", "prenominal", "predicative"), # categorize condition
     size = ifelse(
-      ((question1 == "That's a small") || (question2 == "is small.")), 
+      ((question1 == "That's a small") || (question2 == "is small.")), # categorize size
       "small",
       "big")
     ) %>%
-  mutate(
+  mutate( # categorize responses 
     response_cat = ifelse(
       response %in% c("ape", "primate", "bird", "dog", "fish", "flower", "monkey", "tree"), "super", "sub"),
     response_num = ifelse(response_cat == "sub", 1, 0),
@@ -83,11 +96,11 @@ d_main_responseCat <- d_main %>%
   )
 ```
 
-
+## Proportion of subordinate response by condition 
 ```{r}
 d_main_summary <- d_main_responseCat %>%
   group_by(condition, response_label) %>%
-  tidyboot_mean(column = response_num) %>%
+  tidyboot_mean(column = response_num) %>% # calculate proportion of subordinate labels in the different conditions 
   ungroup() %>%
   mutate(condition = factor(condition, 
                             levels = c("prenominal", "predicative"),
@@ -102,7 +115,9 @@ ggplot(d_main_summary, aes(x = condition, fill = condition,
 ```
 
 
-Big vs. small
+## Proportion of subordinate labels in big vs. small trials 
+
+Check if there is any difference between the trials with different target size. It seems to not be the case. 
 
 ```{r}
 d_main_summary_bySize <- d_main_responseCat %>%
@@ -122,7 +137,7 @@ ggplot(d_main_summary_bySize, aes(x = size, fill = condition,
 ```
 
 
-By Subject
+## Consistency of choosing a response category by subject
 
 ```{r}
 d_main_responseCat %>%
@@ -137,4 +152,24 @@ d_main_responseCat %>%
   facet_wrap(~condition)
 ```
 
-By Item...
+## Proportion of subordinate responses by item (context)
+
+```{r}
+d_main_responseCat %>%
+  group_by(context_picture, condition, response_label) %>%
+  summarize(n_sub_responses = sum(response_num)) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X (prenominal)", "That X is big (predicative)"))) %>%
+  ggplot(., aes( x = n_sub_responses ))+
+  geom_bar()+
+  facet_wrap(~context_picture)
+```
+
+## Issues, Discussion, Suggestions
+The variable coding the experiment script will be improved to avoid the mutations here in the analysis. 
+The ape and monkeys and ape issue will be resolved.
+What is the target view?
+
+We suggest another experiment which includes trials where target pictures are paired with 'forced', more surprising / informative adjectives for their respective subordinate category and contradictive for the superordinate category, e. g. 'big chihuahua' and 'small sequoia'. 
