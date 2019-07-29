@@ -1,0 +1,140 @@
+---
+title: "analysis_mh"
+author: "MH Tessler"
+date: "7/29/2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(tidyboot)
+#library(dplyr)
+set.seed(123)
+#setwd('~/Internship/speaker-production-exp-results')
+# read in data
+d <- read_csv('results_4_comparison-class-production_24.csv')#, header=T, sep=',')
+
+#first look at the data
+glimpse(d)
+# comments
+d_comments <- d %>%
+  distinct(submission_id, problems, comments, fairprice)
+
+View(d_comments)
+```
+
+```{r}
+
+# notable comments: possibly photos instead of cartoons
+# include primates as acceptable answer, be consistent about apes vs monkeys 
+# tree clipart is not clear
+# mean of fair price 1.34$
+
+d_filt <- d %>% 
+  filter(grepl("English", languages, ignore.case = T)) %>%
+  select(submission_id, trial_name, trial_number, question1, question2, response, response1, response2, response3, correct1, correct2, correct3, context_picture)
+# sometimes participants use only "en" or "eng" for english
+
+
+View(d_filt)
+#d <- select(d_filt, c(submission_id, trial_name, trial_number, question1, question2, response, response1, response2, response3, correct1, correct2, correct3, context_picture))
+
+glimpse(d_filt)
+#main trials 
+d_main <- d_filt %>% 
+  filter(trial_name == "main") %>%
+  select(submission_id, trial_number, question1, question2, response, context_picture)
+
+
+warmup <- filter(d_filt, trial_name =="warmup")
+warmup <- select(warmup, c(submission_id, trial_number, response1, correct1, response2, correct2, response3, correct3))
+
+# NB: trial_number includes two distinct trials (first block, second block)
+warmup %>%
+  group_by(submission_id, trial_number, correct3) %>%
+  count() %>%
+  ungroup() %>%
+  tidyboot_mean(column = n)
+```
+
+
+
+```{r}
+
+d_main_responseCat <- d_main %>%
+  rowwise() %>%
+  mutate(
+    question2 = ifelse(is.na(question2), "X", question2), # rewrite NAs as X
+    condition = ifelse(question2 == "X", "prenominal", "predicative"),
+    size = ifelse(
+      ((question1 == "That's a small") || (question2 == "is small.")), 
+      "small",
+      "big")
+    ) %>%
+  mutate(
+    response_cat = ifelse(
+      response %in% c("ape", "primate", "bird", "dog", "fish", "flower", "monkey", "tree"), "super", "sub"),
+    response_num = ifelse(response_cat == "sub", 1, 0),
+    response_label = "sub"
+  )
+```
+
+
+```{r}
+d_main_summary <- d_main_responseCat %>%
+  group_by(condition, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big")))
+
+ggplot(d_main_summary, aes(x = condition, fill = condition,
+                           y = mean, ymin = ci_lower, ymax = ci_upper))+
+  geom_col(position = position_dodge())+
+  geom_linerange(position = position_dodge())+
+  labs( y = "Proportion subordinate responses")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+```
+
+
+Big vs. small
+
+```{r}
+d_main_summary_bySize <- d_main_responseCat %>%
+  group_by(condition, size, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big")))
+
+ggplot(d_main_summary_bySize, aes(x = size, fill = condition,
+                           y = mean, ymin = ci_lower, ymax = ci_upper))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+```
+
+
+By Subject
+
+```{r}
+d_main_responseCat %>%
+  group_by(submission_id, condition, response_label) %>%
+  summarize(n_sub_responses = sum(response_num)) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X (prenominal)", "That X is big (predicative)"))) %>%
+  ggplot(., aes( x = n_sub_responses ))+
+  geom_bar()+
+  facet_wrap(~condition)
+```
+
+By Item...
