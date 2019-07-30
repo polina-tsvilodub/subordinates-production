@@ -8,6 +8,85 @@
 // and a render function, the render function gets CT and the babe-object as input
 // and has to call babe.findNextView() eventually to proceed to the next view (or the next trial in this view),
 // if it is an trial view it also makes sense to call babe.trial_data.push(trial_data) to save the trial information
+const custom_botcaptcha = function(config){
+  const view = {
+    name: config.name,
+    CT: 0,
+    trials: config.trials,
+    render: function(CT, babe) {
+      $("main").html(`<div class="babe-view">
+        <h1 class='babe-view-title'>Are you a bot?</h1>
+        <br />
+        <section class="babe-text-container" align="center">
+            <p class="babe-text-container">${config.speaker} says to ${config.listener}: It's a beautiful day, isn't it?</p>
+        </section>
+        <br />
+        <section class="babe-text-container" align="center">
+            <p class="babe-text-container" id="quest-response">Who is ${config.speaker} talking to?</p>
+            <textarea rows="1" cols="15" name="botresponse" id="listener-response"></textarea>
+
+        </section>
+        <br />
+        <button class="babe-view-button" id='next'>Let's go!</button>
+        <section class="answer-container" align="center">
+            <p class="text" id="error_incorrect" style="color: #7CB637">This is incorrect.</p>
+            <p class="text" id="error_2more" style="color: #7CB637">You have 2 more trials.</p>
+            <p class="text" id="error_1more" style="color: #7CB637">You have 1 more trial.</p>
+            <p class="text" id="error" style="color: #7CB637">Error: You failed to enter the correct response.</p>
+        </section>
+        </div>`);
+// don't allow to press enter in the response field
+        $('#listener-response').keypress(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+            }
+        });
+        let next = $("#next");
+        // don't show any error message
+        $("#error").hide();
+        $("#error_incorrect").hide();
+        $("#error_2more").hide();
+        $("#error_1more").hide();
+
+        // amount of trials to enter correct response
+        var trial = 0;
+
+        $("#next").on("click", function() {
+            response = $("#listener-response").val().replace(" ","");
+
+            // response correct
+            if (listener.toLowerCase() == response.toLowerCase()) {
+                babe.global_data.botresponse = $("#listener-response").val();
+                babe.findNextView();
+
+            // response false
+            } else {
+                trial = trial + 1;
+                $("#error_incorrect").show();
+                if (trial == 1) {
+                    $("#error_2more").show();
+                } else if (trial == 2) {
+                    $("#error_2more").hide();
+                    $("#error_1more").show();
+                } else {
+                    $("#error_incorrect").hide();
+                    $("#error_1more").hide();
+                    $("#next").hide();
+                //    $('#quest-response').css("opacity", "0.2");
+                    $('#listener-response').prop("disabled", true);
+                    $("#error").show();
+                };
+            };
+
+        });
+
+    }
+  };
+  return view;
+};
+
+
+
 const custom_textfield_main = function(config, startingTime) {
   const view = {
     name: config.name,

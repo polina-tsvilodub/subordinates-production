@@ -1,6 +1,6 @@
 // In this file you can specify the trial data for your experiment
-const utt_prenominal = {question1b: "That's a big ", question2b: "", question1s: "That's a small ", question2s: ""}
-const utt_predicative = {question1b: "That ", question2b: " is big.", question1s: "That ", question2s: " is small."}
+const utt_prenominal = {question1b: "That's a big ", question2b: "", question1s: "That's a small ", question2s: "", condition: "prenominal"}
+const utt_predicative = {question1b: "That ", question2b: " is big.", question1s: "That ", question2s: " is small.", condition:"predicative"}
 // const utt_prenominal_small = [{question1: "That's a small ", question2: "" }]
 // const utt_predicative_bla = [ {question1: "That ", question2: " is small."}]
 
@@ -11,113 +11,150 @@ const size = function() {
 
 const mainTrials = { dogs: [{
    context_picture: "images/dog_parade.png",
+   item: "dogs",
     picture: "images/great-dane.jpg",
     context: "You see a group of animals.",
     text: "Another animal belongs to the group.",
     sentence: "You say to your friend:",
     question1: utterance.question1b,
-    question2: utterance.question2b
+    question2: utterance.question2b,
+    condition: utterance.condition,
+    size: "big"
   },
   {
    context_picture: "images/dog_parade_small.png",
+   item: "dogs",
     picture: "images/chihuahua.jpg",
     context: "You see a group of animals.",
     text: "Another animal belongs to the group.",
     sentence: "You say to your friend:",
     question1: utterance.question1s,
-    question2: utterance.question2s
+    question2: utterance.question2s,
+    condition: utterance.condition,
+    size: "small"
   }],
   birds: [{
     context_picture: "images/bird-parade.png",
+    item: "birds",
      picture: "images/swan.jpg",
      context: "You see a group of animals.",
      text: "Another animal belongs to the group.",
      sentence: "You say to your friend:",
      question1: utterance.question1b,
-     question2: utterance.question2b
+     question2: utterance.question2b,
+     condition: utterance.condition,
+     size: "big"
    },
    {
      context_picture: "images/bird-parade-small.png",
+     item: "birds",
       picture: "images/colibri.jpg",
       context: "You see a group of animals.",
       text: "Another animal bleongs to the group.",
       sentence: "You say to your friend:",
       question1: utterance.question1s,
-      question2: utterance.question2s
+      question2: utterance.question2s,
+      condition: utterance.condition,
+      size: "small"
     }],
    monkeys: [{
      context_picture: "images/monkey-parade.png",
+     item: "primates",
       picture: "images/gorilla.jpg",
       context: "You see a group of animals.",
       text: "Another animal belongs to the group.",
       sentence: "You say to your friend:",
       question1: utterance.question1b,
-      question2: utterance.question2b
+      question2: utterance.question2b,
+      condition: utterance.condition,
+      size: "big"
     },
     {
       context_picture: "images/monkey-parade-small.png",
+      item: "primates",
        picture: "images/spidermonkey.jpg",
        context: "You see a group of animals.",
        text: "Another animal belongs to the group.",
        sentence: "You say to your friend:",
        question1: utterance.question1s,
-       question2: utterance.question2s
+       question2: utterance.question2s,
+       condition: utterance.condition,
+       size: "small"
      }],
     flowers: [{
       context_picture: "images/flower-parade.png",
+      item: "flowers",
        picture: "images/sunflower.png",
        context: "You see a group of plants.",
        text: "Another plant belongs to the group.",
        sentence: "You say to your friend:",
        question1: utterance.question1b,
-       question2: utterance.question2b
+       question2: utterance.question2b,
+       condition: utterance.condition,
+       size: "big"
      },
      {
        context_picture: "images/flower-parade-small.png",
+       item: "flowers",
         picture: "images/daisy.png",
         context: "You see a group of plants.",
         text: "Another plant belongs to the group.",
         sentence: "You say to your friend:",
         question1: utterance.question1s,
-        question2: utterance.question2s
+        question2: utterance.question2s,
+        condition: utterance.condition,
+        size: "small"
       }],
      fish: [{
        context_picture: "images/fish-parade.png",
+       item: "fish",
         picture: "images/swordfish.jpg",
         context: "You see a group of animals.",
         text: "Another animal belongs to the group.",
         sentence: "You say to your friend:",
         question1: utterance.question1b,
-        question2: utterance.question2b
+        question2: utterance.question2b,
+        condition: utterance.condition,
+        size: "big"
       },
       {
         context_picture: "images/fish-parade.png",
+        item: "fish",
          picture: "images/goldfish.png",
          context: "You see a group of animals.",
          text: "Another animal belongs to the group.",
          sentence: "You say to your friend:",
          question1: utterance.question1s,
-         question2: utterance.question2s
+         question2: utterance.question2s,
+         condition: utterance.condition,
+         size: "small"
        }],
     trees: [{
         context_picture: "images/tree-parade.png",
+        item: "trees",
          picture: "images/sequoia.jpg",
          context: "You see a group of plants.",
          text: "Another plant belongs to the group.",
          sentence: "You say to your friend:",
          question1: utterance.question1b,
-         question2: utterance.question2b
+         question2: utterance.question2b,
+         condition: utterance.condition,
+         size: "big"
        },
        {
          context_picture: "images/tree-parade.png",
+         item: "trees",
           picture: "images/bonsai.jpg",
           context: "You see a group of plants.",
           text: "Another plant belongs to the group.",
           sentence: "You say to your friend:",
           question1: utterance.question1s,
-          question2: utterance.question2s
+          question2: utterance.question2s,
+          condition: utterance.condition,
+          size: "small"
         }]};
 const warmupTrials = {dogs: {
+  item: "dogs",
   picture1: "images/chihuahua.jpg",
   picture2: "images/great-dane.jpg",
   correct1: ["chihuahua"],
@@ -129,6 +166,7 @@ const warmupTrials = {dogs: {
 },
 
 birds: {
+  item: "birds",
   picture1: "images/swan.jpg",
   picture2: "images/colibri.jpg",
   correct1: ["swan"],
@@ -139,16 +177,18 @@ birds: {
   question2: "These are both"
 },
 monkeys: {
+  item: "primates",
   picture1: "images/spidermonkey.jpg",
   picture2: "images/gorilla.jpg",
   correct1: ["spider monkey"],
   correct2: ["gorilla"],
-  correct3: ["monkeys", "apes"],
+  correct3: ["monkeys", "apes", "primates"],
   text: "Please label the pictures below.",
   question1: "This is a ",
   question2: "These are both"
 },
 flowers: {
+  item: "flowers",
   picture1: "images/daisy.png",
   picture2: "images/sunflower.png",
   correct1: ["daisy"],
@@ -159,6 +199,7 @@ flowers: {
   question2: "These are both"
 },
 fish: {
+  item: "fish",
   picture1: "images/swordfish.jpg",
   picture2: "images/goldfish.png",
   correct1: ["swordfish"],
@@ -169,6 +210,7 @@ fish: {
   question2: "These are both"
 },
 trees: {
+  item: "trees",
   picture1: "images/sequoia.jpg",
   picture2: "images/bonsai.jpg",
   correct1: ["redwood", "sequoia"],
