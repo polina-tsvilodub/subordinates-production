@@ -3,10 +3,12 @@ title: "Comparison Class Elicitation Pilot"
 author: "MH Tessler"
 date: "7/29/2019"
 output: github_document
+always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
 #Experiment outline 
 This script analyses the data from a comparison class elicitation pilot experiment (n=24). The goal of the pilot is to get a first impression of the design efficacy and a preliminary test of the hypothesis. 
@@ -25,23 +27,19 @@ The main trials set the situationsl context via an object parade picture. Then t
 
 The syntactic structure of the reponse is the main condition (prenominal versus predicative, randomly sampled between-subject), the size of the target in comparison to the superordinate class is also randomly sampled (within-subject). The pairings of the target and the adjective are constant: i. e. if the target is a chihuahua, the sentence always includes the adjective "small", if it is a great dane, it would always be "big". 
 
-This is an overview of all the contexts and target:
-```{r}
 
-#|Superordinate| Small_target  | Big_target|
-#|-------------| --------------|----------|
-#|dogs    | chihuahua    |   great dane|
-#|fish    |  swordfish   |   goldfish  |
-#|primates|    gorilla   |  spider monkey|
-#|birds   |swan          | hummingbird  |
-#|trees   |     redwood  |bonsai        |
-#|flowers | sunflower    |daisy        |
+```{r} 
+library(tidyverse)
+library(kableExtra)
+contexts <- data.frame("Superordinate" = c( "small target", "big target"), "Dogs"=c("chihuahua", "great dane"), "Fish"=c("swordfish", "goldfish"), "Primates"=c("gorilla", "spider monkey"), "Birds"=c("swan", "hummingbird"), "Flowers"=c("sunflower", "daisy"), "Trees"=c("redwood", "bonsai"), stringsAsFactors = F)
+
+knitr::kable(contexts, align = "c",  padding= 2, caption = "Overview of contexts and targets") %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
 
 ```
 
 ## Data analysis
 ```{r}
-library(tidyverse)
+#library(tidyverse)
 library(tidyboot)
 
 # read in data

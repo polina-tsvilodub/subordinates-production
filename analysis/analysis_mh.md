@@ -20,22 +20,6 @@ The main trials set the situationsl context via an object parade picture. Then t
 
 The syntactic structure of the reponse is the main condition (prenominal versus predicative, randomly sampled between-subject), the size of the target in comparison to the superordinate class is also randomly sampled (within-subject). The pairings of the target and the adjective are constant: i. e. if the target is a chihuahua, the sentence always includes the adjective "small", if it is a great dane, it would always be "big".
 
-This is an overview of all the contexts and target:
-
-``` r
-#|Superordinate| Small_target  | Big_target|
-#|-------------| --------------|----------|
-#|dogs    | chihuahua    |   great dane|
-#|fish    |  swordfish   |   goldfish  |
-#|primates|    gorilla   |  spider monkey|
-#|birds   |swan          | hummingbird  |
-#|trees   |     redwood  |bonsai        |
-#|flowers | sunflower    |daisy        |
-```
-
-Data analysis
--------------
-
 ``` r
 library(tidyverse)
 ```
@@ -52,6 +36,100 @@ library(tidyverse)
     ## x dplyr::lag()    masks stats::lag()
 
 ``` r
+library(kableExtra)
+```
+
+    ## Warning: package 'kableExtra' was built under R version 3.5.3
+
+``` r
+contexts <- data.frame("Superordinate" = c( "small target", "big target"), "Dogs"=c("chihuahua", "great dane"), "Fish"=c("swordfish", "goldfish"), "Primates"=c("gorilla", "spider monkey"), "Birds"=c("swan", "hummingbird"), "Flowers"=c("sunflower", "daisy"), "Trees"=c("redwood", "bonsai"), stringsAsFactors = F)
+
+knitr::kable(contexts, align = "c",  padding= 2, caption = "Overview of contexts and targets") %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+```
+
+<table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
+<caption>
+Overview of contexts and targets
+</caption>
+<thead>
+<tr>
+<th style="text-align:center;">
+Superordinate
+</th>
+<th style="text-align:center;">
+Dogs
+</th>
+<th style="text-align:center;">
+Fish
+</th>
+<th style="text-align:center;">
+Primates
+</th>
+<th style="text-align:center;">
+Birds
+</th>
+<th style="text-align:center;">
+Flowers
+</th>
+<th style="text-align:center;">
+Trees
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+small target
+</td>
+<td style="text-align:center;">
+chihuahua
+</td>
+<td style="text-align:center;">
+swordfish
+</td>
+<td style="text-align:center;">
+gorilla
+</td>
+<td style="text-align:center;">
+swan
+</td>
+<td style="text-align:center;">
+sunflower
+</td>
+<td style="text-align:center;">
+redwood
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+big target
+</td>
+<td style="text-align:center;">
+great dane
+</td>
+<td style="text-align:center;">
+goldfish
+</td>
+<td style="text-align:center;">
+spider monkey
+</td>
+<td style="text-align:center;">
+hummingbird
+</td>
+<td style="text-align:center;">
+daisy
+</td>
+<td style="text-align:center;">
+bonsai
+</td>
+</tr>
+</tbody>
+</table>
+Data analysis
+-------------
+
+``` r
+#library(tidyverse)
 library(tidyboot)
 ```
 
@@ -187,7 +265,7 @@ d_warmup %>%
     ## # A tibble: 1 x 5
     ##       n empirical_stat ci_lower  mean ci_upper
     ##   <int>          <dbl>    <dbl> <dbl>    <dbl>
-    ## 1   144           2.28     1.92  2.27     2.64
+    ## 1   144           2.28     1.95  2.27     2.65
 
 On average, participants had to re-enter the labels twice per two warm-up views, meaning that they corrected they initial answer once to proceed to the next view.
 
