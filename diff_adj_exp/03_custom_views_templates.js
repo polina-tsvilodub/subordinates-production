@@ -23,6 +23,10 @@ const custom_botcaptcha = function(config){
         <br />
         <section class="babe-text-container" align="center">
             <p class="babe-text-container" id="quest-response">Who is ${config.speaker} talking to?</p>
+            <section class="babe-text-container" align="center">
+                <p class="babe-text-container">Please enter your answer in lower case.</p>
+            </section
+            <br />
             <textarea rows="1" cols="15" name="botresponse" id="listener-response"></textarea>
 
         </section>

@@ -15,8 +15,8 @@ $("document").ready(function() {
     window.babe_monitor = babeInit({
         // You have to specify all views you want to use in this experiment and the order of them
         views_seq: [
-            botcaptcha,
             custom_intro,
+            botcaptcha,
             instructions,
             warmup_trials1,
             context1,
