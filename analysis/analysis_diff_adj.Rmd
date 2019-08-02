@@ -16,7 +16,7 @@ This script analyses the data from a comparison class elicitation pilot experime
 We expect _more subordinate labels to occur in the incongruent condition_. In contrast, we expect _a similar proportion of superordinate and subordinate labels as in the previous experiment in the congruent condition_. Overall proportion of _subordinate labels should be higher in the predicative condition_. 
 
 ### Procedure
-The pairings of the target and the adjective are altered in this experiment: i. e. in the congruent condition, if target is a chihuahua, the sentence includes the adjective "small", if it is a great dane, it includes "big". In the incongruent (critical) condition, if the target is a chihuahua, the sentence includes the adjective "big", if the target is a great dane, it includes "small".  
+The pairings of the target and the adjective are altered in this experiment: i. e. in the congruent condition, if target is a chihuahua, the sentence includes the adjective "small", if it is a great dane, it includes "big". In the incongruent (critical) condition, if the target is a chihuahua, the sentence includes the adjective "big", if the target is a great dane, it includes "small".Every subject view three congruent and three incongruent conditions, randomly matched to three big and three small targets. 
 
 
 
@@ -44,6 +44,9 @@ The participants recruited via MTurk were paid $1.10.
 
 ##Spliting data into main and warm-up, excluding participants
 Data from n = 110 participants will be analysed. 
+
+7 participants are excluded because of their native language. 
+There are participants using upper case in the bot captcha, but they are not excluded in this analysis. 
 ```{r}
 # make sure how participants indicate their native language 
 # sometimes participants use only "en" or "eng" for english
@@ -81,12 +84,15 @@ d_warmup %>%
 On average, participants had to re-enter the labels twice per two warm-up views, meaning that they corrected they initial answer once to proceed to the next view. 
 
 ## Categorizing the data 
-Two responses to be excluded from the analysis: "herdof primates", "collection of plants"
+Two responses to be excluded from the analysis: "herd of primates", "collection of plants"
 ```{r}
 # question1 and question2 are the sentence parts coded in the experiment 
+# look at the different responses provided and categorize them 
+d_main %>% distinct(d_main$response) 
+
 d_main$response[d_main$response=="herd of primates"]<- NA
 d_main$response[d_main$response=="collection of plants"]<- NA
-d_main %>% distinct(d_main$response) 
+
 d_main_responseCat <- d_main %>% 
   rowwise() %>%
   mutate( # categorize responses 
@@ -97,7 +103,7 @@ d_main_responseCat <- d_main %>%
   )
 ```
 
-## Proportion of subordinate responses by condition 
+## Proportion of subordinate responses by condition, separated by congruency  
 
 The proportion of subordinate responses is the dependent variable we test by manipulating the syntactic condition: "That's a big X" (prenominal) versus "That X is big" (predicative). 
 ```{r}
@@ -114,8 +120,10 @@ ggplot(d_main_summary, aes(x = condition, fill = adj_cond,
   geom_col(position = position_dodge(0.8))+
   geom_linerange(position = position_dodge(0.8))+
   labs( y = "Proportion subordinate responses")+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  ggtitle("The proportion of subordinate responses by syntactic condition")
 ```
+The surprising observation here is that the overall proportion of subordinate responses ih higher than in the previos experiment. 
 
 ## Proportion of subordinate responses by congruence 
 ```{r}
@@ -132,14 +140,19 @@ ggplot(d_main_congr, aes(x = adj_cond, fill = condition,
   geom_col(position = position_dodge(0.8))+
   geom_linerange(position = position_dodge(0.8))+
   labs( y = "Proportion subordinate responses")+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
+  ggtitle("Proportion of subordinate responses by congruence")
 ```
+The peculiar observation is that the proportions in the congruent trials (same as previous experiment) are equal in both conditions now. Maybe there is a priming effect of the incongruent trials if they preceed in the trial sequence?
+The prevalence of subordinates in the prenominal condition in the incongruent trials seems to support the hypothesis: the comparison class is restricted to the NP here, so the subordinate is used to preserve the truth condition of the preposition. 
 
 ## Proportion of subordinate labels in big vs. small trials 
 
 We check if there is any proportional difference between the trials with different target size. The size does not seem to have a significant effect.  
 
 ```{r}
+d_main_responseCat %>% group_by(size_target, adj_cond) %>% count()
+
 d_main_summary_bySize <- d_main_responseCat %>%
   group_by(condition, size_target, adj_cond, response_label) %>%
   tidyboot_mean(column = response_num) %>%
@@ -155,8 +168,14 @@ ggplot(d_main_summary_bySize, aes(x = adj_cond, fill = condition,
   geom_linerange(position = position_dodge(0.8))+
   labs( y = "Proportion subordinate responses")+
   facet_wrap(~size_target)+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+ ggtitle("Proportions in trials grouped by target size")
 ```
+Interestingly, small targets seem to elicit less subordinates in the predicative condition (more sensistive to syntactic structure), whereas big targets elicit equal proportions in both conditions. Is there a different prior of using positive adjectives ('big' as the incongruent one in small trials) (in terms of informativity) than using negative adjectives (incongruent ones in the big trials)?  Is it 'worse' to say "big chihuahua" in comparison to dogs than "small great dane" in comparison to dogs?
+Also, the proportions reverse in the congruent conditions depending on the target size! This should not be the case! People rather say "That's a big great dane" (>0.5), but perform as expected in the predicative condition (0.5). Again, different prior expectations of positive vs negative feature expression on a scale? 
+In the small trials, they perform as expected (predicative > prenominal).
+
+Does this positive/negative adj/feature difference exist on other scales?
+
 ## Proportion depending on adjective 'big' versus 'small'
 ```{r}
 d_main_summary_byAdj <- d_main_responseCat %>%
@@ -174,8 +193,14 @@ ggplot(d_main_summary_byAdj, aes(x = adj_cond, fill = condition,
   geom_linerange(position = position_dodge(0.8))+
   labs( y = "Proportion subordinate responses")+
   facet_wrap(~size_adj)+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1)) + ggtitle("Proportions in trials grouped by adjective used")
+
 ```
+Grouped this way, we see some evidence for difference depending on the adjective. 
+Prenominal condiion seems to be particularly salient in the incongruent 'big' condition. 
+Isn't it strange: 'That dog is big' is rather used for a chihuahua than 'That chihuahua is big'.
+
+_Now is it the target size or the adjective used that causes the difference in the performance?_
 
 ## Consistency of choosing a response category by subject
 
@@ -190,22 +215,15 @@ d_main_responseCat %>%
                             labels= c("That's a big X (prenominal)", "That X is big (predicative)"))) %>%
   ggplot(., aes( x = n_sub_responses, fill = adj_cond))+
   geom_bar(position=position_dodge())+
-  facet_wrap(~condition)
+  facet_wrap(~condition) + ggtitle("Number of subordinate responses uttered per participant in the 3 trials")
 ```
+There are many people in the congruent condition consistently using subordinates in the prenominal condition, but also some not using them at all. Incongruent trials seem to be as expected.  
 
 ## Proportion of subordinate responses by item (context)
 For each context, there is a pair of targets (a big and a small one). The targets seem to elicit different proportions of subordinate lables. The most effective ones seem to be the swan, the chihuahua and the bonsai. However, the results are not robust due to a small sample size. 
 ```{r}
 d_main_responseCat %>% count(item, condition) %>% glimpse()
 
-d_main_responseCat %>%
-  group_by(item, condition, adj_cond, response_label) %>%
-  summarize(n_sub_responses = sum(response_num)) %>%
-  ungroup() %>%
-  
-  ggplot(., aes( x=n_sub_responses,fill=adj_cond ))+
-  geom_bar(position = position_dodge())+
-  facet_wrap(~item)
 
 
 d_main_responseCat %>%
@@ -229,67 +247,35 @@ ggplot(., aes(x = adj_cond, fill = condition,
 ```
 ## Order effects
 ```{r}
-d_main_responseCat %>%
-  group_by(trial_number, adj_cond, condition, response_label)  %>%
-  summarize(n_sub_responses = sum(response_num)) %>%
-  ungroup() %>%
-  mutate(condition = factor(condition, 
-                            levels = c("prenominal", "predicative"),
-                            labels= c("That's a big X (prenominal)", "That X is big (predicative)"))) %>%
-  ggplot(., aes( x=trial_number ,y = n_sub_responses, fill = trial_number))+
-  geom_bar(position=position_dodge())+
-  facet_wrap(~condition)
+d_main_responseCat %>% group_by(size_target, response_cat, adj_cond) %>% count() 
 
-d_main_responseCat %>%
-  group_by(trial_number, condition, adj_cond, response_label) %>%
+```
+In the incongruent trials, prenominal condition, people seem to get more sensitive with trial progress in general. 
+
+```{r}
+d_main_responseCat %>% 
+  group_by(trial_number, adj_cond, condition, response_label) %>%
   tidyboot_mean(column = response_num) %>%
   ungroup() %>%
   mutate(condition = factor(condition, 
                             levels = c("prenominal", "predicative"),
-                            labels= c("That's a big X", "That X is big"))) %>%
-
-# big and small indicate the adjective actually used 
-ggplot(., aes(x = trial_number, fill = condition, 
-                           y = mean, ymin = ci_lower, ymax = ci_upper))+
-  geom_col(position = position_dodge(0.8), width = 0.8)+
-  geom_linerange(position = position_dodge(0.8))+
-  labs( y = "Proportion subordinate responses")+
-  facet_wrap(~adj_cond)+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
-
-# only incongruent trials, see amount of sub responses on each trial nr
-d_main_responseCat %>% #filter(adj_cond=="incongruent") %>%
-  group_by(trial_number, adj_cond, condition, response_label) %>%
-  summarize(n_sub_responses = sum(response_num)) %>%
-  ungroup() %>%
-  mutate(condition = factor(condition, 
-                            levels = c("prenominal", "predicative"),
-                            labels= c("That's a big X", "That X is big"))) %>%
+                            labels= c("That's a big X (prenominal)", "That X is big (predicative)"))) %>%
 
 # big and small indicate the adjective actually used 
 ggplot(., aes(x = trial_number,  
-                           y = n_sub_responses, fill=adj_cond))+
+                           y = mean, fill=adj_cond))+
   geom_col(position = position_dodge(0.8), width = 0.8)+
   #geom_linerange(position = position_dodge(0.8))+
   labs( y = "Proportion subordinate responses")+
-  facet_wrap(~condition)
-  #scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
-
-table(d_main_responseCat$trial_number, d_main_responseCat$response_cat, d_main_responseCat$adj_cond)
+  facet_wrap(~condition) + ggtitle("Proportion of subordinate responses in each trial number")
 ```
-This graph does show the amount of subordinate responses per trial being an incongruent or congruent trial
+There is a constantly high sub proportion in incongruent prenominal condition. Proportion in congruent trials is much higher in third trial, probably being primed. Proportions in the predicative condition are as expected.
 
-## Issues, Suggestions, Discussion
-The pilot data supports our hypothesis. 
+BTW, is it possible that people start to get more insensitive to prenominal condition in congruent trials because there is no clear reference to "average" subordinate size? I. e. being primed, people produce 'That's a big great dane' because there is no benchmark for an average great dane (hard without direct visual reference).
 
-For the main experiment, a few improvements and suggestions might be incorporated. 
+There is definetly a difference to proportions in the first experiment (added). There is a steady decrease in subs in the prenominal condition, increase in predicative condition (makes sense). 
 
-The variable coding the experiment script will be improved to avoid the mutations here in the analysis. Furthermore, the primates trial will be altered to be consistent between monkeys and apes. The label 'primates' will also be included as a correct answer in the warm-up trials. Further trials might be included. 
-
-To make sure the choice of subordinate labels is not confounded with other effects, we could run an experiment with warm-up tagets different from the main targets. Yet participants might not know the subordinate labels in the main trials.
-A possibility to improve that is to use photos instead of cartoons. 
-
-Additionally, we suggest another experiment including main trials where target pictures are paired with 'forced', more surprising / informative adjectives for their respective subordinate category, e. g. 'big chihuahua' and 'small great dane'. 
+## Order effects
 
 ```{r}
 d_main_seq <- d_main_responseCat %>% mutate(
@@ -299,53 +285,72 @@ d_main_seq <- d_main_responseCat %>% mutate(
   else {"D" }
 ) 
 
-d_main_seq$sequence[d_main_seq$submission_id == 100]
 
-x <-length((d_main_seq$submission_id))/6
-i <- 0
-#d_main_seq <- d_main_seq %>% mutate(array = x) 
-y <- function(i, x, d_main_seq) {
-  #array <- vector(length=1)
-  seq_list <- c()
-  for (i in x) {
-    print(i)
-    seq = toString(d_main_seq$sequence[d_main_seq$submission_id == i])
-    print(seq)
-   # seq_list d_main_seq$sequence[d_main_seq$submission_id == i]
-   seq_list[[i]] <- seq
-   #print(seq_list)
-    
-    # i seem to alter the whole d_main_seq 
-    #array1 <- mutate(d_main_seq, array <- ifelse(d_main_seq$submission_id==i, seq, NA))
-  
-  #print(seq)
-  #array <- cbind(seq)
-  #print(typeof(seq))
- # subv <- c("A","B", "C", "D", "D", "D") %in% seq
-  #d_main_seq_update <- mutate (d_main_seq,
-  #order <- if(subv){"infl1"} else {"no-infl" }) 
-  }
-  return(seq_list) 
-}
-id_list <- d_main_seq$submission_id
+```
+## Trials having an incongruent trial at the beginnning
+``` {r}
 
-d_main_seq_update <- y(i, id_list, d_main_seq) 
-d_main_seq_new <- cbind(d_main_seq, d_main_seq_update)
-
-d_main_responseCat %>% 
-  group_by(adj_cond, condition, response_label, submission_id) %>%
-   filter(trial_number==1) %>% #filter(adj_cond=="incongruent") %>%
-  summarize(n_sub_responses = sum(response_num)) %>%
+# filter the subjects who have a first incongruent trial 
+ids_A <- d_main_seq %>% group_by(submission_id, sequence)%>%count() %>% filter(sequence =="A") %>% select(submission_id)
+# look at the trials which start with A 
+d_main_seq %>% group_by(submission_id) %>% filter(submission_id %in% ids_A$submission_id) %>%
+  group_by(trial_number, adj_cond, condition, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
   ungroup() %>%
- # mutate(condition = factor(condition, 
-  #                          levels = c("prenominal", "predicative"),
-   #                         labels= c("That's a big X", "That X is big"))) %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))) %>%
+ggplot(., aes(x = trial_number,  
+                           y = mean, fill=adj_cond))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  labs( y = "Proportion subordinate responses")+
+  facet_wrap(~condition) + ggtitle("Proportion of subordinate responses in trials beginning with an incongruent trial")
+  
+```
+There are still congruent trials in the first position because subjects have two first trials (first and second block).
 
-# big and small indicate the adjective actually used 
-ggplot(., aes(  
-                           x = n_sub_responses, fill=adj_cond))+
-  geom_bar(position=position_dodge())+
-  #geom_linerange(position = position_dodge(0.8))+
-  labs( y = "Proportion subordinate responses")
-  #facet_wrap(~condition)
+## Proportion of subordinate responses in subjects starting with a congruent trial
+```{r}
+# filter the subjects who have a congruent first trial
+
+ids_D <- d_main_seq %>% group_by(submission_id, trial_number, sequence)%>%count()%>%  filter(sequence =="D") %>% filter(trial_number ==1) %>%  select(submission_id)
+# look at the trials which start with D
+d_main_seq %>% group_by(submission_id) %>% filter(submission_id %in% ids_D$submission_id) %>%
+  group_by(trial_number, adj_cond, condition, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))) %>%
+ggplot(., aes(x = trial_number,  
+                           y = mean, fill=adj_cond))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  labs( y = "Proportion subordinate responses")+
+  facet_wrap(~condition) + ggtitle("Proportion of subordinate responses in trials beginning with a congruent trial")
+```
+
+## Proportions in subjects starting with two incongruent trials
+There is an increase in the congruent trials subordinate proportion, indicating a role of incongruent trials preceding the congruent ones. 
+```{r}
+ids_AB <- d_main_seq %>% group_by(submission_id, trial_number, sequence)%>%count() %>% filter(trial_number ==1|trial_number==2) %>%  filter(sequence=="A"|sequence=="B") %>%select(submission_id)
+# look at the trials which start with D
+d_main_seq %>% group_by(submission_id) %>% filter(submission_id %in% ids_AB$submission_id) %>%
+  group_by(trial_number, adj_cond, condition, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))) %>%
+ggplot(., aes(x = trial_number,  
+                           y = mean, fill=adj_cond))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  labs( y = "Proportion subordinate responses")+
+  facet_wrap(~condition) + ggtitle("Proportion of subordinate responses in trials beginning with two incongruent trials")
+```
+It is not clear whether there is a stronger effect on congruent trials if two incongruent trials preceed. 
+
+## Try assigning unique trial numbers
+```{r}
+
+d_main_responseCat %>% mutate(unique_id = )
 ```

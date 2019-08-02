@@ -190,6 +190,26 @@ d_main_responseCat %>%
 
 
 ```
+## Proportions of subordinate responses depending on trial number
+```{r}
+
+d_main_responseCat %>% 
+  group_by(trial_number, condition, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))) %>%
+
+# big and small indicate the adjective actually used 
+ggplot(., aes(x = trial_number,  
+                           y = mean))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  #geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")+
+  facet_wrap(~condition) + ggtitle("Proportion of subordinate responses in each trial number")
+```
+
 
 ## Issues, Suggestions, Discussion
 The pilot data supports our hypothesis. 
