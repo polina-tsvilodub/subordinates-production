@@ -8,6 +8,31 @@
 // and a render function, the render function gets CT and the babe-object as input
 // and has to call babe.findNextView() eventually to proceed to the next view (or the next trial in this view),
 // if it is an trial view it also makes sense to call babe.trial_data.push(trial_data) to save the trial information
+
+// const expired_hit = function(config) {
+//   const view = {
+//     name: 'expired_hit',
+//     CT: 0,
+//     trials:1,
+//     render: function(babe) {
+//       $("main").html(`<div class="babe-view">
+//         <h1 class='babe-view-title'>This HIT has expired!</h1>
+//         <br />
+//         <br />
+//         <section class="babe-text-container" align="center">
+//             <p class="babe-text-container">This HIT is not available anymore. Please return the HIT.</p>
+//             <p class="babe-text-container">Sorry for the inconvenience!</p>
+//         </section>
+//         </div>`)
+//
+//     }
+//   }
+//   return view;
+// }
+
+
+
+
 const custom_botcaptcha = function(config){
   const view = {
     name: config.name,

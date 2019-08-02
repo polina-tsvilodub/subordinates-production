@@ -1,0 +1,351 @@
+---
+title: "Comparison Class Elicitation With Different Adjective Informativity"
+author: "Polina Tsvilodub"
+date: "7/29/2019"
+output: github_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+```
+#Experiment outline 
+This script analyses the data from a comparison class elicitation pilot experiment with different adjective and target pais (n=113). 
+
+We expect _more subordinate labels to occur in the incongruent condition_. In contrast, we expect _a similar proportion of superordinate and subordinate labels as in the previous experiment in the congruent condition_. Overall proportion of _subordinate labels should be higher in the predicative condition_. 
+
+### Procedure
+The pairings of the target and the adjective are altered in this experiment: i. e. in the congruent condition, if target is a chihuahua, the sentence includes the adjective "small", if it is a great dane, it includes "big". In the incongruent (critical) condition, if the target is a chihuahua, the sentence includes the adjective "big", if the target is a great dane, it includes "small".  
+
+
+
+## Data analysis
+```{r}
+library(tidyverse)
+library(tidyboot)
+
+# read in data
+d <- read_csv('./../data/results_5_comparison-class-prod-diff-adj_113.csv')
+
+#first look at the data
+glimpse(d)
+
+# comments
+d_comments <- d %>%
+  distinct(submission_id, problems, comments, fairprice)
+
+```
+
+A few participants had issues submitting the experiment the first time, so they retried it (submission_id: 120, 130, 79), they will be excluded from the analysis. One participant had issues with the framing of the views.
+
+The participants recruited via MTurk were paid $1.10. 
+
+
+##Spliting data into main and warm-up, excluding participants
+Data from n = 110 participants will be analysed. 
+```{r}
+# make sure how participants indicate their native language 
+# sometimes participants use only "en" or "eng" for english
+# excluded non-native speakers 
+d %>% distinct(d$languages) %>% View()
+d_langs <- d %>% mutate(
+  languages = ifelse(languages == "Englishj", "English", languages)
+) %>% mutate(
+  languages = ifelse(is.na(languages), "X", languages)
+) 
+
+d_filt <- d %>% 
+  filter(grepl("English", languages, ignore.case = T)) %>%
+  filter((submission_id != 120)& (submission_id != 130)&(submission_id != 79)) %>%
+  select(submission_id, trial_name, trial_number, size_adj, item, botresponse, response, response1, response2, response3, correct1, correct2, correct3, condition, size_target, attempts, adj_cond)
+
+glimpse(d_filt)
+
+# extract main trials 
+d_main <- d_filt %>% 
+  filter(trial_name == "main") %>%
+  select(submission_id, trial_number, response, size_adj, item, condition, size_target, adj_cond)
+
+# extract warm-up trials 
+d_warmup <- d_filt %>% filter(trial_name =="warmup") %>% 
+  select(submission_id, trial_number, attempts, response1, correct1, response2, correct2, response3, correct3, item, botresponse)
+
+# NB: in the warmup trials, trial_number includes two distinct trials (first block, second block), i.e. trial_number 1 is both the first warm-up view of the first and the second warm-up block
+d_warmup %>%
+  group_by(submission_id, trial_number, correct3) %>%
+  count() %>%
+  ungroup() %>%
+  tidyboot_mean(column = n) # calculate mean of attempts participants needed for the warm-up completion
+```
+On average, participants had to re-enter the labels twice per two warm-up views, meaning that they corrected they initial answer once to proceed to the next view. 
+
+## Categorizing the data 
+Two responses to be excluded from the analysis: "herdof primates", "collection of plants"
+```{r}
+# question1 and question2 are the sentence parts coded in the experiment 
+d_main$response[d_main$response=="herd of primates"]<- NA
+d_main$response[d_main$response=="collection of plants"]<- NA
+d_main %>% distinct(d_main$response) 
+d_main_responseCat <- d_main %>% 
+  rowwise() %>%
+  mutate( # categorize responses 
+    response_cat = ifelse(
+      tolower(response) %in% c("ape", "primate", "bird", "dog", "fish", "flower", "monkey", "tree", "plant", "dig", "money", "puppy"), "super", "sub"),
+    response_num = ifelse(response_cat == "sub", 1, 0),
+    response_label = "sub"
+  )
+```
+
+## Proportion of subordinate responses by condition 
+
+The proportion of subordinate responses is the dependent variable we test by manipulating the syntactic condition: "That's a big X" (prenominal) versus "That X is big" (predicative). 
+```{r}
+d_main_summary <- d_main_responseCat %>%
+  group_by(condition, response_label, adj_cond) %>%
+  tidyboot_mean(column = response_num) %>% # calculate proportion of subordinate labels in the different conditions 
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big")))
+
+ggplot(d_main_summary, aes(x = condition, fill = adj_cond,
+                           y = mean, ymin = ci_lower, ymax = ci_upper))+
+  geom_col(position = position_dodge(0.8))+
+  geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+```
+
+## Proportion of subordinate responses by congruence 
+```{r}
+d_main_congr <- d_main_responseCat %>%
+  group_by(adj_cond, condition, response_label) %>%
+  tidyboot_mean(column = response_num) %>% # calculate proportion of subordinate labels in the different conditions 
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big")))
+
+ggplot(d_main_congr, aes(x = adj_cond, fill = condition,
+                           y = mean, ymin = ci_lower, ymax = ci_upper))+
+  geom_col(position = position_dodge(0.8))+
+  geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+```
+
+## Proportion of subordinate labels in big vs. small trials 
+
+We check if there is any proportional difference between the trials with different target size. The size does not seem to have a significant effect.  
+
+```{r}
+d_main_summary_bySize <- d_main_responseCat %>%
+  group_by(condition, size_target, adj_cond, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big")))
+
+# big and small indicate the size of the target here 
+ggplot(d_main_summary_bySize, aes(x = adj_cond, fill = condition, 
+                           y = mean, ymin = ci_lower, ymax = ci_upper))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")+
+  facet_wrap(~size_target)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+```
+## Proportion depending on adjective 'big' versus 'small'
+```{r}
+d_main_summary_byAdj <- d_main_responseCat %>%
+  group_by(condition, size_adj, adj_cond, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big")))
+
+# big and small indicate the adjective actually used 
+ggplot(d_main_summary_byAdj, aes(x = adj_cond, fill = condition, 
+                           y = mean, ymin = ci_lower, ymax = ci_upper))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")+
+  facet_wrap(~size_adj)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+```
+
+## Consistency of choosing a response category by subject
+
+Do participants switch between superordinate and subordinate labels within the experiment?  
+```{r}
+d_main_responseCat %>%
+  group_by(submission_id, adj_cond, condition, response_label) %>%
+  summarize(n_sub_responses = sum(response_num)) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X (prenominal)", "That X is big (predicative)"))) %>%
+  ggplot(., aes( x = n_sub_responses, fill = adj_cond))+
+  geom_bar(position=position_dodge())+
+  facet_wrap(~condition)
+```
+
+## Proportion of subordinate responses by item (context)
+For each context, there is a pair of targets (a big and a small one). The targets seem to elicit different proportions of subordinate lables. The most effective ones seem to be the swan, the chihuahua and the bonsai. However, the results are not robust due to a small sample size. 
+```{r}
+d_main_responseCat %>% count(item, condition) %>% glimpse()
+
+d_main_responseCat %>%
+  group_by(item, condition, adj_cond, response_label) %>%
+  summarize(n_sub_responses = sum(response_num)) %>%
+  ungroup() %>%
+  
+  ggplot(., aes( x=n_sub_responses,fill=adj_cond ))+
+  geom_bar(position = position_dodge())+
+  facet_wrap(~item)
+
+
+d_main_responseCat %>%
+  group_by(condition, item, adj_cond, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))) %>%
+
+# big and small indicate the adjective actually used 
+ggplot(., aes(x = adj_cond, fill = condition, 
+                           y = mean, ymin = ci_lower, ymax = ci_upper))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")+
+  facet_wrap(~item)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+# leave this grouping or interchange adj_cond and condition?
+
+```
+## Order effects
+```{r}
+d_main_responseCat %>%
+  group_by(trial_number, adj_cond, condition, response_label)  %>%
+  summarize(n_sub_responses = sum(response_num)) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X (prenominal)", "That X is big (predicative)"))) %>%
+  ggplot(., aes( x=trial_number ,y = n_sub_responses, fill = trial_number))+
+  geom_bar(position=position_dodge())+
+  facet_wrap(~condition)
+
+d_main_responseCat %>%
+  group_by(trial_number, condition, adj_cond, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))) %>%
+
+# big and small indicate the adjective actually used 
+ggplot(., aes(x = trial_number, fill = condition, 
+                           y = mean, ymin = ci_lower, ymax = ci_upper))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")+
+  facet_wrap(~adj_cond)+
+  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+
+# only incongruent trials, see amount of sub responses on each trial nr
+d_main_responseCat %>% #filter(adj_cond=="incongruent") %>%
+  group_by(trial_number, adj_cond, condition, response_label) %>%
+  summarize(n_sub_responses = sum(response_num)) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))) %>%
+
+# big and small indicate the adjective actually used 
+ggplot(., aes(x = trial_number,  
+                           y = n_sub_responses, fill=adj_cond))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  #geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")+
+  facet_wrap(~condition)
+  #scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
+
+table(d_main_responseCat$trial_number, d_main_responseCat$response_cat, d_main_responseCat$adj_cond)
+```
+This graph does show the amount of subordinate responses per trial being an incongruent or congruent trial
+
+## Issues, Suggestions, Discussion
+The pilot data supports our hypothesis. 
+
+For the main experiment, a few improvements and suggestions might be incorporated. 
+
+The variable coding the experiment script will be improved to avoid the mutations here in the analysis. Furthermore, the primates trial will be altered to be consistent between monkeys and apes. The label 'primates' will also be included as a correct answer in the warm-up trials. Further trials might be included. 
+
+To make sure the choice of subordinate labels is not confounded with other effects, we could run an experiment with warm-up tagets different from the main targets. Yet participants might not know the subordinate labels in the main trials.
+A possibility to improve that is to use photos instead of cartoons. 
+
+Additionally, we suggest another experiment including main trials where target pictures are paired with 'forced', more surprising / informative adjectives for their respective subordinate category, e. g. 'big chihuahua' and 'small great dane'. 
+
+```{r}
+d_main_seq <- d_main_responseCat %>% mutate(
+  sequence = if((trial_number == 1) & (adj_cond == "incongruent")) {"A"}
+  else if ((trial_number == 2) & (adj_cond == "incongruent")){"B"}  
+  else if((trial_number == 3) & (adj_cond == "incongruent")) {"C"}
+  else {"D" }
+) 
+
+d_main_seq$sequence[d_main_seq$submission_id == 100]
+
+x <-length((d_main_seq$submission_id))/6
+i <- 0
+#d_main_seq <- d_main_seq %>% mutate(array = x) 
+y <- function(i, x, d_main_seq) {
+  #array <- vector(length=1)
+  seq_list <- c()
+  for (i in x) {
+    print(i)
+    seq = toString(d_main_seq$sequence[d_main_seq$submission_id == i])
+    print(seq)
+   # seq_list d_main_seq$sequence[d_main_seq$submission_id == i]
+   seq_list[[i]] <- seq
+   #print(seq_list)
+    
+    # i seem to alter the whole d_main_seq 
+    #array1 <- mutate(d_main_seq, array <- ifelse(d_main_seq$submission_id==i, seq, NA))
+  
+  #print(seq)
+  #array <- cbind(seq)
+  #print(typeof(seq))
+ # subv <- c("A","B", "C", "D", "D", "D") %in% seq
+  #d_main_seq_update <- mutate (d_main_seq,
+  #order <- if(subv){"infl1"} else {"no-infl" }) 
+  }
+  return(seq_list) 
+}
+id_list <- d_main_seq$submission_id
+
+d_main_seq_update <- y(i, id_list, d_main_seq) 
+d_main_seq_new <- cbind(d_main_seq, d_main_seq_update)
+
+d_main_responseCat %>% 
+  group_by(adj_cond, condition, response_label, submission_id) %>%
+   filter(trial_number==1) %>% #filter(adj_cond=="incongruent") %>%
+  summarize(n_sub_responses = sum(response_num)) %>%
+  ungroup() %>%
+ # mutate(condition = factor(condition, 
+  #                          levels = c("prenominal", "predicative"),
+   #                         labels= c("That's a big X", "That X is big"))) %>%
+
+# big and small indicate the adjective actually used 
+ggplot(., aes(  
+                           x = n_sub_responses, fill=adj_cond))+
+  geom_bar(position=position_dodge())+
+  #geom_linerange(position = position_dodge(0.8))+
+  labs( y = "Proportion subordinate responses")
+  #facet_wrap(~condition)
+```

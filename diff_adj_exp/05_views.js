@@ -17,7 +17,7 @@
     * More about the properties and functions of the wrapping views - https://babe-project.github.io/babe-docs/01_designing_experiments/01_template_views/#wrapping-views
 
 */
-
+const expired = expired_hit();
 // Every experiment should start with an intro view. Here you can welcome your participants and tell them what the experiment is about
 
 // For most tasks, you need instructions views
