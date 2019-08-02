@@ -351,6 +351,44 @@ It is not clear whether there is a stronger effect on congruent trials if two in
 
 ## Try assigning unique trial numbers
 ```{r}
+unique_nr <- c(1:6)
+d_main_seq_nr <- cbind(d_main_seq, unique_nr )
+# filter the subjects who have a first incongruent trial 
+ids_A <- d_main_seq_nr %>% group_by(submission_id)%>% filter(sequence =="A") %>% select(submission_id) %>% as.list()
+d_main_seq_update <- d_main_seq_nr %>% select(d_main_seq_nr$submission_id[sequence =="A"])
+# look at the trials which start with A 
+d_main_seq_nr %>% group_by(submission_id) %>% which(submission_id %in% ids_A) %>%
+  group_by(unique_nr, adj_cond, condition, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))) %>%
+ggplot(., aes(x = unique_nr,  
+                           y = mean, fill=adj_cond))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  labs( y = "Proportion subordinate responses", x = "Trial number")+
+  facet_wrap(~condition) + 
+  ggtitle("Proportion of subordinate responses in trials beginning with an incongruent trial")
 
-d_main_responseCat %>% mutate(unique_id = )
+```
+
+## Two incongruent trials in the beginning
+```{r}
+ids_AB <- d_main_seq_nr %>% group_by(submission_id, unique_nr, sequence)%>%count() %>% 
+filter((unique_nr ==1)&(sequence=="A")) %>%  filter(sequence=="A"|sequence=="B")%>%select(submission_id)
+  #filter(unique_nr ==1|unique_nr==2) %>%  filter(sequence=="A"|sequence=="B") select(submission_id)
+# look at the trials which start with D
+d_main_seq_nr %>% group_by(submission_id) %>% filter(submission_id %in% ids_AB$submission_id) %>%
+  group_by(unique_nr, adj_cond, condition, response_label) %>%
+  tidyboot_mean(column = response_num) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))) %>%
+ggplot(., aes(x = unique_nr,  
+                           y = mean, fill=adj_cond))+
+  geom_col(position = position_dodge(0.8), width = 0.8)+
+  labs( y = "Proportion subordinate responses", x="Trial number")+
+  facet_wrap(~condition) + ggtitle("Proportion of subordinate responses in trials beginning with two incongruent trials")
 ```
