@@ -434,7 +434,7 @@ trees: {
 }
 }
 
-const consistency = _.sample([0,1])
+const consistency = 0 //_.sample([0,1])
 const size = _.shuffle([0, 0, 0, 1, 1, 1])
 const trials = _.shuffle([ {x: warmupTrials.dogs, y:mainTrials.dogs[size[0]][consistency]},
   {x:warmupTrials.birds, y:mainTrials.birds[size[1]][consistency]}, {x:warmupTrials.monkeys,y:mainTrials.monkeys[size[2]][consistency]},
