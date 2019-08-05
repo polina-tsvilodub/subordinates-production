@@ -201,7 +201,7 @@ const custom_textfield_main = function(config, startingTime) {
         next.on("click", function(startingTime) {
             const RT = Date.now() - startingTime; // measure RT before anything else
             let trial_data = {
-                trial_name: 'main',
+                trial_name: config.name,
                 trial_number: CT + 1,
                 response: textInput.val().trim(),
                 RT: RT
