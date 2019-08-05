@@ -227,7 +227,7 @@ d_main_responseCat %>% count(item, condition) %>% glimpse()
 
 
 d_main_responseCat %>%
-  group_by(condition, item, adj_cond, response_label) %>%
+  group_by(condition, item, size_adj, size_target, response_label) %>%
   tidyboot_mean(column = response_num) %>%
   ungroup() %>%
   mutate(condition = factor(condition, 
@@ -235,12 +235,12 @@ d_main_responseCat %>%
                             labels= c("That's a big X", "That X is big"))) %>%
 
 # big and small indicate the adjective actually used 
-ggplot(., aes(x = adj_cond, fill = condition, 
+ggplot(., aes(x = size_target, fill = size_adj, 
                            y = mean, ymin = ci_lower, ymax = ci_upper))+
   geom_col(position = position_dodge(0.8), width = 0.8)+
   geom_linerange(position = position_dodge(0.8))+
   labs( y = "Proportion subordinate responses")+
-  facet_wrap(~item)+
+  facet_grid(condition~item)+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
 # leave this grouping or interchange adj_cond and condition?
 
@@ -291,7 +291,7 @@ d_main_seq <- d_main_responseCat %>% mutate(
 ``` {r}
 
 # filter the subjects who have a first incongruent trial 
-ids_A <- d_main_seq %>% group_by(submission_id, sequence)%>%count() %>% filter(sequence =="A") %>% select(submission_id)
+ids_A <- d_main_seq %>% group_by(submission_id, sequence) %>% filter(sequence =="A") %>% select(submission_id)
 # look at the trials which start with A 
 d_main_seq %>% group_by(submission_id) %>% filter(submission_id %in% ids_A$submission_id) %>%
   group_by(trial_number, adj_cond, condition, response_label) %>%
@@ -345,19 +345,24 @@ ggplot(., aes(x = trial_number,
                            y = mean, fill=adj_cond))+
   geom_col(position = position_dodge(0.8), width = 0.8)+
   labs( y = "Proportion subordinate responses")+
-  facet_wrap(~condition) + ggtitle("Proportion of subordinate responses in trials beginning with two incongruent trials")
+  facet_wrap(~condition) + ggtitle("Proportion of subordinate responses in trials beginning with either of first two being incongruent trials")
 ```
 It is not clear whether there is a stronger effect on congruent trials if two incongruent trials preceed. 
 
 ## Try assigning unique trial numbers
 ```{r}
+d_main_seq1 <- d_main_seq_nr %>% mutate(
+  sequence = ifelse((trial_number == 1) & (adj_cond == "incongruent"), "A", "D") 
+) 
+
 unique_nr <- c(1:6)
 d_main_seq_nr <- cbind(d_main_seq, unique_nr )
+
 # filter the subjects who have a first incongruent trial 
-ids_A <- d_main_seq_nr %>% group_by(submission_id)%>% filter(sequence =="A") %>% select(submission_id) %>% as.list()
-d_main_seq_update <- d_main_seq_nr %>% select(d_main_seq_nr$submission_id[sequence =="A"])
+ids_A <- d_main_seq_nr %>% group_by(submission_id)%>% filter(sequence =="A") %>% select(submission_id) %>% unique() %>% as.list()
+
 # look at the trials which start with A 
-d_main_seq_nr %>% group_by(submission_id) %>% which(submission_id %in% ids_A) %>%
+d_main_seq_nr %>% filter_all(submission_id, any_vars(submission_id %in% ids_A)) %>%
   group_by(unique_nr, adj_cond, condition, response_label) %>%
   tidyboot_mean(column = response_num) %>%
   ungroup() %>%
@@ -368,7 +373,7 @@ ggplot(., aes(x = unique_nr,
                            y = mean, fill=adj_cond))+
   geom_col(position = position_dodge(0.8), width = 0.8)+
   labs( y = "Proportion subordinate responses", x = "Trial number")+
-  facet_wrap(~condition) + 
+  #facet_wrap(~condition) + 
   ggtitle("Proportion of subordinate responses in trials beginning with an incongruent trial")
 
 ```
