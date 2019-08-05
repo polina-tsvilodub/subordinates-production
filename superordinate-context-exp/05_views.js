@@ -44,11 +44,13 @@ const instructions = babeViews.view_generator("instructions",{
 
             <br />
             <br />
-            The experiment consists of two rounds with three trials each.
+            The experiment consists of six trials.
             <br />
             <br />
             You are watching groups of objects and describing them as they pass by.
-  
+            <br />
+            <br />
+            You will see the groups. Please <b>press the space bar</b> to view another member of the group. It will appear after a short delay.
             <br />
             <br />
             By pressing the button 'Go to Trials' you begin the first round.

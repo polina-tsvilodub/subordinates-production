@@ -130,7 +130,7 @@ const mainTrials = { dogs: [ [{
     }
   ]],
    monkeys: [ [{
-     context_picture: "images/primates_parade_big_s.png",
+     context_picture: "images/primates_parade_big.png",
      item: "primates",
       picture: "images/gorilla.png",
       context: "You see a parade of animals.",

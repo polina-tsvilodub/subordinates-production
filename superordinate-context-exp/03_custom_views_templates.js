@@ -125,12 +125,12 @@ const custom_textfield_main = function(config, startingTime) {
     CT: 0,
     trials: config.trials,
     render: function(CT, babe, startingTime) {
-      $("main").html(`<div class='babe-view'>
+      $("main").html(`<div id='main-view' class='babe-view'>
 
       <div style="width:100%">
           <div style="width:70%;height:150px;float:left;position:relative;align:center;">
             <div style="align:center">
-                      <section class="babe-text-container">
+                      <section class="babe-text-container" id="context">
                         <p class="babe-view-question">${config.data[CT].context}</p>
                       </section>
 
@@ -138,11 +138,11 @@ const custom_textfield_main = function(config, startingTime) {
           </div>
           <div style="width:30%;height:150px;float:right;position:relative;align:center;">
               <div style="position:absolute;left:20px;">
-                      <section class="babe-text-container">
+                      <section id="target1" class="babe-text-container babe-nodisplay" >
                         <p class="babe-view-question">${config.data[CT].text}</p>
                       </section>
 
-                      <section class="babe-text-container">
+                      <section id="target2" class="babe-text-container babe-nodisplay" >
                         <p class="babe-view-question">${config.data[CT].sentence}</p>
                       </section>
 
@@ -154,7 +154,7 @@ const custom_textfield_main = function(config, startingTime) {
       <div style="width:100%;">
           <div style="width:70%;height:400px;float:left;position:relative;align:center;">
               <div style="position:absolute;right:20px;">
-                  <div class="picture" align="center">
+                  <div class="picture" align="center" id="context">
                     <img src="${config.data[CT].context_picture}" >
                   </div>
               </div>
@@ -162,11 +162,11 @@ const custom_textfield_main = function(config, startingTime) {
 
           <div style="width:30%;height:400px;float:right;position:relative;align:center;">
               <div style="position:absolute;left:20px;">
-                  <div class="picture" align="center">
+                  <div id="target3" class="picture babe-nodisplay" align="center" >
                     <img src="${config.data[CT].picture}">
                   </div>
 
-                  <div class='babe-view-answer-container'>
+                  <div id="target4"  class='babe-view-answer-container babe-nodisplay'>
                   <p class='babe-view-text'>${config.data[CT].question1}
                     <textarea name='textbox-input' rows=1 cols=15 class='textbox-input'/>
                     ${config.data[CT].question2}
@@ -179,6 +179,24 @@ const custom_textfield_main = function(config, startingTime) {
           <button id='next' class='babe-view-button babe-nodisplay'>next</button>
       </div>`);
 
+// first, present the context. When the bar is pressed, wait a few seconds, display target
+
+      document.addEventListener("keyup", function(event) {
+
+          if (event.which == 32) {
+            setTimeout(function() {
+              $("#target1").removeClass("babe-nodisplay");
+              $("#target2").removeClass("babe-nodisplay");
+              $("#target3").removeClass("babe-nodisplay");
+              $("#target4").removeClass("babe-nodisplay");
+
+            }, 1500);
+
+          }
+      });
+        //$('body').on(,handleKey());
+      //  handleKey('keypress');
+      //  document.addEventListener('keypress', handleKey);
         let next;
         let textInput;
         const minChars = config.data[CT].min_chars === undefined ? 2 : config.data[CT].min_chars;
