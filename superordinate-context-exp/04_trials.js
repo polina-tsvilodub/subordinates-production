@@ -15,7 +15,7 @@ const mainTrials = { dogs: [ [{
    context_picture: "images/animal_parade_big_s.png",
    item: "dogs",
     picture: "images/great-dane.png",
-    context: "You see a group of animals.",
+    context: "You see a parade of animals.",
     text: "Another animal belongs to the group.",
     sentence: "You say to your friend:",
     question1: adj[0][0],
@@ -434,7 +434,7 @@ trees: {
 }
 }
 
-const consistency = 0 //_.sample([0,1])
+const consistency = _.sample([0,1])
 const size = _.shuffle([0, 0, 0, 1, 1, 1])
 const trials = _.shuffle([ {x: warmupTrials.dogs, y:mainTrials.dogs[size[0]][consistency]},
   {x:warmupTrials.birds, y:mainTrials.birds[size[1]][consistency]}, {x:warmupTrials.monkeys,y:mainTrials.monkeys[size[2]][consistency]},

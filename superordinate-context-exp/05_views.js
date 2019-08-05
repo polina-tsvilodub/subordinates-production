@@ -44,13 +44,11 @@ const instructions = babeViews.view_generator("instructions",{
 
             <br />
             <br />
-            The experiment consists of two rounds, each having a few warm-up trials before the main trials start.
+            The experiment consists of two rounds with three trials each.
             <br />
             <br />
-            During the warm-up trials, you will see pictures of objects.
-            <br />
-            <br />
-            Please label the objects. You will be given feedback on your labels.
+            You are watching groups of objects and describing them as they pass by.
+  
             <br />
             <br />
             By pressing the button 'Go to Trials' you begin the first round.
