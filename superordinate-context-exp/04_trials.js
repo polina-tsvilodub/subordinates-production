@@ -12,11 +12,11 @@ const adj = [[utterance.question1b, utterance.question2b, "big"], [utterance.que
 
 const mainTrials = { dogs: [ [{
 
-   context_picture: "images/animal_parade_big_s.png",
+   context_picture: "images/animal_parade_big.png",
    item: "dogs",
     picture: "images/great-dane.png",
     context: "You see a parade of animals.",
-    text: "Another animal belongs to the group.",
+    text: "This one is also in the parade.",
     sentence: "You say to your friend:",
     question1: adj[0][0],
     question2: adj[0][1],
@@ -26,11 +26,11 @@ const mainTrials = { dogs: [ [{
     size_target: "big"
   },
   {
-    context_picture: "images/animal_parade_big_s.png",
+    context_picture: "images/animal_parade_big.png",
     item: "dogs",
      picture: "images/great-dane.png",
-     context: "You see a group of animals.",
-     text: "Another animal belongs to the group.",
+     context: "You see a parade of animals.",
+     text: "This one is also in the parade.",
      sentence: "You say to your friend:",
      question1: adj[1][0],
      question2: adj[1][1],
@@ -42,11 +42,11 @@ const mainTrials = { dogs: [ [{
 ],
   [
   {
-   context_picture: "images/animal_parade_small_s.png",
+   context_picture: "images/animal_parade_small.png",
    item: "dogs",
     picture: "images/chihuahua.png",
-    context: "You see a group of animals.",
-    text: "Another animal belongs to the group.",
+    context: "You see a parade of animals.",
+    text: "This one is also in the parade.",
     sentence: "You say to your friend:",
     question1: adj[1][0],
     question2: adj[1][1],
@@ -56,11 +56,11 @@ const mainTrials = { dogs: [ [{
     size_target: "small"
   },
   {
-   context_picture: "images/animal_parade_small_s.png",
+   context_picture: "images/animal_parade_small.png",
    item: "dogs",
     picture: "images/chihuahua.png",
-    context: "You see a group of animals.",
-    text: "Another animal belongs to the group.",
+    context: "You see a parade of animals.",
+    text: "This one is also in the parade.",
     sentence: "You say to your friend:",
     question1: adj[0][0],
     question2: adj[0][1],
@@ -71,11 +71,11 @@ const mainTrials = { dogs: [ [{
   }
 ]],
   birds: [ [{
-    context_picture: "images/birds_parade_big_s.png",
+    context_picture: "images/birds_parade_big.png",
     item: "birds",
      picture: "images/swan.png",
-     context: "You see a group of animals.",
-     text: "Another animal belongs to the group.",
+     context: "You see a parade of animals.",
+     text: "This one is also in the parade.",
      sentence: "You say to your friend:",
      question1: adj[0][0],
      question2: adj[0][1],
@@ -85,11 +85,11 @@ const mainTrials = { dogs: [ [{
      size_target: "big"
    },
    {
-     context_picture: "images/birds_parade_big_s.png",
+     context_picture: "images/birds_parade_big.png",
      item: "birds",
       picture: "images/swan.png",
-      context: "You see a group of animals.",
-      text: "Another animal belongs to the group.",
+      context: "You see a parade of animals.",
+      text: "This one is also in the parade.",
       sentence: "You say to your friend:",
       question1: adj[1][0],
       question2: adj[1][1],
@@ -101,11 +101,11 @@ const mainTrials = { dogs: [ [{
   ],
    [
     {
-    context_picture: "images/birds_parade_small_s.png",
+    context_picture: "images/birds_parade_small.png",
     item: "birds",
      picture: "images/hummingbird.png",
-     context: "You see a group of animals.",
-     text: "Another animal belongs to the group.",
+     context: "You see a parade of animals.",
+     text: "This one is also in the parade.",
      sentence: "You say to your friend:",
      question1: adj[1][0],
      question2: adj[1][1],
@@ -115,11 +115,11 @@ const mainTrials = { dogs: [ [{
      size_target: "small"
    },
    {
-     context_picture: "images/birds_parade_small_s.png",
+     context_picture: "images/birds_parade_small.png",
      item: "birds",
       picture: "images/hummingbird.png",
-      context: "You see a group of animals.",
-      text: "Another animal belongs to the group.",
+      context: "You see a parade of animals.",
+      text: "This one is also in the parade.",
       sentence: "You say to your friend:",
       question1: adj[0][0],
       question2: adj[0][1],
@@ -133,8 +133,8 @@ const mainTrials = { dogs: [ [{
      context_picture: "images/primates_parade_big_s.png",
      item: "primates",
       picture: "images/gorilla.png",
-      context: "You see a group of animals.",
-      text: "Another animal belongs to the group.",
+      context: "You see a parade of animals.",
+      text: "This one is also in the parade.",
       sentence: "You say to your friend:",
       question1: adj[0][0],
       question2: adj[0][1],
@@ -144,11 +144,11 @@ const mainTrials = { dogs: [ [{
       size_target: "big"
     },
     {
-      context_picture: "images/primates_parade_big_s.png",
+      context_picture: "images/primates_parade_big.png",
       item: "primates",
        picture: "images/gorilla.png",
-       context: "You see a group of animals.",
-       text: "Another animal belongs to the group.",
+       context: "You see a parade of animals.",
+       text: "This one is also in the parade.",
        sentence: "You say to your friend:",
        question1: adj[1][0],
        question2: adj[1][1],
@@ -160,11 +160,11 @@ const mainTrials = { dogs: [ [{
   ],
     [
      {
-       context_picture: "images/primates_parade_small_s.png",
+       context_picture: "images/primates_parade_small.png",
        item: "primates",
         picture: "images/spider-monkey.png",
-        context: "You see a group of animals.",
-        text: "Another animal belongs to the group.",
+        context: "You see a parade of animals.",
+        text: "This one is also in the parade.",
         sentence: "You say to your friend:",
         question1: adj[1][0],
         question2: adj[1][1],
@@ -174,11 +174,11 @@ const mainTrials = { dogs: [ [{
         size_target: "small"
       },
       {
-        context_picture: "images/primates_parade_small_s.png",
+        context_picture: "images/primates_parade_small.png",
         item: "primates",
          picture: "images/spider-monkey.png",
-         context: "You see a group of animals.",
-         text: "Another animal belongs to the group.",
+         context: "You see a parade of animals.",
+         text: "This one is also in the parade.",
          sentence: "You say to your friend:",
          question1: adj[0][0],
          question2: adj[0][1],
@@ -189,11 +189,11 @@ const mainTrials = { dogs: [ [{
        }
    ]],
     flowers: [ [{
-      context_picture: "images/plant_parade_big_s.png",
+      context_picture: "images/plant_parade_big.png",
       item: "flowers",
        picture: "images/sunflower.png",
-       context: "You see a group of plants.",
-       text: "Another plant belongs to the group.",
+       context: "You see a collection of plants.",
+       text: "This one is also in the collection.",
        sentence: "You say to your friend:",
        question1: adj[0][0],
        question2: adj[0][1],
@@ -203,11 +203,11 @@ const mainTrials = { dogs: [ [{
        size_target: "big"
      },
      {
-       context_picture: "images/plant_parade_big_s.png",
+       context_picture: "images/plant_parade_big.png",
        item: "flowers",
         picture: "images/sunflower.png",
-        context: "You see a group of plants.",
-        text: "Another plant belongs to the group.",
+        context: "You see a collection of plants.",
+        text: "This one is also in the collection.",
         sentence: "You say to your friend:",
         question1: adj[1][0],
         question2: adj[1][1],
@@ -219,11 +219,11 @@ const mainTrials = { dogs: [ [{
    ],
      [
       {
-        context_picture: "images/plant_parade_small_s.png",
+        context_picture: "images/plant_parade_small.png",
         item: "flowers",
          picture: "images/daisy.png",
-         context: "You see a group of plants.",
-         text: "Another plant belongs to the group.",
+         context: "You see a collection of plants.",
+         text: "This one is also in the collection.",
          sentence: "You say to your friend:",
          question1: adj[1][0],
          question2: adj[1][1],
@@ -233,11 +233,11 @@ const mainTrials = { dogs: [ [{
          size_target: "small"
        },
        {
-         context_picture: "images/plant_parade_small_s.png",
+         context_picture: "images/plant_parade_small.png",
          item: "flowers",
           picture: "images/daisy.png",
-          context: "You see a group of plants.",
-          text: "Another plant belongs to the group.",
+          context: "You see a collection of plants.",
+          text: "This one is also in the collection.",
           sentence: "You say to your friend:",
           question1: adj[0][0],
           question2: adj[0][1],
@@ -248,11 +248,11 @@ const mainTrials = { dogs: [ [{
         }
     ]],
      fish: [[{
-       context_picture: "images/fish_parade_big_s.png",
+       context_picture: "images/fish_parade_big.png",
        item: "fish",
         picture: "images/swordfish.png",
-        context: "You see a group of animals.",
-        text: "Another animal belongs to the group.",
+        context: "You see a parade of animals.",
+        text: "This one is also in the parade.",
         sentence: "You say to your friend:",
         question1: adj[0][0],
         question2: adj[0][1],
@@ -262,11 +262,11 @@ const mainTrials = { dogs: [ [{
         size_target: "big"
       },
       {
-        context_picture: "images/fish_parade_big_s.png",
+        context_picture: "images/fish_parade_big.png",
         item: "fish",
          picture: "images/swordfish.png",
-         context: "You see a group of animals.",
-         text: "Another animal belongs to the group.",
+         context: "You see a parade of animals.",
+         text: "This one is also in the parade.",
          sentence: "You say to your friend:",
          question1: adj[1][0],
          question2: adj[1][1],
@@ -278,11 +278,11 @@ const mainTrials = { dogs: [ [{
     ],
       [
        {
-         context_picture: "images/fish_parade_small_s.png",
+         context_picture: "images/fish_parade_small.png",
          item: "fish",
           picture: "images/goldfish.png",
-          context: "You see a group of animals.",
-          text: "Another animal belongs to the group.",
+          context: "You see a parade of animals.",
+          text: "This one is also in the parade.",
           sentence: "You say to your friend:",
           question1: adj[1][0],
           question2: adj[1][1],
@@ -292,11 +292,11 @@ const mainTrials = { dogs: [ [{
           size_target: "small"
         },
         {
-          context_picture: "images/fish_parade_small_s.png",
+          context_picture: "images/fish_parade_small.png",
           item: "fish",
            picture: "images/goldfish.png",
-           context: "You see a group of animals.",
-           text: "Another animal belongs to the group.",
+           context: "You see a parade of animals.",
+           text: "This one is also in the parade.",
            sentence: "You say to your friend:",
            question1: adj[0][0],
            question2: adj[0][1],
@@ -307,11 +307,11 @@ const mainTrials = { dogs: [ [{
          }
      ]],
     trees: [[{
-        context_picture: "images/landscape_big_s.png",
+        context_picture: "images/landscape_big.png",
         item: "trees",
          picture: "images/redwood.png",
-         context: "You see a landscape.",
-         text: "Another plant belongs to the landscape.",
+         context: "You see the following items on the landscape.",
+         text: "This one is also in the landscape.",
          sentence: "You say to your friend:",
          question1: adj[0][0],
          question2: adj[0][1],
@@ -321,11 +321,11 @@ const mainTrials = { dogs: [ [{
          size_target: "big"
        },
        {
-           context_picture: "images/landscape_big_s.png",
+           context_picture: "images/landscape_big.png",
            item: "trees",
             picture: "images/redwood.png",
-            context: "You see a landscape.",
-            text: "Another plant belongs to the landscape.",
+            context: "You see the following items on the landscape.",
+            text: "This one is also in the landscape.",
             sentence: "You say to your friend:",
             question1: adj[1][0],
             question2: adj[1][1],
@@ -337,11 +337,11 @@ const mainTrials = { dogs: [ [{
      ],
        [
         {
-          context_picture: "images/landscape_small_s.png",
+          context_picture: "images/landscape_small.png",
           item: "trees",
            picture: "images/bonsai.png",
-           context: "You see a landscape.",
-           text: "Another plant belongs to the landscape.",
+           context: "You see the following items on the landscape.",
+           text: "This one is also in the landscape.",
            sentence: "You say to your friend:",
            question1: adj[1][0],
            question2: adj[1][1],
@@ -351,11 +351,11 @@ const mainTrials = { dogs: [ [{
            size_target: "small"
          },
          {
-           context_picture: "images/landscape_small_s.png",
+           context_picture: "images/landscape_small.png",
            item: "trees",
             picture: "images/bonsai.png",
-            context: "You see a landscape.",
-            text: "Another plant belongs to the landscape.",
+            context: "You see the following items on the landscape.",
+            text: "This one is also in the landscape.",
             sentence: "You say to your friend:",
             question1: adj[0][0],
             question2: adj[0][1],

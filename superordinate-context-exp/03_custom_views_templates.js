@@ -126,9 +126,9 @@ const custom_textfield_main = function(config, startingTime) {
     trials: config.trials,
     render: function(CT, babe, startingTime) {
       $("main").html(`<div class='babe-view'>
-      <h1 class='babe-view-title'>Parades</h1>
+
       <div style="width:100%">
-          <div style="width:60%;height:150px;float:left;position:relative;align:center;">
+          <div style="width:70%;height:150px;float:left;position:relative;align:center;">
             <div style="align:center">
                       <section class="babe-text-container">
                         <p class="babe-view-question">${config.data[CT].context}</p>
@@ -136,7 +136,7 @@ const custom_textfield_main = function(config, startingTime) {
 
               </div>
           </div>
-          <div style="width:40%;height:150px;float:right;position:relative;align:center;">
+          <div style="width:30%;height:150px;float:right;position:relative;align:center;">
               <div style="position:absolute;left:20px;">
                       <section class="babe-text-container">
                         <p class="babe-view-question">${config.data[CT].text}</p>
@@ -152,7 +152,7 @@ const custom_textfield_main = function(config, startingTime) {
       </div>
 
       <div style="width:100%;">
-          <div style="width:60%;height:400px;float:left;position:relative;align:center;">
+          <div style="width:70%;height:400px;float:left;position:relative;align:center;">
               <div style="position:absolute;right:20px;">
                   <div class="picture" align="center">
                     <img src="${config.data[CT].context_picture}" >
@@ -160,7 +160,7 @@ const custom_textfield_main = function(config, startingTime) {
               </div>
           </div>
 
-          <div style="width:40%;height:400px;float:right;position:relative;align:center;">
+          <div style="width:30%;height:400px;float:right;position:relative;align:center;">
               <div style="position:absolute;left:20px;">
                   <div class="picture" align="center">
                     <img src="${config.data[CT].picture}">
