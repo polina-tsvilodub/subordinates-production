@@ -53,7 +53,7 @@ const instructions = babeViews.view_generator("instructions",{
             You will see the groups. Please <b>press the space bar</b> to view another member of the group. It will appear after a short delay.
             <br />
             <br />
-            By pressing the button 'Go to Trials' you begin the first round.
+            By pressing the button 'Go to Trials' you begin the experiment.
 
             <br/>
             <br/>
