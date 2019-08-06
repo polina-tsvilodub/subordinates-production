@@ -10,14 +10,14 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 
 ```
-#Experiment outline 
+# Experiment outline 
 This script analyses the data from a comparison class elicitation pilot experiment with different adjective and target pais (n=80). 
 
 We expect _more subordinate labels to occur in the incongruent condition_. In contrast, we expect _a similar proportion of superordinate and subordinate labels as in the previous experiment in the congruent condition_. Overall proportion of _subordinate labels should be higher in the predicative condition_. 
+The proportion of superordinate labels is expected to be higher due to superordinate contextual competitors.
 
 ### Procedure
-The pairings of the target and the adjective are altered in this experiment: i. e. in the congruent condition, if target is a chihuahua, the sentence includes the adjective "small", if it is a great dane, it includes "big". In the incongruent (critical) condition, if the target is a chihuahua, the sentence includes the adjective "big", if the target is a great dane, it includes "small".Every subject view three congruent and three incongruent conditions, randomly matched to three big and three small targets. 
-
+The pairings of the target and the adjective are altered in this experiment: i. e. in the congruent condition, if target is a chihuahua, the sentence includes the adjective "small", if it is a great dane, it includes "big". In the incongruent (critical) condition, if the target is a chihuahua, the sentence includes the adjective "big", if the target is a great dane, it includes "small" (between-subject).
 
 
 ## Data analysis
@@ -69,7 +69,7 @@ d_main <- d_filt %>%
 ```
 
 ## Categorizing the data 
-Two responses to be excluded from the analysis: "herd of primates", "collection of plants"
+About 30 responses excluded due to task misundersatnding.
 ```{r}
 # question1 and question2 are the sentence parts coded in the experiment 
 # look at the different responses provided and categorize them 
@@ -163,18 +163,18 @@ We check if there is any proportional difference between the trials with differe
 d_main_responseCat %>% group_by(size_target, adj_cond) %>% count()
 
 d_main_summary_bySize <- d_main_responseCat %>%
-  group_by(condition, size_target, adj_cond, response_label) %>%
+  group_by(condition, size_target, adj_cond, size_adj, response_label) %>%
   tidyboot_mean(column = response_num) %>%
   ungroup() %>%
   mutate(condition = factor(condition, 
                             levels = c("prenominal", "predicative"),
                             labels= c("That's a big X", "That X is big")),
-         adj_cond = factor(adj_cond, 
-                            levels=c("congruent", "incongruent"), 
-                           labels = c("great dane : big", "great dane : small")))
+         adjective = factor(size_adj, 
+                            levels=c("big", "small"), 
+                           labels = c("big", "small")))
 
 # big and small indicate the size of the target here 
-ggplot(d_main_summary_bySize, aes(x = size_target, fill = adj_cond, 
+ggplot(d_main_summary_bySize, aes(x = size_target, fill = adjective, 
                            y = mean, ymin = ci_lower, ymax = ci_upper))+
   geom_col(position = position_dodge(0.8), width = 0.8)+
   geom_linerange(position = position_dodge(0.8))+
@@ -182,16 +182,12 @@ ggplot(d_main_summary_bySize, aes(x = size_target, fill = adj_cond,
   facet_wrap(~condition)+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+ ggtitle("Proportions in trials grouped by target size")
 ```
-Interestingly, small targets seem to elicit less subordinates in the predicative condition (more sensistive to syntactic structure), whereas big targets elicit equal proportions in both conditions. Is there a different prior of using positive adjectives ('big' as the incongruent one in small trials) (in terms of informativity) than using negative adjectives (incongruent ones in the big trials)?  Is it 'worse' to say "big chihuahua" in comparison to dogs than "small great dane" in comparison to dogs?
-Also, the proportions reverse in the congruent conditions depending on the target size! This should not be the case! People rather say "That's a big great dane" (>0.5), but perform as expected in the predicative condition (0.5). Again, different prior expectations of positive vs negative feature expression on a scale? 
-In the small trials, they perform as expected (predicative > prenominal).
-
 
 ## Consistency of choosing a response category by subject
 
 Do participants switch between superordinate and subordinate labels within the experiment?  
 
-Add statistics on no/all responses of same cat, more/less than half/mixed
+
 ```{r}
 d_main_responseCat %>%
   group_by(submission_id, adj_cond, condition, response_label) %>%
@@ -207,10 +203,10 @@ d_main_responseCat %>%
   geom_bar(position=position_dodge())+
   facet_grid(adj_cond~condition) + ggtitle("Number of subordinate responses uttered per participant in the 3 trials")
 ```
-There are many people in the congruent condition consistently using subordinates in the prenominal condition, but also some not using them at all. Incongruent trials seem to be as expected.  
+
 
 ## Proportion of subordinate responses by item (context)
-For each context, there is a pair of targets (a big and a small one). The targets seem to elicit different proportions of subordinate lables. The most effective ones seem to be the swan, the chihuahua and the bonsai. However, the results are not robust due to a small sample size. 
+For each context, there is a pair of targets (a big and a small one). The targets seem to elicit different proportions of subordinate labels. 
 ```{r}
 d_main_responseCat %>% count(item, condition) %>% glimpse()
 
@@ -247,12 +243,33 @@ d_main_responseCat %>%
          ) %>%
 
 # big and small indicate the adjective actually used 
-ggplot(., aes(x = n_sub_responses, 
+ggplot(., aes(x = n_sub_responses
                         ))+
   geom_bar(position = position_dodge(0.8), width = 0.8)+
  
   labs( y = "Proportion subordinate responses")+
   facet_grid(condition~item)
 # leave this grouping or interchange adj_cond and condition?
+
+```
+
+``` {r}
+d_main_responseCat %>%
+  group_by(condition, item, size_target, response_label) %>%
+  summarize(n_sub_responses = sum(response_num)) %>%
+  ungroup() %>%
+  mutate(condition = factor(condition, 
+                            levels = c("prenominal", "predicative"),
+                            labels= c("That's a big X", "That X is big"))
+         ) %>%
+
+# big and small indicate the adjective actually used 
+ggplot(., aes(x = n_sub_responses, fill = size_target
+                        ))+
+  geom_bar(position = position_dodge(0.8), width = 0.8)+
+ 
+  labs( y = "Proportion subordinate responses")+
+  facet_grid(condition~item)
+
 
 ```
