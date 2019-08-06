@@ -61,14 +61,14 @@ d_langs <- d %>% mutate(
 d_filt <- d %>% 
   filter(grepl("English", languages, ignore.case = T)) %>%
   filter((submission_id != 120)& (submission_id != 130)&(submission_id != 79)) %>%
-  select(submission_id, trial_name, trial_number, size_adj, item, botresponse, response, response1, response2, response3, correct1, correct2, correct3, condition, size_target, attempts, adj_cond)
+  select(submission_id, trial_name, trial_number, size_adj, item, botresponse, response, response1, response2, response3, correct1, correct2, correct3, condition, size_target, attempts, adj_cond, picture)
 
 glimpse(d_filt)
 
 # extract main trials 
 d_main <- d_filt %>% 
   filter(trial_name == "main") %>%
-  select(submission_id, trial_number, response, size_adj, item, condition, size_target, adj_cond)
+  select(submission_id, trial_number, response, size_adj, item, condition, size_target, adj_cond, picture)
 
 # extract warm-up trials 
 d_warmup <- d_filt %>% filter(trial_name =="warmup") %>% 
@@ -128,6 +128,22 @@ ggplot(d_main_summary, aes(x = condition, fill = congruence,
 ```
 The surprising observation here is that the overall proportion of subordinate responses ih higher than in the previous experiment. 
 
+## Stats
+``` {r}
+d_main_congruent <- d_main_responseCat %>% filter(adj_cond == "congruent")
+
+library(lme4)
+lm.rs <- glmer(response_num ~ condition + (1 | submission_id) + 
+        (1 + condition | item), data = d_main_congruent, family = 'binomial')
+summary(lm.rs)
+```
+``` {r}
+cond_numeric <- ifelse(d_main_congruent$condition=="prenominal", 1, -1)
+lm.rsnum <- glmer(response_num ~ cond_numeric + (1 | submission_id) + 
+        (1 + cond_numeric | item), data = d_main_congruent, family = 'binomial')
+summary(lm.rsnum)
+
+```
 ## Proportion of subordinate responses by congruence 
 ```{r}
 d_main_congr <- d_main_responseCat %>%
@@ -266,6 +282,31 @@ ggplot(., aes(x = n_sub_responses, fill = size_target
  
   labs( y = "Proportion subordinate responses")+
   facet_grid(condition~item)
+```
+## Sub responses by item
+
+```{r}
+d_main_responseCat.itemConsistency <- d_main_responseCat %>%
+  group_by(item, size_target, response_label) %>%
+  summarize(n_sub_responses = sum(response_num),
+            n = n(),
+            prop = n_sub_responses / n) %>%
+  ungroup() 
+
+
+d_main_responseCat.itemConsistency %>%
+  ggplot(., aes( x = prop ))+
+  geom_histogram()+
+  xlab("proportion subordinate responses")+
+  ylab('number of items')
+```
+
+```{r}
+d_main_responseCat.itemConsistency[with(d_main_responseCat.itemConsistency, order(prop)), ] %>% cbind(items=c("spider monkey", "great dane", "chihuahua", "bonsai", "swordfish", "redwood", "goldfish", "colibri", "gorilla", "sunflower", "daisy", "swan")) %>% 
+  select(items,  prop, n_sub_responses, n) %>%
+
+  kable()
+
 ```
 
 ## Order effects
