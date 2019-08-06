@@ -113,7 +113,10 @@ d_main_summary <- d_main_responseCat %>%
   ungroup() %>%
   mutate(condition = factor(condition, 
                             levels = c("prenominal", "predicative"),
-                            labels= c("That's a big X", "That X is big")))
+                            labels= c("That's a big X", "That X is big")),
+         congruence = factor(adj_cond,
+                           levels = c("congruent", "incongruent"),
+                           labels = c("great dane:big (congruent)", "great dane:small (incongruent)")))
 
 ggplot(d_main_summary, aes(x = condition, fill = adj_cond,
                            y = mean, ymin = ci_lower, ymax = ci_upper))+
@@ -133,9 +136,12 @@ d_main_congr <- d_main_responseCat %>%
   ungroup() %>%
   mutate(condition = factor(condition, 
                             levels = c("prenominal", "predicative"),
-                            labels= c("That's a big X", "That X is big")))
+                            labels= c("That's a big X", "That X is big")),
+         congruence = factor(adj_cond,
+                           levels = c("congruent", "incongruent"),
+                           labels = c("great dane:big (congruent)", "great dane:small (incongruent)")))
 
-ggplot(d_main_congr, aes(x = adj_cond, fill = condition,
+ggplot(d_main_congr, aes(x = congruence, fill = condition,
                            y = mean, ymin = ci_lower, ymax = ci_upper))+
   geom_col(position = position_dodge(0.8))+
   geom_linerange(position = position_dodge(0.8))+
