@@ -131,6 +131,28 @@ ggplot(d_main_summary, aes(x = condition, fill = condition,
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
 ```
 
+## Stats
+
+```{r}
+library(lme4)
+lm.rs <- glmer(response_num ~ condition + (1 | submission_id) + 
+        (1 + condition | picture), data = d_main_responseCat, family = 'binomial')
+
+summary(lm.rs)
+```
+
+"effect coding" condition to get more veridical estimate of item variability
+
+```{r}
+cond_numeric <- ifelse(d_main_responseCat$condition=="prenominal", 1, -1)
+
+lm.rsnum <- glmer(response_num ~ cond_numeric + (1 | submission_id) + 
+        (1 + cond_numeric | picture), data = d_main_responseCat, family = 'binomial')
+summary(lm.rsnum)
+
+# removing the by-item intercept (0 + cond_numeric | picture) reduces the estimate of by-item variability to 0. it may be just that the by-item variability is small, and the model is having a hard time estimating that small number.
+```
+
 
 ## Proportion of subordinate labels in big vs. small trials 
 
@@ -160,15 +182,45 @@ Do participants switch between superordinate and subordinate labels within the e
 ```{r}
 d_main_responseCat %>%
   group_by(submission_id, condition, response_label) %>%
+  ##group_by(picture, condition, response_label) %>%
+  #group_by(picture, response_label) %>%
   summarize(n_sub_responses = sum(response_num)) %>%
   ungroup() %>%
-  mutate(condition = factor(condition, 
+  mutate(condition = factor(condition,
                             levels = c("prenominal", "predicative"),
                             labels= c("That's a big X (prenominal)", "That X is big (predicative)"))) %>%
   ggplot(., aes( x = n_sub_responses ))+
   geom_bar()+
+  xlab("number of subordinate responses")+
+  ylab('number of participants')+
   facet_wrap(~condition)
 ```
+
+
+## Consistency of choosing a response category by item
+
+```{r}
+d_main_responseCat.itemConsistency <- d_main_responseCat %>%
+  group_by(picture, response_label) %>%
+  summarize(n_sub_responses = sum(response_num),
+            n = n(),
+            prop = n_sub_responses / n) %>%
+  ungroup() 
+
+
+d_main_responseCat.itemConsistency %>%
+  ggplot(., aes( x = prop ))+
+  geom_histogram()+
+  xlab("proportion subordinate responses")+
+  ylab('number of items')
+```
+
+```{r}
+d_main_responseCat.itemConsistency[with(d_main_responseCat.itemConsistency, order(prop)), ] %>%
+  select(picture, prop, n_sub_responses, n) %>%
+  kable()
+```
+
 
 ## Proportion of subordinate responses by item (context)
 For each context, there is a pair of targets (a big and a small one). The targets seem to elicit different proportions of subordinate lables. The most effective ones seem to be the swan, the chihuahua and the bonsai. However, the results are not robust due to a small sample size. 
