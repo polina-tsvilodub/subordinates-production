@@ -25,9 +25,9 @@ $("document").ready(function() {
             context2,
             warmup_trials2,
             main_trials2,
-            context3,
-            warmup_trials3,
-            main_trials3,
+            // context3,
+            // warmup_trials3,
+            // main_trials3,
             custom_post_test,
             thanks,
         ],
@@ -51,9 +51,9 @@ $("document").ready(function() {
                 warmup_trials1.name,
                 main_trials1.name,
                 warmup_trials2.name,
-                main_trials2.name,
-                warmup_trials3.name,
-                main_trials3.name
+                main_trials2.name
+                // warmup_trials3.name,
+                // main_trials3.name
             ],
              // Possible styles are "default", "separate" and "chunks"
             style: "separate",

@@ -380,35 +380,35 @@ const trial_info = {
 
        trials[0].y,
        trials[1].y,
-       trials[2].y,
-       trials[3].y
+       trials[2].y
+    //   trials[3].y
 
   ],
   text_insertion_main2 :[
+    trials[3].y,
     trials[4].y,
-    trials[5].y,
-    trials[6].y
+    trials[5].y
   ],
-  text_insertion_main3 : [
-    trials[7].y,
-    trials[8].y,
-    trials[9].y
-  ],
+  // text_insertion_main3 : [
+  //   trials[7].y,
+  //   trials[8].y,
+  //   trials[9].y
+  // ],
    text_insertion_warmup1: [
      trials[0].x,
      trials[1].x,
-     trials[2].x,
-     trials[3].x
+     trials[2].x
+  //   trials[3].x
 
   ],
   text_insertion_warmup2: [
+    trials[3].x,
     trials[4].x,
-    trials[5].x,
-    trials[6].x
-  ],
-  text_insertion_warmup3: [
-    trials[7].x,
-    trials[8].x,
-    trials[9].x
+    trials[5].x
   ]
+  // text_insertion_warmup3: [
+  //   trials[7].x,
+  //   trials[8].x,
+  //   trials[9].x
+  // ]
 };

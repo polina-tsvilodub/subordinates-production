@@ -45,7 +45,7 @@ const instructions = babeViews.view_generator("instructions",{
 
             <br />
             <br />
-            The experiment consists of three rounds, each having a few warm-up trials before the main trials start.
+            The experiment consists of two rounds, each having a few warm-up trials before the main trials start.
             <br />
             <br />
             During the warm-up trials, you will see pictures of objects.
@@ -93,7 +93,7 @@ const thanks = babeViews.view_generator("thanks", {
 const warmup_trials1 = custom_textfield_warmup({
   name: 'warmup1',
   title: 'Labeling task',
-  trials: 4,
+  trials: 3,
   data: trial_info.text_insertion_warmup1,
 //  hook: {
 //    after_response_enabled: check_response
@@ -164,7 +164,7 @@ const context3 = babeViews.view_generator("instructions",{
 const main_trials1 = custom_textfield_main({
   name: 'main1',
 //  title: 'Parades',
-  trials: 4,
+  trials: 3,
   data: _.shuffle(trial_info.text_insertion_main1)
 
 
