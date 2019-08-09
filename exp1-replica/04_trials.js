@@ -366,28 +366,28 @@ trees: {
 }
 }
 
-const size = _.shuffle([0,0,0,0,0,1,1,1,1,1])
+const size = _.shuffle([0,0,0,1,1,1])
 
-const trials = _.shuffle([ {x: warmupTrials.dogs1, y:mainTrials.dogs1[size[0]]}, {x: warmupTrials.dogs2, y:mainTrials.dogs2[size[1]]},
-  {x:warmupTrials.birds1, y:mainTrials.birds1[size[2]]}, {x:warmupTrials.birds2, y:mainTrials.birds2[size[3]]}, {x:warmupTrials.birds3, y:mainTrials.birds3[size[4]]},
-  {x:warmupTrials.flowers1, y:mainTrials.flowers1[size[5]]},   {x:warmupTrials.flowers2, y:mainTrials.flowers2[size[6]]},
-  {x:warmupTrials.fish1,y:mainTrials.fish1[size[7]]}, {x:warmupTrials.fish2,y:mainTrials.fish2[size[8]]},
-  {x:warmupTrials.trees, y: mainTrials.trees[size[9]]}])
+const trials = _.shuffle([ {x: warmupTrials.dogs1, y:mainTrials.dogs1}, {x: warmupTrials.dogs2, y:mainTrials.dogs2},
+  {x:warmupTrials.birds1, y:mainTrials.birds1}, {x:warmupTrials.birds2, y:mainTrials.birds2}, {x:warmupTrials.birds3, y:mainTrials.birds3},
+  {x:warmupTrials.flowers1, y:mainTrials.flowers1},   {x:warmupTrials.flowers2, y:mainTrials.flowers2},
+  {x:warmupTrials.fish1,y:mainTrials.fish1}, {x:warmupTrials.fish2,y:mainTrials.fish2},
+  {x:warmupTrials.trees, y: mainTrials.trees}])
 
 const trial_info = {
 
      text_insertion_main1: [
 
-       trials[0].y,
-       trials[1].y,
-       trials[2].y
+       trials[0].y[size[0]],
+       trials[1].y[size[1]],
+       trials[2].y[size[2]]
     //   trials[3].y
 
   ],
   text_insertion_main2 :[
-    trials[3].y,
-    trials[4].y,
-    trials[5].y
+    trials[3].y[size[3]],
+    trials[4].y[size[4]],
+    trials[5].y[size[5]]
   ],
   // text_insertion_main3 : [
   //   trials[7].y,
