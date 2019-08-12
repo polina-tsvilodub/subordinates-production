@@ -11,13 +11,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```
 # Experiment outline 
-This script analyses the data from a comparison class elicitation pilot experiment with different adjective and target pais (n=80). 
+This script analyses the data from a comparison class production experiment with (n=X). 
 
-We expect _more subordinate labels to occur in the incongruent condition_. In contrast, we expect _a similar proportion of superordinate and subordinate labels as in the previous experiment in the congruent condition_. Overall proportion of _subordinate labels should be higher in the predicative condition_. 
-The proportion of superordinate labels is expected to be higher due to superordinate contextual competitors.
+In a between-subject design we manipulate the syntactic frame in which the subjects elicit the comparison class with respect to size of a target obejct: "That X is big" (predicative condition) and "That's a big X" (prenominal condition). We use both adjectives 'big' and 'small', depending on the target. The targets are chosen such that they are obviously big (or small) members of their superordinate category, but normal-sized for their subordinate category. A stimulus consists of a context group, for example different-sized dogs (superordinate category), and the target, a normal-sized great dane (a big dog) or a normal-sized chihuahua (a small dog) (subordinate categories). 
+
+Due to  syntactic frame manipulation, the participans are expected to use different comparison classes (superordinate labels versus subordinate labels of the target) in order to communicate the situation presented to them in the stimulus. 
+
+We expect _more superordinate labels to occur in the prenominal condition_, since the NP restricts the comparison class more strongly to the category used in the NP. In contrast, we expect _a similar proportion of superordinate and subordinate labels in the predicative condition_, since the comparison class is less restricted.
 
 ### Procedure
-The pairings of the target and the adjective are altered in this experiment: i. e. in the congruent condition, if target is a chihuahua, the sentence includes the adjective "small", if it is a great dane, it includes "big". In the incongruent (critical) condition, if the target is a chihuahua, the sentence includes the adjective "big", if the target is a great dane, it includes "small" (between-subject).
+The experiment is devided into two blocks, each consisting of three warm-up and three main trials, such that subjects can easily memorize target category labels. 
+The warm-up trials are a simple labeling task. The subjects see pictures of two members of the same superordinate category, for example two dogs, each being a different subordinate, and a text box asking for a common label (the superordinate label is expected). The task is to label the pictures. The goal of this task to motivate speakers to produce subordinate category labels and to familiarize them with the target labels, since the warm-up trial pictures include the main trial target pictures. They were given feedback on the labels and could proceed only after correcting the entered answer to the suggested one. 
+
+The main trials set the situationsl context via an object parade picture. Then the participants see an additional parade member, the target object, which they are supposed to point out to a friend.  
+
+The syntactic structure of the reponse is the main condition (prenominal versus predicative, randomly sampled between-subject), the size of the target in comparison to the superordinate class is also randomly sampled (within-subject). The pairings of the target and the adjective are constant: i. e. if the target is a chihuahua, the sentence always includes the adjective "small", if it is a great dane, it would always be "big". 
 
 
 ## Data analysis
@@ -34,6 +42,8 @@ glimpse(d)
 # comments
 d_comments <- d %>%
   distinct(submission_id, problems, comments, fairprice)
+
+# number of big / small targets per condition
 d %>% group_by(condition, size) %>% count()
 
 ```
@@ -43,8 +53,7 @@ The participants recruited via MTurk were paid $1.10.
 
 ##Spliting data into main and warm-up, excluding participants
 
-6 participants are excluded because of their native language. 
-There are participants using upper case in the bot captcha, but they are not excluded in this analysis. 
+Subject exclusion
 ```{r}
 # make sure how participants indicate their native language 
 # sometimes participants use only "en" or "eng" for english
@@ -58,7 +67,9 @@ d_filt <- d %>%
 
 glimpse(d_filt)
 
+# exclude participants if necessary based on botcaptcha 
 d_filt %>% distinct(d_filt$botresponse) %>% View()
+
 # extract main trials 
 d_main <- d_filt %>% filter((trial_name =="main1")|(trial_name=="main2")) %>% 
   select(submission_id, trial_number, response,  size, item, condition, picture)
@@ -66,12 +77,13 @@ d_main <- d_filt %>% filter((trial_name =="main1")|(trial_name=="main2")) %>%
 ```
 
 ## Categorizing the data 
-About 30 responses excluded due to task misundersatnding.
+
 ```{r}
 # question1 and question2 are the sentence parts coded in the experiment 
 # look at the different responses provided and categorize them 
 d_main %>% distinct(d_main$response) %>% View()
 
+# exclude if responses are not referring to the target 
 d_main_valid <- subset(d_main, !(response %in% c("small"))) 
 
 d_main_responseCat <- d_main_valid %>%
@@ -85,6 +97,7 @@ d_main_responseCat <- d_main_valid %>%
     response_label = "sub"
   )
 ```
+
 ## Response category distribution
 ```{r}
 d_main_responseCat %>% mutate(condition = factor(condition, 
@@ -96,7 +109,6 @@ d_main_responseCat %>% mutate(condition = factor(condition,
 
 The proportion of subordinate responses is the dependent variable we test by manipulating the syntactic condition: "That's a big X" (prenominal) versus "That X is big" (predicative). 
 
-Count of different conditions: about 160 incongruent observations, about 240 congruent observations. Given the task description, the confusion among participants seems to happens especially in incongruent trials.
 
 ```{r}
 d_main_summary <- d_main_responseCat %>%
@@ -124,22 +136,35 @@ ggplot(d_main_summary, aes(x = condition, fill = condition,
 
 library(lme4)
 lm.rs <- glmer(response_num ~ condition + (1 | submission_id) + 
-        (1 + condition | item), data = d_main_responseCat, family = 'binomial')
+        (1 + condition | picture), data = d_main_responseCat, family = 'binomial')
 summary(lm.rs)
 ```
 
 ```{r}
 cond_numeric <- ifelse(d_main_responseCat$condition=="prenominal", 1, -1)
 lm.rsnum <- glmer(response_num ~ cond_numeric + (1 | submission_id) + 
-        (1 + cond_numeric | item), data = d_main_responseCat, family = 'binomial')
+        (1 + cond_numeric | picture), data = d_main_responseCat, family = 'binomial')
 summary(lm.rsnum)
 
 ```
+## Bayesian stats
 
+```{r}
+library(brms)
+# fit regression model
+lm.bayes <- brm(response_num ~ condition + (1| submission_id) + (1 + condition|picture), data = d_main_responseCat, family = "binomial")
+summary(lm.bayes)
 
+#extract posterior samples
+pos_samples <- posterior_samples(lm.bayes)
+head(pos_samples)
+
+# test hypothesis: is the sub response proportion credibly greater in the predicative condition?
+mean(pos_samples$b_Intercept-pos_samples$b_conditionprenominal > 0)
+```
 ## Proportion of subordinate labels in big vs. small trials 
 
-We check if there is any proportional difference between the trials with different target size. The size does not seem to have a significant effect.  
+We check if there is any proportional difference between the trials with different target size.  
 
 ```{r}
 d_main_responseCat %>% group_by(size, response_label) %>% count()
@@ -181,12 +206,10 @@ d_main_responseCat %>%
 ```
 
 
-## Proportion of subordinate responses by item (context)
+## Proportion of subordinate responses by target size within item (context)
 For each context, there is a pair of targets (a big and a small one). The targets seem to elicit different proportions of subordinate labels. 
 ```{r}
 d_main_responseCat %>% count(picture, condition) %>% View()
-
-
 
 d_main_responseCat %>%
   group_by(condition, item, size, response_label) %>%
@@ -197,7 +220,7 @@ d_main_responseCat %>%
                             labels= c("That's a big X", "That X is big"))
          ) %>%
 
-# big and small indicate the adjective actually used 
+
 ggplot(., aes(x = size, fill = condition, 
                            y = mean, ymin = ci_lower, ymax = ci_upper))+
   geom_col(position = position_dodge(0.8), width = 0.8)+
@@ -205,10 +228,10 @@ ggplot(., aes(x = size, fill = condition,
   labs( y = "Proportion subordinate responses")+
   facet_grid(~item)+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))
-# leave this grouping or interchange adj_cond and condition?
+
 
 ```
-
+## Number of sub responses by context and condition
 ``` {r}
 d_main_responseCat %>%
   group_by(condition, item,  response_label) %>%
@@ -229,10 +252,10 @@ ggplot(., aes(x = n_sub_responses
 # leave this grouping or interchange adj_cond and condition?
 
 ```
-
+## Number of sub responses by target size within contexts by condition
 ``` {r}
 d_main_responseCat %>%
-  group_by(condition, item, size_target, response_label) %>%
+  group_by(condition, item, size, response_label) %>%
   summarize(n_sub_responses = sum(response_num)) %>%
   ungroup() %>%
   mutate(condition = factor(condition, 
@@ -241,7 +264,7 @@ d_main_responseCat %>%
          ) %>%
 
 # big and small indicate the adjective actually used 
-ggplot(., aes(x = n_sub_responses, fill = size_target
+ggplot(., aes(x = n_sub_responses, fill = size
                         ))+
   geom_bar(position = position_dodge(0.8), width = 0.8)+
  
@@ -250,7 +273,7 @@ ggplot(., aes(x = n_sub_responses, fill = size_target
 
 
 ```
-
+## Proportion of sub responses per item
 ``` {r}
 d_main_responseCat.itemCon <- d_main_responseCat %>%
   group_by(picture, response_label) %>%
@@ -266,7 +289,7 @@ d_main_responseCat.itemCon %>%
   xlab("proportion subordinate responses")+
   ylab('number of items')
 ```
-
+## Table of sub response proportions per item
 ```{r}
 d_main_responseCat.itemCon[with(d_main_responseCat.itemCon, order(prop)),] %>%
   select(picture, prop, n_sub_responses, n) %>%
