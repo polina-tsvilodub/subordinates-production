@@ -289,7 +289,7 @@ d_main_responseCat.itemCon %>%
   xlab("proportion subordinate responses")+
   ylab('number of items')
 ```
-## Table of sub response proportions per item
+## Table of sub response proportions
 ```{r}
 d_main_responseCat.itemCon[with(d_main_responseCat.itemCon, order(prop)),] %>%
   select(picture, prop, n_sub_responses, n) %>%
