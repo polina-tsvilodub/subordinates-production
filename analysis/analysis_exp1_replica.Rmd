@@ -96,7 +96,7 @@ d_main_responseCat <- d_main_valid %>%
     response_num = ifelse(response_cat == "sub", 1, 0),
     response_label = "sub"
   )
-```
+``` 
 
 ## Response category distribution
 ```{r}
