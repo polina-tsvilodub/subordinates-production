@@ -1,5 +1,5 @@
 ---
-title: "Comparison Class Production"
+title: "Comparison Class Production Full Data Analysis"
 author: "Polina Tsvilodub"
 date: "8/12/2019"
 output: github_document
@@ -65,7 +65,7 @@ glimpse(d_filt)
 d_filt %>% distinct(d_filt$botresponse) %>% View()
 
 # extract main trials 
-d_main <- d_filt %>% filter((trial_name =="main1") & (trial_number== 1)  ) %>% 
+d_main <- d_filt %>% filter((trial_name =="main1") | (trial_name== "main2")  ) %>% 
   select(submission_id, trial_number, response,  size, item, syntax, picture)
 
 ```
@@ -97,7 +97,7 @@ d_main_responseCat <- d_main_valid %>%
 ```{r}
 d_main_responseCat %>% mutate(condition = factor(syntax, 
                             levels = c("prenominal", "predicative"),
-                            labels= c("That's a big X", "That X is big"))) %>% ggplot(aes(x=response_cat)) +geom_bar(position=position_dodge()) + facet_wrap(~syntax)
+                            labels= c("That's a big X", "That X is big"))) %>% ggplot(aes(x=response_cat, fill=response_cat)) +geom_bar(position=position_dodge()) + facet_wrap(~syntax)
 ```
 
 ## Proportion of subordinate responses by condition, separated by congruency  
@@ -122,7 +122,7 @@ ggplot(d_main_summary, aes(x = syntax, fill = syntax,
   labs( y = "Proportion subordinate responses")+
   scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
   ggtitle("The proportion of subordinate responses by syntactic condition")
- # facet_wrap(~condition)
+
 
 ```
 
@@ -161,7 +161,16 @@ d_main_responseCat %>% group_by(item, syntax, response_label) %>% tidyboot_mean(
 #d_main_responseCat %>% group_by(item, syntax, response_label, size) %>% summarise(nr_sub_resp = sum(resp_cat)) %>% ungroup() %>% ggplot(., aes(x = nr_sub_resp)) + geom_bar() + facet_grid(syntax + size ~item)
 
 # proportion of sub reponses by picture
-d_main_responseCat %>% group_by(picture, syntax, response_label) %>% tidyboot_mean(column = resp_cat) %>% ungroup() %>% ggplot(., aes(x = picture, y = mean,  ymin = ci_lower, ymax = ci_upper)) + geom_col(position = position_dodge(0.8)) + geom_linerange(position = position_dodge(0.8)) + facet_wrap(~syntax) + coord_flip()
-
+d_main_responseCat %>% group_by(picture, syntax, response_label) %>% tidyboot_mean(column = resp_cat) %>% ungroup() %>% ggplot(., aes(x = reorder(picture, mean), y = mean, fill=syntax, ymin = ci_lower, ymax = ci_upper)) + geom_col(position = position_dodge(0.8)) + geom_linerange(position = position_dodge(0.8))  + coord_flip() 
+# + facet_wrap(~syntax)
 ```
-
+## Number of sub responses per participant
+``` {r}
+d_main_responseCat %>%
+  group_by(submission_id, syntax, response_label) %>%
+  summarize(n_sub_responses = sum(resp_cat)) %>%
+  ungroup() %>%
+  ggplot(., aes( x = n_sub_responses))+
+  geom_bar(position=position_dodge())+
+  facet_wrap(~syntax) + ggtitle("Number of subordinate responses uttered per participant in the 6 trials")
+```
