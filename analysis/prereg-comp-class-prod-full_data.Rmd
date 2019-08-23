@@ -174,3 +174,8 @@ d_main_responseCat %>%
   geom_bar(position=position_dodge())+
   facet_wrap(~syntax) + ggtitle("Number of subordinate responses uttered per participant in the 6 trials")
 ```
+``` {r}
+## Analysis by target size
+
+d_main_responseCat %>% group_by(size, response_label, syntax) %>% tidyboot_mean(column=resp_cat) %>% ungroup() %>% ggplot(., aes(x=size, fill=syntax, y = mean, ymin = ci_lower, ymax = ci_upper)) + geom_col(position = position_dodge(0.8)) + geom_linerange(position = position_dodge(0.8))
+```
