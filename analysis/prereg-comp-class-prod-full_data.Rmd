@@ -141,7 +141,7 @@ summary(lm.bayes)
 
 #extract posterior samples
 pos_samples <- posterior_samples(lm.bayes)
-head(pos_samples)
+#head(pos_samples)
 
 # test hypothesis: is the sub response proportion credibly greater in the predicative condition?
 mean(pos_samples$b_syntax1 > 0)
@@ -161,7 +161,7 @@ d_main_responseCat %>% group_by(item, syntax, response_label) %>% tidyboot_mean(
 #d_main_responseCat %>% group_by(item, syntax, response_label, size) %>% summarise(nr_sub_resp = sum(resp_cat)) %>% ungroup() %>% ggplot(., aes(x = nr_sub_resp)) + geom_bar() + facet_grid(syntax + size ~item)
 
 # proportion of sub reponses by picture
-d_main_responseCat %>% group_by(picture, syntax, response_label) %>% tidyboot_mean(column = resp_cat) %>% ungroup() %>% ggplot(., aes(x = reorder(picture, mean), y = mean, fill=syntax, ymin = ci_lower, ymax = ci_upper)) + geom_col(position = position_dodge(0.8)) + geom_linerange(position = position_dodge(0.8))  + coord_flip() 
+d_main_responseCat %>% group_by(picture, syntax, response_label) %>% tidyboot_mean(column = resp_cat) %>% ungroup() %>% ggplot(., aes(x = reorder(picture, mean), y = mean, fill=syntax, ymin = ci_lower, ymax = ci_upper)) + geom_col(position = position_dodge(0.8)) + geom_linerange(position = position_dodge(0.8)) + coord_flip() 
 # + facet_wrap(~syntax)
 ```
 ## Number of sub responses per participant
