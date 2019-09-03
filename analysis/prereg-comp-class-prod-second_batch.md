@@ -1,63 +1,99 @@
-Comparison Class Production Full Data Analysis
+Adjective Comparison Class Free Production Experiment
 ================
 Polina Tsvilodub
 8/12/2019
 
-## Experiment outline
+# Introduction
 
-This script analyses the data from a comparison class production
-experiment with (n=X).
+This free production experiment is part of the adjective comparison
+class studies, following up on promising pilot experiment results gained
+in the same experimental setup.  
+We investigate the hypothesis that NPs in a sentence can be employed
+either referentially or predicatively and that different syntactic
+frames suggest different functions for the NPs (reference
+vs. predication). In particular, we hypothesize that **the NP of a
+simple, copular sentence explicitly provides the comparison class of the
+adjective when the NP is used predicatively** (and hence, the adjective
+appears prenominally: “That’s a big NP”). **When the NP is used
+referentially (and hence, the adjective appears in a predicative
+position: “That NP is big”), the NP does not fix the comparison class**,
+which allows other contextual circumstances to guide the inference about
+the comparison class. This script analyses the data collected in two
+batches of the adjective comparison class free production experiment.
+The experiment and the analysis were preregistered prior to the first
+recruitment of 60 participants on MTurk. Since the experiment has four
+conditions, the data of 60 participants was not sufficient, so another
+60 participants were recruited without another preregistration. The data
+from 120 participants is analysed here. They were compensated $1.00 /
+participant.
 
-In a between-subject design we manipulate the syntactic frame in which
-the subjects elicit the comparison class with respect to size of a
-target obejct: “That X is big” (predicative condition) and “That’s a big
-X” (prenominal condition). We use both adjectives ‘big’ and ‘small’,
-depending on the target. The targets are chosen such that they are
-obviously big (or small) members of their superordinate category, but
-normal-sized for their subordinate category. A stimulus consists of a
-context group, for example different-sized dogs (superordinate
-category), and the target, a normal-sized great dane (a big dog) or a
-normal-sized chihuahua (a small dog) (subordinate categories).
+## Experiment design
 
-Due to syntactic frame manipulation, the participans are expected to use
-different comparison classes (superordinate labels versus subordinate
-labels of the target) in order to communicate the situation presented to
-them in the stimulus.
-
-We expect *more superordinate labels to occur in the prenominal
-condition*, since the NP restricts the comparison class more strongly to
-the category used in the NP. In contrast, we expect *a similar
-proportion of superordinate and subordinate labels in the predicative
-condition*, since the comparison class is less
-    restricted.
+Before the main trails, participants complete warm-up trials to get
+faimiliar with subordinate-level labels of the main trial stimuli. They
+label two instances of a basic level category (e. g. dogs) from
+different subordinate level categories, e. g. a great dane and a pug
+(both the great dane and the pug are also target referents in subsequent
+main trials.) In the warm-up trial, participants provide the subordinate
+level labels as well as a common, basic-level label (i.e. dogs) for the
+instances shown. Participants are provided feedback. If participants
+supply an incorrect label, they are required to correct the label before
+proceeding. The experimental task is to describe an object. Participants
+are presented a context picture of several members of a common
+basic-level category, e. g. a parade of dogs. The parade includes three
+different subordinate categories of the basic-level category (like dog),
+e. g. a big, a middle-sized and a small dog breed like great danes,
+poodles and chihuahuas. A representative of either the big or the small
+breed is a target presented in another picture below the context picture
+which the participant has to describe. We use both adjectives ‘big’ and
+‘small’ (within-subject), consistent with the intuitive size of the
+target. The targets are chosen such that they are obviously big (or
+small) members of their basic-level category, but normal-sized for their
+subordinate category. The participants are supposed to describe the
+target referent (e. g. a great dane) by completing a sentence. The
+syntax of the sentence is the main condition manipulated between
+subjects. It has either the prenominal syntax “That’s a big \_” or the
+predicative syntax “That \_ is big”, the blank to be filled in with a
+noun phrase. In the prenominal condition, the NP is hypothesized to set
+the adjective comparison class, i. e. inserting the basic-level label of
+the referent means that the referent (e. g. a great dane) is “big in
+comparison to other dogs”.  
+Hence, we expect *more basic-level labels (‘dog’) to occur in the
+prenominal condition*, since the NP restricts the comparison class more
+strongly to the category used in the NP. In contrast, we expect *a
+similar proportion of basic-level (‘dog’) and subordinate (‘great dane’)
+labels in the predicative condition*, since the comparison class is less
+restricted. Inserting both the basic-level and the subordinate label of
+the target (e. g. great dane) could mean “big in comparison to other
+dogs”.
 
 # Data analysis
 
-``` r
-library(tidyverse)
-```
-
-    ## -- Attaching packages ----------------------------------------------------- tidyverse 1.2.1 --
+    ## -- Attaching packages ---------------------------------------------------- tidyverse 1.2.1 --
 
     ## v ggplot2 3.1.0     v purrr   0.2.5
     ## v tibble  1.4.2     v dplyr   0.7.7
     ## v tidyr   0.8.2     v stringr 1.3.1
     ## v readr   1.1.1     v forcats 0.3.0
 
-    ## -- Conflicts -------------------------------------------------------- tidyverse_conflicts() --
+    ## -- Conflicts ------------------------------------------------------- tidyverse_conflicts() --
     ## x dplyr::filter() masks stats::filter()
     ## x dplyr::lag()    masks stats::lag()
 
-``` r
-library(tidyboot)
-```
+    ## Parsed with column specification:
+    ## cols(
+    ##   .default = col_character(),
+    ##   submission_id = col_integer(),
+    ##   experiment_id = col_integer(),
+    ##   enjoyment = col_integer(),
+    ##   age = col_integer(),
+    ##   trial_number = col_integer(),
+    ##   startTime = col_double(),
+    ##   attempts = col_integer(),
+    ##   fairprice = col_double()
+    ## )
 
-    ## Warning: package 'tidyboot' was built under R version 3.5.3
-
-``` r
-# read in data
-d1 <- read_csv('./../data/results_8_exp1-post-prereg-pred.csv')
-```
+    ## See spec(...) for full column specifications.
 
     ## Parsed with column specification:
     ## cols(
@@ -74,9 +110,20 @@ d1 <- read_csv('./../data/results_8_exp1-post-prereg-pred.csv')
 
     ## See spec(...) for full column specifications.
 
-``` r
-d2 <- read_csv('./../data/results_10_exp1-post-prereg-prenom.csv')
-```
+    ## Parsed with column specification:
+    ## cols(
+    ##   .default = col_character(),
+    ##   submission_id = col_integer(),
+    ##   experiment_id = col_integer(),
+    ##   enjoyment = col_integer(),
+    ##   age = col_integer(),
+    ##   trial_number = col_integer(),
+    ##   startTime = col_double(),
+    ##   attempts = col_integer(),
+    ##   fairprice = col_double()
+    ## )
+
+    ## See spec(...) for full column specifications.
 
     ## Parsed with column specification:
     ## cols(
@@ -90,105 +137,8 @@ d2 <- read_csv('./../data/results_10_exp1-post-prereg-prenom.csv')
     ##   attempts = col_integer(),
     ##   fairprice = col_double()
     ## )
+
     ## See spec(...) for full column specifications.
-
-``` r
-d3 <- read_csv('./../data/results_8_exp1-post-prereg-pred_batch2.csv')
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   submission_id = col_integer(),
-    ##   experiment_id = col_integer(),
-    ##   enjoyment = col_integer(),
-    ##   age = col_integer(),
-    ##   trial_number = col_integer(),
-    ##   startTime = col_double(),
-    ##   attempts = col_integer(),
-    ##   fairprice = col_double()
-    ## )
-    ## See spec(...) for full column specifications.
-
-``` r
-d4 <- read_csv('./../data/results_10_exp1-post-prereg-prenom_batch2.csv')
-```
-
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   submission_id = col_integer(),
-    ##   experiment_id = col_integer(),
-    ##   enjoyment = col_integer(),
-    ##   age = col_integer(),
-    ##   trial_number = col_integer(),
-    ##   startTime = col_double(),
-    ##   attempts = col_integer(),
-    ##   fairprice = col_double()
-    ## )
-    ## See spec(...) for full column specifications.
-
-``` r
-x <- rbind(d1, d3)
-y <- rbind(d2, d4)
-d <- rbind(x, y)
-
-#first look at the data
-glimpse(d)
-```
-
-    ## Observations: 2,054
-    ## Variables: 41
-    ## $ submission_id   <int> 341, 341, 341, 341, 341, 341, 341, 341, 341, 3...
-    ## $ response1       <chr> "swordfish", "tall tree", "cedar", "pine", "tr...
-    ## $ startDate       <chr> "Wed Aug 21 2019 14:55:05 GMT-0500 (CDT)", "We...
-    ## $ context_picture <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-    ## $ experiment_id   <int> 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8...
-    ## $ picture2        <chr> "warmup/goldfish.png", "warmup/bonsai.jpg", "w...
-    ## $ correct1        <chr> "swordfish", "redwood|sequoia", "redwood|sequo...
-    ## $ question1       <chr> "This is a", "This is a", "This is a", "This i...
-    ## $ problems        <chr> "no", "no", "no", "no", "no", "no", "no", "no"...
-    ## $ enjoyment       <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
-    ## $ hit_id          <chr> "3ZZAYRN1I6FJ5KHUN3YSSTTS1K6OTT", "3ZZAYRN1I6F...
-    ## $ item            <chr> "fish", "trees", "trees", "trees", "trees", "t...
-    ## $ botresponse     <chr> "susan", "susan", "susan", "susan", "susan", "...
-    ## $ assignment_id   <chr> "3S4AW7T80C6U5YX0LCMUGO9UECL4LV", "3S4AW7T80C6...
-    ## $ correct2        <chr> "goldfish", "bonsai", "bonsai", "bonsai", "bon...
-    ## $ understand      <chr> "yes", "yes", "yes", "yes", "yes", "yes", "yes...
-    ## $ text            <chr> "Please label the pictures below.", "Please la...
-    ## $ condition       <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-    ## $ sentence        <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-    ## $ age             <int> 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65, 65...
-    ## $ response        <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-    ## $ comments        <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-    ## $ picture1        <chr> "warmup/swordfish.jpg", "warmup/sequoia.jpg", ...
-    ## $ response3       <chr> "fish", "trees", "trees", "trees", "trees", "e...
-    ## $ education       <chr> "graduated_college", "graduated_college", "gra...
-    ## $ worker_id       <chr> "A2BLQ1GVEHJR8T", "A2BLQ1GVEHJR8T", "A2BLQ1GVE...
-    ## $ languages       <chr> "English", "English", "English", "English", "E...
-    ## $ sex             <chr> "female", "female", "female", "female", "femal...
-    ## $ RT              <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-    ## $ correct3        <chr> "fish", "trees", "trees", "trees", "trees", "t...
-    ## $ context         <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-    ## $ trial_number    <int> 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 1, 2, 3, 1...
-    ## $ startTime       <dbl> 1.566417e+12, 1.566417e+12, 1.566417e+12, 1.56...
-    ## $ attempts        <int> 1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, NA, NA, NA...
-    ## $ picture         <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-    ## $ question3       <chr> "This is a", "This is a", "This is a", "This i...
-    ## $ fairprice       <dbl> 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00...
-    ## $ question2       <chr> "These are both", "These are both", "These are...
-    ## $ size            <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA...
-    ## $ response2       <chr> "goldfish", "bonsai", "bonsai", "bonsai", "bon...
-    ## $ trial_name      <chr> "warmup1", "warmup1", "warmup1", "warmup1", "w...
-
-``` r
-# comments
-d_comments <- d %>%
-  distinct(submission_id, problems, comments, fairprice)
-
-# number of big / small targets per condition
-d %>% group_by(condition, size) %>% count()
-```
 
     ## # A tibble: 5 x 3
     ## # Groups:   condition, size [5]
@@ -200,132 +150,59 @@ d %>% group_by(condition, size) %>% count()
     ## 4 prenominal  small   180
     ## 5 <NA>        <NA>   1334
 
-The participants recruited via MTurk were paid $1.00.
+\#\#Spliting and filtering data Paticipants whose native language is not
+English or the information is missing are excluded from the analysis.
+Two participants were excluded.
 
-\#\#Spliting data into main and warm-up, excluding participants
-
-Subject exclusion
-
-``` r
-# make sure how participants indicate their native language 
-# sometimes participants use only "en" or "eng" for english
-# excluded non-native speakers 
-d %>% distinct(d$languages) %>% View()
-
-
-d_filt <- d %>% 
-  filter(grepl("eng", languages, ignore.case = T)) %>%
-  select(submission_id, trial_name, trial_number, size, item, botresponse, response, condition,  picture) %>% mutate(size=factor(size), syntax = factor(condition))
-
-glimpse(d_filt)
-```
-
-    ## Observations: 2,020
-    ## Variables: 10
-    ## $ submission_id <int> 341, 341, 341, 341, 341, 341, 341, 341, 341, 341...
-    ## $ trial_name    <chr> "warmup1", "warmup1", "warmup1", "warmup1", "war...
-    ## $ trial_number  <int> 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 1, 2, 3, 1, ...
-    ## $ size          <fct> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
-    ## $ item          <chr> "fish", "trees", "trees", "trees", "trees", "tre...
-    ## $ botresponse   <chr> "susan", "susan", "susan", "susan", "susan", "su...
-    ## $ response      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
-    ## $ condition     <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
-    ## $ picture       <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
-    ## $ syntax        <fct> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, ...
-
-``` r
-# exclude participants if necessary based on botcaptcha 
-d_filt %>% distinct(d_filt$botresponse) %>% View()
-
-# extract main trials 
-d_main <- d_filt %>% filter((trial_name =="main1") | (trial_name== "main2")  ) %>% 
-  select(submission_id, trial_number, response,  size, item, syntax, condition, picture)
-```
+    ## # A tibble: 7 x 1
+    ##   `d$languages`   
+    ##   <chr>           
+    ## 1 English         
+    ## 2 english         
+    ## 3 ENGLISH         
+    ## 4 Spanish, English
+    ## 5 eng             
+    ## 6 <NA>            
+    ## 7 English, Spanish
 
 ## Categorizing the data
 
-``` r
-# question1 and question2 are the sentence parts coded in the experiment 
-# look at the different responses provided and categorize them 
-d_main %>% distinct(d_main$response) %>% View()
+The responses produced by the participants are catgorized into
+subordinate and basic-level labels of the target picture. The following
+lemmas were categorized as basic-level responses: bird, dog, fish,
+plant, flower, tree, animal. All other valid responses were categrpized
+as subordinate labels. Six invalid data points like obviously wrong
+labels or ungrammatical sentences are excluded.
 
-# exclude if responses are not referring to the target 
-d_main_valid <- subset(d_main, !(response %in% c("rose", "duck", "weed", "pigeon", "stingfish", "rat"))) 
-
-d_main_responseCat <- d_main_valid %>%
-  rowwise() %>%
-  mutate( # categorize responses 
-    response_cat =
-      ifelse(
-      tolower(response) %in% c("bird", "birds", "dog", "dogs", "fish","one plant", "flower", "flowers", "tree", "trees", "animal", "plant"), "super", "sub"),
-    
-    resp_cat = ifelse(response_cat == "sub", 1, 0),
-    response_label = "sub"
-  )
-```
-
-## Response category distribution
-
-``` r
-d_main_responseCat %>% mutate(condition = factor(syntax, 
-                            levels = c("prenominal", "predicative"),
-                            labels= c("That's a big X", "That X is big"))) %>% ggplot(aes(x=response_cat, fill=response_cat)) +geom_bar(position=position_dodge()) + facet_wrap(~syntax)
-```
-
-![](prereg-comp-class-prod-second_batch_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
-
-## Proportion of subordinate responses by condition, separated by congruency
+## Proportion of subordinate responses by syntactic condition
 
 The proportion of subordinate responses is the dependent variable we
-test by manipulating the syntactic condition: “That’s a big X”
-(prenominal) versus “That X is big” (predicative).
-
-``` r
-d_main_summary <- d_main_responseCat %>%
-  group_by(syntax, response_label) %>%
-  tidyboot_mean(column = resp_cat) %>% # calculate proportion of subordinate labels in the different conditions 
-  ungroup() %>%
-  mutate(condition = factor(syntax, 
-                            levels = c("prenominal", "predicative"),
-                            labels= c("That's a big X", "That X is big"))
-        )
-```
-
-    ## Warning: Grouping rowwise data frame strips rowwise nature
-
-``` r
-ggplot(d_main_summary, aes(x = syntax, fill = syntax,
-                           y = mean, ymin = ci_lower, ymax = ci_upper))+
-  geom_col(position = position_dodge(0.8))+
-  geom_linerange(position = position_dodge(0.8))+
-  labs( y = "Proportion subordinate responses")+
-  scale_y_continuous(limits = c(0, 1), breaks = c(0, 0.5, 1))+
-  ggtitle("The proportion of subordinate responses by syntactic condition")
-```
-
-![](prereg-comp-class-prod-second_batch_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
-
-## Bayesian stats
-
-``` r
-library(brms)
-```
-
-    ## Warning: package 'brms' was built under R version 3.5.3
+test by manipulating the syntactic condition: “That’s a big \_\_”
+(prenominal) versus “That \_\_ is big” (predicative). The proportion of
+subordinate responses is higher in he predictaive than in the prenominal
+condition, supporting the hypothesis that in the prenominal condition
+rather basic-level labels are used in order to communicate the
+comparison class. The overall proportion of subordinate responses is
+above 50 % in both syntactic conditions, revealing participants’
+preference for subordinate labels. The reason might be a general
+preference for more specific comparison classes over more general
+ones.  
+![](prereg-comp-class-prod-second_batch_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+\#\# Bayesian model The logistic Bayesian regression model was
+preregistered. Effect coding is used for the syntax, prenominal
+condition being the reference level. The categorized response (basic vs
+subordinate) is regressed against the syntactic category (prenominal
+vs. predicative) with random intercept by-participant effects and
+random intercept and syntax-effects by-item. Given the Bayesian model,
+the effect of the syntax on the response category is not statistically
+significant. There is big by-participant variation and some by-item
+variation.
 
     ## Loading required package: Rcpp
 
     ## Loading 'brms' package (version 2.8.0). Useful instructions
     ## can be found by typing help('brms'). A more detailed introduction
     ## to the package is available through vignette('brms_overview').
-
-``` r
-# effect coding
-#contrasts(d_main_responseCat$syntax)=contr.sum(2)
-contrasts(d_main_responseCat$syntax)=matrix(c(-1, 1))
-# fit regression model
-lm.bayes <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|picture), data = d_main_responseCat, family = "bernoulli")
-```
 
     ## Compiling the C++ model
 
@@ -334,8 +211,8 @@ lm.bayes <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|picture), d
     ## 
     ## SAMPLING FOR MODEL '1b1423e832ba07da4efffd5a83eb433e' NOW (CHAIN 1).
     ## Chain 1: 
-    ## Chain 1: Gradient evaluation took 0.168 seconds
-    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1680 seconds.
+    ## Chain 1: Gradient evaluation took 0.026 seconds
+    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 260 seconds.
     ## Chain 1: Adjust your expectations accordingly!
     ## Chain 1: 
     ## Chain 1: 
@@ -352,15 +229,15 @@ lm.bayes <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|picture), d
     ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
     ## Chain 1: 
-    ## Chain 1:  Elapsed Time: 13.386 seconds (Warm-up)
-    ## Chain 1:                6.275 seconds (Sampling)
-    ## Chain 1:                19.661 seconds (Total)
+    ## Chain 1:  Elapsed Time: 13.023 seconds (Warm-up)
+    ## Chain 1:                6.077 seconds (Sampling)
+    ## Chain 1:                19.1 seconds (Total)
     ## Chain 1: 
     ## 
     ## SAMPLING FOR MODEL '1b1423e832ba07da4efffd5a83eb433e' NOW (CHAIN 2).
     ## Chain 2: 
-    ## Chain 2: Gradient evaluation took 0.001 seconds
-    ## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 10 seconds.
+    ## Chain 2: Gradient evaluation took 0.008 seconds
+    ## Chain 2: 1000 transitions using 10 leapfrog steps per transition would take 80 seconds.
     ## Chain 2: Adjust your expectations accordingly!
     ## Chain 2: 
     ## Chain 2: 
@@ -377,15 +254,15 @@ lm.bayes <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|picture), d
     ## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     ## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
     ## Chain 2: 
-    ## Chain 2:  Elapsed Time: 18.566 seconds (Warm-up)
-    ## Chain 2:                22.678 seconds (Sampling)
-    ## Chain 2:                41.244 seconds (Total)
+    ## Chain 2:  Elapsed Time: 13.922 seconds (Warm-up)
+    ## Chain 2:                7.6 seconds (Sampling)
+    ## Chain 2:                21.522 seconds (Total)
     ## Chain 2: 
     ## 
     ## SAMPLING FOR MODEL '1b1423e832ba07da4efffd5a83eb433e' NOW (CHAIN 3).
     ## Chain 3: 
-    ## Chain 3: Gradient evaluation took 0.001 seconds
-    ## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 10 seconds.
+    ## Chain 3: Gradient evaluation took 0 seconds
+    ## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
     ## Chain 3: Adjust your expectations accordingly!
     ## Chain 3: 
     ## Chain 3: 
@@ -402,9 +279,9 @@ lm.bayes <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|picture), d
     ## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     ## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
     ## Chain 3: 
-    ## Chain 3:  Elapsed Time: 13.444 seconds (Warm-up)
-    ## Chain 3:                23.982 seconds (Sampling)
-    ## Chain 3:                37.426 seconds (Total)
+    ## Chain 3:  Elapsed Time: 10.376 seconds (Warm-up)
+    ## Chain 3:                7.686 seconds (Sampling)
+    ## Chain 3:                18.062 seconds (Total)
     ## Chain 3: 
     ## 
     ## SAMPLING FOR MODEL '1b1423e832ba07da4efffd5a83eb433e' NOW (CHAIN 4).
@@ -427,14 +304,10 @@ lm.bayes <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|picture), d
     ## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     ## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
     ## Chain 4: 
-    ## Chain 4:  Elapsed Time: 19.173 seconds (Warm-up)
-    ## Chain 4:                16.782 seconds (Sampling)
-    ## Chain 4:                35.955 seconds (Total)
+    ## Chain 4:  Elapsed Time: 12.078 seconds (Warm-up)
+    ## Chain 4:                7.409 seconds (Sampling)
+    ## Chain 4:                19.487 seconds (Total)
     ## Chain 4:
-
-``` r
-summary(lm.bayes)
-```
 
     ##  Family: bernoulli 
     ##   Links: mu = logit 
@@ -446,9 +319,9 @@ summary(lm.bayes)
     ## Group-Level Effects: 
     ## ~picture (Number of levels: 20) 
     ##                        Estimate Est.Error l-95% CI u-95% CI Eff.Sample
-    ## sd(Intercept)              1.10      0.30     0.61     1.78       1650
-    ## sd(syntax1)                0.25      0.18     0.01     0.66       2012
-    ## cor(Intercept,syntax1)     0.23      0.53    -0.88     0.97       4260
+    ## sd(Intercept)              1.09      0.30     0.59     1.77       1245
+    ## sd(syntax1)                0.25      0.19     0.01     0.68       1836
+    ## cor(Intercept,syntax1)     0.23      0.53    -0.87     0.97       3786
     ##                        Rhat
     ## sd(Intercept)          1.00
     ## sd(syntax1)            1.00
@@ -456,34 +329,26 @@ summary(lm.bayes)
     ## 
     ## ~submission_id (Number of levels: 118) 
     ##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## sd(Intercept)     4.64      0.70     3.46     6.18       1254 1.00
+    ## sd(Intercept)     4.62      0.71     3.42     6.19        852 1.01
     ## 
     ## Population-Level Effects: 
     ##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## Intercept     1.46      0.58     0.40     2.65        944 1.00
-    ## syntax1      -0.93      0.51    -1.94     0.04        976 1.01
+    ## Intercept     1.50      0.58     0.46     2.72       1131 1.01
+    ## syntax1      -0.92      0.49    -1.92     0.01       1018 1.00
     ## 
     ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
     ## is a crude measure of effective sample size, and Rhat is the potential 
     ## scale reduction factor on split chains (at convergence, Rhat = 1).
 
-``` r
-#extract posterior samples
-pos_samples <- posterior_samples(lm.bayes)
-#head(pos_samples)
+    ## [1] 0.973
 
-# test hypothesis: is the sub response proportion credibly greater in the predicative condition?
-mean(pos_samples$b_syntax1 > 0)
-```
+## Bayesian model with target size effects
 
-    ## [1] 0.03125
-
-``` r
-# bayesian stats with by-size effects
-contrasts(d_main_responseCat$syntax)=matrix(c(-1, 1))
-# fit regression model
-lm.bayes.size <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|picture) + (1|size), data = d_main_responseCat, family = "bernoulli")
-```
+This Bayesian model includes an exploration of the effect of the size
+condition (the target being big or small) on the response category. The
+same variable coding scheme is used as in the model above. This model
+was not preregistered. Given the CI, there seems to be no evidence for a
+size effect on the response category.
 
     ## Compiling the C++ model
 
@@ -492,8 +357,8 @@ lm.bayes.size <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|pictur
     ## 
     ## SAMPLING FOR MODEL '8ddf8065e23629c394260386a0932192' NOW (CHAIN 1).
     ## Chain 1: 
-    ## Chain 1: Gradient evaluation took 0.158 seconds
-    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 1580 seconds.
+    ## Chain 1: Gradient evaluation took 0.032 seconds
+    ## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 320 seconds.
     ## Chain 1: Adjust your expectations accordingly!
     ## Chain 1: 
     ## Chain 1: 
@@ -510,9 +375,9 @@ lm.bayes.size <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|pictur
     ## Chain 1: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     ## Chain 1: Iteration: 2000 / 2000 [100%]  (Sampling)
     ## Chain 1: 
-    ## Chain 1:  Elapsed Time: 57.667 seconds (Warm-up)
-    ## Chain 1:                15.833 seconds (Sampling)
-    ## Chain 1:                73.5 seconds (Total)
+    ## Chain 1:  Elapsed Time: 90.04 seconds (Warm-up)
+    ## Chain 1:                52.552 seconds (Sampling)
+    ## Chain 1:                142.592 seconds (Total)
     ## Chain 1: 
     ## 
     ## SAMPLING FOR MODEL '8ddf8065e23629c394260386a0932192' NOW (CHAIN 2).
@@ -535,15 +400,15 @@ lm.bayes.size <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|pictur
     ## Chain 2: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     ## Chain 2: Iteration: 2000 / 2000 [100%]  (Sampling)
     ## Chain 2: 
-    ## Chain 2:  Elapsed Time: 38.061 seconds (Warm-up)
-    ## Chain 2:                70.927 seconds (Sampling)
-    ## Chain 2:                108.988 seconds (Total)
+    ## Chain 2:  Elapsed Time: 35.989 seconds (Warm-up)
+    ## Chain 2:                45.84 seconds (Sampling)
+    ## Chain 2:                81.829 seconds (Total)
     ## Chain 2: 
     ## 
     ## SAMPLING FOR MODEL '8ddf8065e23629c394260386a0932192' NOW (CHAIN 3).
     ## Chain 3: 
-    ## Chain 3: Gradient evaluation took 0.001 seconds
-    ## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 10 seconds.
+    ## Chain 3: Gradient evaluation took 0 seconds
+    ## Chain 3: 1000 transitions using 10 leapfrog steps per transition would take 0 seconds.
     ## Chain 3: Adjust your expectations accordingly!
     ## Chain 3: 
     ## Chain 3: 
@@ -560,9 +425,9 @@ lm.bayes.size <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|pictur
     ## Chain 3: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     ## Chain 3: Iteration: 2000 / 2000 [100%]  (Sampling)
     ## Chain 3: 
-    ## Chain 3:  Elapsed Time: 45.706 seconds (Warm-up)
-    ## Chain 3:                27.763 seconds (Sampling)
-    ## Chain 3:                73.469 seconds (Total)
+    ## Chain 3:  Elapsed Time: 83.753 seconds (Warm-up)
+    ## Chain 3:                62.402 seconds (Sampling)
+    ## Chain 3:                146.155 seconds (Total)
     ## Chain 3: 
     ## 
     ## SAMPLING FOR MODEL '8ddf8065e23629c394260386a0932192' NOW (CHAIN 4).
@@ -585,29 +450,14 @@ lm.bayes.size <- brm(resp_cat ~ syntax + (1| submission_id) + (1 + syntax|pictur
     ## Chain 4: Iteration: 1800 / 2000 [ 90%]  (Sampling)
     ## Chain 4: Iteration: 2000 / 2000 [100%]  (Sampling)
     ## Chain 4: 
-    ## Chain 4:  Elapsed Time: 52.026 seconds (Warm-up)
-    ## Chain 4:                77.757 seconds (Sampling)
-    ## Chain 4:                129.783 seconds (Total)
+    ## Chain 4:  Elapsed Time: 131.925 seconds (Warm-up)
+    ## Chain 4:                76.704 seconds (Sampling)
+    ## Chain 4:                208.629 seconds (Total)
     ## Chain 4:
-
-    ## Warning: There were 409 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help. See
-    ## http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
-
-    ## Warning: Examine the pairs() plot to diagnose sampling problems
-
-``` r
-summary(lm.bayes.size)
-```
-
-    ## Warning: The model has not converged (some Rhats are > 1.1). Do not analyse the results! 
-    ## We recommend running more iterations and/or setting stronger priors.
-
-    ## Warning: There were 409 divergent transitions after warmup. Increasing adapt_delta above 0.8 may help.
-    ## See http://mc-stan.org/misc/warnings.html#divergent-transitions-after-warmup
 
     ##  Family: bernoulli 
     ##   Links: mu = logit 
-    ## Formula: resp_cat ~ syntax + (1 | submission_id) + (1 + syntax | picture) + (1 | size) 
+    ## Formula: resp_cat ~ syntax + size + (1 | submission_id) + (1 + syntax | picture) + (1 | size) 
     ##    Data: d_main_responseCat (Number of observations: 702) 
     ## Samples: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
     ##          total post-warmup samples = 4000
@@ -615,89 +465,188 @@ summary(lm.bayes.size)
     ## Group-Level Effects: 
     ## ~picture (Number of levels: 20) 
     ##                        Estimate Est.Error l-95% CI u-95% CI Eff.Sample
-    ## sd(Intercept)              1.09      0.31     0.55     1.79        551
-    ## sd(syntax1)                0.23      0.18     0.01     0.66       1084
-    ## cor(Intercept,syntax1)     0.19      0.53    -0.87     0.96        304
+    ## sd(Intercept)              1.09      0.32     0.56     1.79        809
+    ## sd(syntax1)                0.23      0.18     0.01     0.66       1674
+    ## cor(Intercept,syntax1)     0.14      0.54    -0.91     0.96       2137
     ##                        Rhat
-    ## sd(Intercept)          1.02
-    ## sd(syntax1)            1.01
-    ## cor(Intercept,syntax1) 1.02
+    ## sd(Intercept)          1.00
+    ## sd(syntax1)            1.00
+    ## cor(Intercept,syntax1) 1.00
     ## 
     ## ~size (Number of levels: 2) 
     ##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## sd(Intercept)     2.53      2.60     0.08     9.80        378 1.01
+    ## sd(Intercept)     6.88      5.77     0.23    25.24        249 1.01
     ## 
     ## ~submission_id (Number of levels: 118) 
     ##               Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## sd(Intercept)     4.62      0.73     3.39     6.20        546 1.02
+    ## sd(Intercept)     4.71      0.71     3.56     6.31        886 1.00
     ## 
     ## Population-Level Effects: 
     ##           Estimate Est.Error l-95% CI u-95% CI Eff.Sample Rhat
-    ## Intercept     1.85      2.25    -2.53     6.48         20 1.23
-    ## syntax1      -0.96      0.48    -1.91    -0.01        263 1.02
+    ## Intercept     1.70      6.15   -12.26    14.20        261 1.01
+    ## syntax1      -0.92      0.52    -1.97     0.08        368 1.00
+    ## sizesmall    -0.71      8.92   -19.57    21.51        288 1.00
     ## 
     ## Samples were drawn using sampling(NUTS). For each parameter, Eff.Sample 
     ## is a crude measure of effective sample size, and Rhat is the potential 
     ## scale reduction factor on split chains (at convergence, Rhat = 1).
 
-## Proportion of sub reponses by item category
+## General Stats
 
-``` r
-#d_main_responseCat %>% group_by(item, syntax, response_label) %>% summarise(nr_sub_resp# sum(resp_cat)) %>% ungroup() %>% ggplot(., aes(x = nr_sub_resp)) + geom_bar() + facet_grid(syntax~item)
+A generalized linear regression model is fitted additionally to the
+Bayesian regression model. This model was not preregistered. The
+response category is regressed against the syntactic category and random
+intercept by-participant effects with random intercept and
+syntax-effects by-item. Effect coding scheme is used for the syntactic
+category, prenominal syntax being the reference level.
 
-# porportions of sub reponses instead of counts
-d_main_responseCat %>% group_by(item, syntax, response_label) %>% tidyboot_mean(column = resp_cat) %>% ungroup() %>% ggplot(., aes(x = item, y = mean, fill=syntax, ymin = ci_lower, ymax = ci_upper)) + geom_col(position = position_dodge(0.8)) + geom_linerange(position = position_dodge(0.8)) 
-```
+There is a big by-participant variation (SD = 3.8). There is also
+by-item (by target picture) variation.
 
-    ## Warning: Grouping rowwise data frame strips rowwise nature
+Given this model, the syntactic categoty has a statistically significant
+effect on the response category (p-value \< 0.05): there are more
+subordinate responses in the predicative than in the prenominal
+condition.
 
-    ## Warning: Column `syntax` has different attributes on LHS and RHS of join
+    ## Loading required package: Matrix
 
+    ## 
+    ## Attaching package: 'Matrix'
+
+    ## The following object is masked from 'package:tidyr':
+    ## 
+    ##     expand
+
+    ## 
+    ## Attaching package: 'lme4'
+
+    ## The following object is masked from 'package:brms':
+    ## 
+    ##     ngrps
+
+    ## Generalized linear mixed model fit by maximum likelihood (Laplace
+    ##   Approximation) [glmerMod]
+    ##  Family: binomial  ( logit )
+    ## Formula: resp_cat ~ syntax + (1 | submission_id) + (1 + syntax | picture)
+    ##    Data: d_main_responseCat
+    ## 
+    ##      AIC      BIC   logLik deviance df.resid 
+    ##    619.5    646.9   -303.8    607.5      696 
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.9737 -0.2227  0.1308  0.2352  2.2839 
+    ## 
+    ## Random effects:
+    ##  Groups        Name        Variance Std.Dev. Corr
+    ##  submission_id (Intercept) 14.69533 3.8334       
+    ##  picture       (Intercept)  0.73521 0.8574       
+    ##                syntax1      0.02253 0.1501   1.00
+    ## Number of obs: 702, groups:  submission_id, 118; picture, 20
+    ## 
+    ## Fixed effects:
+    ##             Estimate Std. Error z value Pr(>|z|)   
+    ## (Intercept)   1.4339     0.4910   2.920   0.0035 **
+    ## syntax1      -0.9152     0.4340  -2.109   0.0350 * 
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##         (Intr)
+    ## syntax1 -0.063
+
+## Proportion of subordinate responses in the first trial
+
+To exclude possible within-participant variations due to seeing many
+different conetxt pictures ofdifferent animals, only the first trial is
+analysed. The proportion of subordinate responses is about chance level
+in the prenominal condition (0.5), the proportion in the predicative
+condition is higher (0.65). The effect of syntactic condition on the
+response category has statistical significance of p \< 0.1.
 ![](prereg-comp-class-prod-second_batch_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-## Proportion of sub reponses by single item (picture)
+    ## Generalized linear mixed model fit by maximum likelihood (Laplace
+    ##   Approximation) [glmerMod]
+    ##  Family: binomial  ( logit )
+    ## Formula: resp_cat ~ syntax + (1 | submission_id) + (1 + syntax | picture)
+    ##    Data: first_trials
+    ## 
+    ##      AIC      BIC   logLik deviance df.resid 
+    ##    295.7    316.5   -141.9    283.7      230 
+    ## 
+    ## Scaled residuals: 
+    ##     Min      1Q  Median      3Q     Max 
+    ## -1.4913 -0.3712  0.2263  0.3307  1.0514 
+    ## 
+    ## Random effects:
+    ##  Groups        Name        Variance Std.Dev. Corr 
+    ##  submission_id (Intercept) 9.587658 3.09639       
+    ##  picture       (Intercept) 0.773467 0.87947       
+    ##                syntax1     0.006011 0.07753  -1.00
+    ## Number of obs: 236, groups:  submission_id, 118; picture, 20
+    ## 
+    ## Fixed effects:
+    ##             Estimate Std. Error z value Pr(>|z|)  
+    ## (Intercept)   0.7813     0.4758   1.642    0.101  
+    ## syntax1      -0.7818     0.4405  -1.775    0.076 .
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Correlation of Fixed Effects:
+    ##         (Intr)
+    ## syntax1 -0.183
 
-``` r
-#d_main_responseCat %>% group_by(item, syntax, response_label, size) %>% summarise(nr_sub_resp = sum(resp_cat)) %>% ungroup() %>% ggplot(., aes(x = nr_sub_resp)) + geom_bar() + facet_grid(syntax + size ~item)
+## Proportion of subordinate reponses by contextual domain
 
-# proportion of sub reponses by picture
-d_main_responseCat %>% group_by(picture, syntax, response_label) %>% tidyboot_mean(column = resp_cat) %>% ungroup() %>% ggplot(., aes(x = reorder(picture, mean), y = mean, fill=syntax, ymin = ci_lower, ymax = ci_upper)) + geom_col(position = position_dodge(0.8)) + geom_linerange(position = position_dodge(0.8)) + coord_flip() 
-```
-
-    ## Warning: Grouping rowwise data frame strips rowwise nature
-
-    ## Warning: Column `syntax` has different attributes on LHS and RHS of join
-
+There are 5 contextual domains employed in the experiment: dogs, birds,
+trees, flowers and fish. As expected, there is no substantial difference
+in the proportions of subordinate responses between the domains. In the
+bird domain, subordinate labels seem to be more salient in the
+prenominal condition than subordinate labels in other domains. Given
+prior experimetns, it might be due to the swan being a very salient
+target of the bird domain.
 ![](prereg-comp-class-prod-second_batch_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-``` r
-# + facet_wrap(~syntax)
-```
+## Proportion of subordinate reponses by single item (target picture)
 
-## Number of sub responses per participant
+In the 5 different domains, there are 10 different contexts: 2 dog
+parades, 2 fish parades, 2 flower collections, 3 bird parades and a tree
+collection. For each context, there is a big and a small representative
+of the basic level category, resulting in 20 different targets. Each
+participant sees 3 big and 3 small targets, randomly sampled from the 10
+different conditions.
 
-``` r
-d_main_responseCat %>%
-  group_by(submission_id, syntax, response_label) %>%
-  summarize(n_sub_responses = sum(resp_cat)) %>%
-  ungroup() %>%
-  ggplot(., aes( x = n_sub_responses))+
-  geom_bar(position=position_dodge())+
-  facet_wrap(~syntax) + ggtitle("Number of subordinate responses uttered per participant in the 6 trials")
-```
+Analysing the subordinate labels of the single targets in the different
+syntactic conditions reveals some variation we ascribe to the different
+saliency / availability of the corresponding subordinate labels.
+Specifically, the swan and the eagle seem to elicit a proportion of 0.75
+or more subordinate labels in both syntactic conditions, whereas the
+doberman label proportion was below 0.5 in both conditions. We expect
+the proportion of subordinate responses to be higher in the predicative
+condition for all the items. However, it is not the case for the goose
+and the daisy items. Furthermore, the swan, the sunflower and the
+doberman items seem to be insensitive to the syntactic manipulation,
+eliciting roughly equal subordinate label proportions.
 
-    ## Warning: Grouping rowwise data frame strips rowwise nature
-
+In the prenominal condition, big targets tend to elicit more subordinate
+labels than small targets. It remains to be investigated if it is a
+result of the item design.
 ![](prereg-comp-class-prod-second_batch_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
-
-``` r
-## Analysis by target size
-
-d_main_responseCat %>% group_by(size, response_label, syntax) %>% tidyboot_mean(column=resp_cat) %>% ungroup() %>% ggplot(., aes(x=size, fill=syntax, y = mean, ymin = ci_lower, ymax = ci_upper)) + geom_col(position = position_dodge(0.8)) + geom_linerange(position = position_dodge(0.8))
-```
-
-    ## Warning: Grouping rowwise data frame strips rowwise nature
-
-    ## Warning: Column `syntax` has different attributes on LHS and RHS of join
-
 ![](prereg-comp-class-prod-second_batch_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+## Response consistency within participants
+
+Do participants keep the same lanbeling strategy through the 6 trials
+they complete? Specifically, how many participants give subordinate
+labels in all the trials in both syntactic conditions? Almost half of
+the participants assigned to the predicative condition use only
+subordinate labels throughout the experiment. Roughly 15% of
+participants did not use subordinate labels at all.The others switched
+their strategy with a tendency towards more subordinate labels. In the
+prenominal condition, more than 25% of participants still use only
+subordinate labels, and only about 20% use no subordinate labels. Other
+participants mixed their labels. Generally more than 50% of participants
+stick to uniform labelling behavior throughout the
+experiment.
+
+![](prereg-comp-class-prod-second_batch_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
