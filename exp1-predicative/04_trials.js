@@ -17,7 +17,8 @@ const mainTrials = { dogs1: [{
     question1: utterance.question1b,
     question2: utterance.question2b,
     condition: utterance.condition,
-    size: "big"
+    size: "big",
+    target: "doberman"
   },
   {
    context_picture: "images/dog-parade.png",
@@ -29,7 +30,8 @@ const mainTrials = { dogs1: [{
     question1: utterance.question1s,
     question2: utterance.question2s,
     condition: utterance.condition,
-    size: "small"
+    size: "small",
+    target: "chihuahua"
   }],
   dogs2: [{
     context_picture: "images/dog-parade2.png",
@@ -41,7 +43,8 @@ const mainTrials = { dogs1: [{
      question1: utterance.question1b,
      question2: utterance.question2b,
      condition: utterance.condition,
-     size: "big"
+     size: "big",
+     target: "great dane"
   }, {
     context_picture: "images/dog-parade2.png",
     item: "dogs",
@@ -52,7 +55,8 @@ const mainTrials = { dogs1: [{
      question1: utterance.question1s,
      question2: utterance.question2s,
      condition: utterance.condition,
-     size: "small"
+     size: "small",
+     target: "pug"
   }],
   birds1: [{
     context_picture: "images/bird-parade.png",
@@ -64,7 +68,8 @@ const mainTrials = { dogs1: [{
      question1: utterance.question1b,
      question2: utterance.question2b,
      condition: utterance.condition,
-     size: "big"
+     size: "big",
+     target: "goose"
    },
    {
      context_picture: "images/bird-parade.png",
@@ -76,7 +81,8 @@ const mainTrials = { dogs1: [{
       question1: utterance.question1s,
       question2: utterance.question2s,
       condition: utterance.condition,
-      size: "small"
+      size: "small",
+      target: "sparrow"
     }],
     birds2: [{context_picture: "images/bird-parade2.png",
     item: "birds",
@@ -87,7 +93,9 @@ const mainTrials = { dogs1: [{
      question1: utterance.question1b,
      question2: utterance.question2b,
      condition: utterance.condition,
-     size: "big"},
+     size: "big",
+     target: "eagle"
+   },
      {
        context_picture: "images/bird-parade2.png",
        item: "birds",
@@ -98,7 +106,8 @@ const mainTrials = { dogs1: [{
         question1: utterance.question1s,
         question2: utterance.question2s,
         condition: utterance.condition,
-        size: "small"
+        size: "small",
+        target: "hummingbird"
      }],
    birds3: [{context_picture: "images/bird-parade3.png",
    item: "birds",
@@ -109,7 +118,9 @@ const mainTrials = { dogs1: [{
     question1: utterance.question1b,
     question2: utterance.question2b,
     condition: utterance.condition,
-    size: "big"},
+    size: "big",
+    target: "swan"
+  },
     {
       context_picture: "images/bird-parade3.png",
       item: "birds",
@@ -120,7 +131,8 @@ const mainTrials = { dogs1: [{
        question1: utterance.question1s,
        question2: utterance.question2s,
        condition: utterance.condition,
-       size: "small"
+       size: "small",
+       target: "canary"
     }],
     flowers1: [{
       context_picture: "images/flower-parade.png",
@@ -132,7 +144,8 @@ const mainTrials = { dogs1: [{
        question1: utterance.question1b,
        question2: utterance.question2b,
        condition: utterance.condition,
-       size: "big"
+       size: "big",
+       target: "peony"
      },
      {
        context_picture: "images/flower-parade.png",
@@ -144,7 +157,8 @@ const mainTrials = { dogs1: [{
         question1: utterance.question1s,
         question2: utterance.question2s,
         condition: utterance.condition,
-        size: "small"
+        size: "small",
+        target: "daisy"
       }],
      flowers2: [{
        context_picture: "images/flower-parade2.png",
@@ -156,7 +170,8 @@ const mainTrials = { dogs1: [{
         question1: utterance.question1b,
         question2: utterance.question2b,
         condition: utterance.condition,
-        size: "big"
+        size: "big",
+        target: "sunflower"
      }, {
        context_picture: "images/flower-parade2.png",
        item: "flowers",
@@ -167,7 +182,8 @@ const mainTrials = { dogs1: [{
         question1: utterance.question1s,
         question2: utterance.question2s,
         condition: utterance.condition,
-        size: "small"
+        size: "small",
+        target: "dandelion"
      }],
      fish1: [{
        context_picture: "images/fish-parade.png",
@@ -179,7 +195,8 @@ const mainTrials = { dogs1: [{
         question1: utterance.question1b,
         question2: utterance.question2b,
         condition: utterance.condition,
-        size: "big"
+        size: "big",
+        target: "swordfish"
       },
       {
         context_picture: "images/fish-parade.png",
@@ -191,7 +208,8 @@ const mainTrials = { dogs1: [{
          question1: utterance.question1s,
          question2: utterance.question2s,
          condition: utterance.condition,
-         size: "small"
+         size: "small",
+         target: "goldfish"
        }],
     fish2: [{
       context_picture: "images/fish-parade2.png",
@@ -203,7 +221,8 @@ const mainTrials = { dogs1: [{
        question1: utterance.question1b,
        question2: utterance.question2b,
        condition: utterance.condition,
-       size: "big"
+       size: "big",
+       target: "tuna"
     }, {
       context_picture: "images/fish-parade2.png",
       item: "fish",
@@ -214,7 +233,8 @@ const mainTrials = { dogs1: [{
        question1: utterance.question1s,
        question2: utterance.question2s,
        condition: utterance.condition,
-       size: "small"
+       size: "small",
+       target: "clownfish"
     }],
     trees: [{
         context_picture: "images/tree-parade.png",
@@ -226,7 +246,8 @@ const mainTrials = { dogs1: [{
          question1: utterance.question1b,
          question2: utterance.question2b,
          condition: utterance.condition,
-         size: "big"
+         size: "big",
+         target: "sequoia"
        },
        {
          context_picture: "images/tree-parade.png",
@@ -238,7 +259,8 @@ const mainTrials = { dogs1: [{
           question1: utterance.question1s,
           question2: utterance.question2s,
           condition: utterance.condition,
-          size: "small"
+          size: "small",
+          target: "bonsai"
         }]};
 const warmupTrials = {dogs1: {
   item: "dogs",
