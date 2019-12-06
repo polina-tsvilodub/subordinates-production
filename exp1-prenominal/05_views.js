@@ -127,7 +127,7 @@ const context1 = babeViews.view_generator("instructions",{
     Next, you will complete the main trials.
     <br/>
     <br/>
-    You are watching groups of objects and describing them as they pass by.
+    You and your friend watch groups of objects and talk about them.
     <br />
     <br />
 
