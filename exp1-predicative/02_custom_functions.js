@@ -58,14 +58,7 @@ check_response = function(data, next) {
        alert('Sorry, this is incorrect! Please correct your response!');
      }
 })
-    //$('textarea[id=textbox-input1]').on('change', function(e) {
-        //if (e.target.value === data.correct1) {
-        //    alert('Your answer is correct! Yey!');
-      //  } else {
-      //      alert('Sorry, this answer is incorrect :( The correct answer was ' + data.correct1);
-    //    }
-  //      next();
-//    })
+
 }
 
 // Declare your hooks here
